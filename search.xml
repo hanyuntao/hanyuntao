@@ -1,3 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
+  <entry>
+    <title><![CDATA[display-inline、block、inline-block的区别]]></title>
+    <url>%2F2017%2F05%2F19%2Fdisplay-inline%E3%80%81block%E3%80%81inline-block%E7%9A%84%E5%8C%BA%E5%88%AB%2F</url>
+    <content type="text"><![CDATA[1.display:block将元素显示为块级元素 总是在新行上开始 高度，行高以及顶和底边距都可控制 宽度缺省是它的容器的100%，除非设定一个宽度 &lt;div&gt; &lt;p&gt; &lt;h1&gt; &lt;form&gt; &lt;ul&gt;和&lt;li&gt;是块元素的例子 2.display:inline将元素显示为行内元素 和其他元素都在一行上 高，行高及顶和底边距不可改变 宽度就是它的文字或图片的宽度，不可改变 &lt;span&gt; &lt;a&gt; &lt;label&gt; &lt;input&gt; &lt;img&gt; &lt;strong&gt; 和&lt;em&gt;是inline元素的例子 3.inline-block将块对象作为内联对象呈递 让块元素和其他元素保持在一行上 高度，行高以及顶和底边距都可控制 4.inline和block的转换情景 让一个inline元素从新行开始 让块元素和其他元素保持在一行上 控制inline元素的宽度（对导航条特别有用） 控制inline元素的高度 无须设定宽度即可为一个块元素设定与文字同宽的背景色 参考资料：display:inline、block、inline-block的区别]]></content>
+      <categories>
+        <category>css</category>
+      </categories>
+      <tags>
+        <tag>css</tag>
+        <tag>web</tag>
+      </tags>
+  </entry>
 </search>
