@@ -465,18 +465,16 @@
       
         
           
-            <p>js 里函数调用有4种模式：方法调用、正常函数调用、构造器函数调用、<code>apply/call</code>调用。同时，无论哪种函数调用除了你声明时定义的形参外，还会自动添加2个形参，分别是<code>this</code> 和 <code>arguments</code>。</p>
-<h1 id="1-方法调用"><a href="#1-方法调用" class="headerlink" title="1.方法调用"></a>1.方法调用</h1><p>这个很好理解，函数是一个对象的属性，比如<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">var a = &#123;</div><div class="line">    v : 0,</div><div class="line">    f : function(xx) &#123;</div><div class="line">        this.v = xx;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">a.f(5);</div></pre></td></tr></table></figure></p>
-<p>这个时候，上面函数里的 <code>this</code> 就绑定的是这个对象 <code>a</code>。所以<code>this.v</code> 可以取到对象<code>a</code> 的属性 <code>v</code>。</p>
-<h1 id="2-正常函数调用"><a href="#2-正常函数调用" class="headerlink" title="2.正常函数调用"></a>2.正常函数调用</h1><p>依然看代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">function f(xx) &#123;</div><div class="line">    this.x = xx;</div><div class="line">&#125;</div><div class="line">f(5);</div></pre></td></tr></table></figure></p>
-<p>这个时候，函数 <code>f</code>里的<code>this</code> 绑定的是全局对象，如果是在浏览器运行的解释器中，一般来说是楼上说的 <code>window</code>对象。所以这里 <code>this.x</code>访问的其实是 <code>window.x</code>，当然，如果 <code>window</code>没有 <code>x</code> 属性，那么你这么一写，按照 js 的坑爹语法，就是给 <code>window</code> 对象添加了一个 x 属性，同时赋值。</p>
-<h1 id="3-构造器函数调用"><a href="#3-构造器函数调用" class="headerlink" title="3.构造器函数调用"></a>3.构造器函数调用</h1><p>构造函数一直是我认为是 js 里最坑爹的部分，因为它和 js 最初设计的基于原型的面向对象实现方式格格不入，就好像是特意为了迎合大家已经被其他基于类的面相对象实现给惯坏了的习惯。<br>如果你在一个函数前面带上 <code>new</code>关键字来调用，那么 js 会创建一个<code>prototype</code>属性是此函数的一个新对象，同时在调用这个函数的时候，把<code>this</code>绑定到这个新对象上。当然<code>new</code> 关键字也会改变<code>return</code>语句的行为。看代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">function a(xx) &#123;</div><div class="line">    this.m = xx;</div><div class="line">&#125;</div><div class="line">var b = new a(5);</div></pre></td></tr></table></figure></p>
-<p>上面这个函数和正常调用的函数写法上没什么区别，只不过在调用的时候函数名前面加了关键字<code>new</code> 罢了，这么一来，<code>this</code> 绑定的就不再是前面讲到的全局对象了，而是这里说的创建的新对象，所以说这种方式其实很危险，因为光看函数，你不会知道这个函数到底是准备拿来当构造函数用的，还是一般函数用的，所以我们可以看到，在<code>jslint</code>里，它会要求你写的所有构造函数，也就是一旦它发现你用了 <code>new</code>关键字，那么后面那个函数的首字母必须大写，这样通过函数首字母大写的方式来区分，我个人只有一个看法：坑爹：）</p>
-<h1 id="4-apply-call-调用"><a href="#4-apply-call-调用" class="headerlink" title="4.apply/call 调用"></a>4.apply/call 调用</h1><p> 我们知道，在 js 里，函数其实也是一个对象，那么函数自然也可以拥有它自己的方法，有点绕，就好像函数可以自己有属性也是一个函数。其中每个函数都拥有<code>apply()</code>这个方法，让我们构造一个参数数组传递给函数，同时可以自己来设置<code>this</code> 的值，这就是它最强大的地方，上面的3种函数调用方法，你可以看到，<code>this</code> 都是自动绑定的，没办法由你来设，当你想设的时候，就可以用 <code>apply()</code>了。<code>apply</code>接收2个参数，第一个是将传递给这个函数的 <code>this</code>的值，第二个是参数数组。看代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">function a(xx) &#123;</div><div class="line">    this.b = xx;</div><div class="line">&#125;</div><div class="line">var o = &#123;&#125;;</div><div class="line">a.apply(o, [5]);</div><div class="line">alert(a.b);    // undefined</div><div class="line">alert(o.b);    // 5</div></pre></td></tr></table></figure></p>
-<p>是不是很神奇，函数 <code>a</code>居然可以给<code>o</code> 加属性值。当然，如果你 <code>apply</code>的第一个参数传递 <code>null</code>，那么在函数<code>a</code> 里面 <code>this</code> 指针依然会绑定全局对象。你可能要问了，<code>apply</code> 函数是哪来的，因为在 js 里所有的函数都有一个共同的<code>prototype</code>，也就是传说中的 <code>Function.prototype</code>, 这个原型里有两个神奇的方法，一个就是这里的<code>apply</code> ，另一个就是让题主疑惑的 <code>call</code>。<br><code>call()</code>方法和 <code>apply()</code> 方法很类似，它们的存在都是为了改变<code>this</code> 的绑定，那<code>call()</code> 和 <code>apply()</code> 有什么区别呢？就我个人看来，没啥鸟区别。。。开玩笑！刚刚说了，上面 <code>apply()</code>接收两个参数，第一个是你想要 <code>this</code> 绑定的对象，第二个是一个参数数组，注意是一个数组，你想传递给这个函数的所有内容都放在数组里，然后 <code>apply()</code> 函数会在传递形参时自动帮你展开，同时加入我上面提到的另一个神奇形参<code>arguments</code>。而 <code>call()</code> 呢，它的第一个参数也是你想要<code>this</code> 绑定的对象，但是后面可以接受不定参数，而不再是一个数组，也就是你可以像平时给函数传参那样把这些参数一个一个传递，当然，神奇形参 <code>arguments</code>还是不会少的。所以如果一定要说有什么区别的话，看起来是这样的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">function a(xx, yy) &#123;</div><div class="line">    alert(xx, yy);</div><div class="line">    alert(this);</div><div class="line">    alert(arguments);</div><div class="line">&#125;</div><div class="line">a.apply(null, [5, 55]);</div><div class="line">a.call(null, 5, 55);</div></pre></td></tr></table></figure></p>
-<p>仅此而已。</p>
-
-          
+          js 里函数调用有4种模式：方法调用、正常函数调用、构造器函数调用、apply/call调用。同时，无论哪种函数调用除了你声明时定义的形参外，还会自动添加2个形参，分别是this 和 arguments。
+1.方法调用这个很好理解，函数是一个对象的属性，比如1234567var a = &#123;
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/04/29/js里函数调用的四种模式/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -650,46 +648,20 @@
       
         
           
-            <p>今天在自学的时候碰见了一个奇怪的事情，先给大家列出几个例子，大家猜猜结果。<br>才疏学浅，有错误请一定指出，首先谢谢您的支持！</p>
-<ol>
-<li>示例1<br>js代码<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">function fn() &#123;</div><div class="line">        alert(&quot;hello&quot;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>html代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;button onclick=&quot;fn()&quot;&gt;hello&lt;/button&gt;</div></pre></td></tr></table></figure></p>
-<ol>
-<li>示例2<br>js代码<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">function fn() &#123;</div><div class="line">        alert(&quot;hello&quot;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>html代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;button onclick=&quot;fn&quot;&gt;hello&lt;/button&gt;</div></pre></td></tr></table></figure></p>
-<ol>
-<li>示例3<br>js代码<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">function fn() &#123;</div><div class="line">        alert(&quot;hello&quot;);</div><div class="line">&#125;</div><div class="line">document.getElementsByTagName(&quot;button&quot;)[0].onclick=fn();</div></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>html代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;button&gt;hello&lt;/button&gt;</div></pre></td></tr></table></figure></p>
-<ol>
-<li>示例4<br>js代码<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">function fn() &#123;</div><div class="line">        alert(&quot;hello&quot;);</div><div class="line">&#125;</div><div class="line">document.getElementsByTagName(&quot;button&quot;)[0].onclick=fn;</div></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>html代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;button&gt;hello&lt;/button&gt;</div></pre></td></tr></table></figure></p>
-<p>答案：</p>
-<ul>
-<li>示例1点击弹出“<code>hello</code>”；</li>
-<li>示例2点击没反应；</li>
-<li>示例3不用点击，直接弹出“<code>hello</code>”；</li>
-<li>示例4点击弹出“<code>hello</code>”。</li>
-</ul>
-<p><strong>为什么会出现这种情况呢？</strong></p>
-<p>首先要记住，<code>fn()</code>会执行，而<code>fn</code>是不执行的。</p>
-<ul>
-<li>当在<code>html</code>里面写<code>onclick</code>的时候（示例1），实际上<code>fn()</code>是在一个<code>onclick</code>函数里面：<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">function onclick()&#123; fn(); &#125;</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>所以当你点击按钮的时候，<code>onclick</code>函数会执行，然后<code>onclick</code>里面的是<code>fn()</code>，所以执行<code>onclick</code>函数的时候，<code>fn</code>函数也执行了，但是像示例2中<code>onclick=&quot;fn&quot;</code>的话，就是<code>function onclick(){ fn }</code>，这样就算执行了<code>onclick</code>，<code>fn</code>也就不会执行了。</p>
-<ul>
-<li>当写在js代码里面的时候，<code>onclick</code>实际上就是你赋值的那个函数，在示例3代码里面，<code>onclick</code>就是<code>fn</code>函数，所以当你触发<code>onclick</code>的时候（点击button时），<code>onclick</code>执行（<code>onclick</code>变成<code>onclick()</code>即<code>fn</code>变成<code>fn()</code>），其实就是<code>fn</code>函数执行。如果你换成<code>fn()</code>，不用点击<code>button</code>，<code>onclick</code>直接变成了<code>onclick()</code>所以直接弹出“<code>hello</code>”。</li>
-</ul>
+          今天在自学的时候碰见了一个奇怪的事情，先给大家列出几个例子，大家猜猜结果。才疏学浅，有错误请一定指出，首先谢谢您的支持！
 
-          
+示例1js代码123function fn() &#123;        alert(&quot;hello&quot;);&#125;
+
+
+html代码1&lt;butto
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/04/21/为什么html里面的onclick函数后面要加-，而js里面不需要？/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -863,303 +835,16 @@
       
         
           
-            <h1 id="一、什么是正则表达式"><a href="#一、什么是正则表达式" class="headerlink" title="一、什么是正则表达式"></a>一、什么是正则表达式</h1><p>正则表达式是由一个字符序列形成的搜索模式，搜索模式可用于文本搜索和文本替换。</p>
-<h1 id="二、创建正则表达式"><a href="#二、创建正则表达式" class="headerlink" title="二、创建正则表达式"></a>二、创建正则表达式</h1><p>JS正则表达式的创建有两种方式： <code>new RegExp()</code> 和 直接字面量。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">var re=new RegExp ();</div><div class="line">//RegExp 是JS中的类，同Array类似。然而这个创建方法没有指定表达式内容</div><div class="line">re=new RegExp (&quot;a&quot;);</div><div class="line">//最简单的正则表达式，将匹配字母a </div><div class="line">re=new RegExp (&quot;a&quot;,&quot;i&quot;);</div><div class="line">//重载的构造函数，其第二个参数指定将不区分大小写</div></pre></td></tr></table></figure></p>
-<p>其中，对于第二个参数，为可选参数，包括三种：</p>
-<ul>
-<li><code>g</code>：全文查找；</li>
-<li><code>i</code>：不区分大小写；</li>
-<li><code>m</code>：多行查找； </li>
-</ul>
-<p>然而更为常见的正则表达式创建法则是：字面量的声明方式。 即：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">var re=/a/i;</div><div class="line">//其作用同：re=new RegExp (&quot;a&quot;,&quot;i&quot;)，而且更常用。</div></pre></td></tr></table></figure></p>
-<h1 id="三、正则表达式本身的方法"><a href="#三、正则表达式本身的方法" class="headerlink" title="三、正则表达式本身的方法"></a>三、正则表达式本身的方法</h1><p>在 JavaScript 中，RegExp 对象是一个预定义了属性和方法的正则表达式对象。</p>
-<ul>
-<li><code>test()</code> 方法<br><code>test()</code> 方法用于检测一个字符串是否匹配某个模式，如果字符串中含有匹配的文本，则返回<code>true</code>，否则返回 <code>false</code>。<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">//以下实例用于搜索字符串中的字符 &quot;e&quot;：</div><div class="line">var patt = /e/;patt.test(&quot;The best things in life are free!&quot;);</div><div class="line">字符串中含有 &quot;e&quot;，所以该实例输出为：</div><div class="line">true</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">以上两行代码可以合并为一行：</div><div class="line">/e/.test(&quot;The best things in life are free!&quot;)</div></pre></td></tr></table></figure>
-<ul>
-<li><code>exec()</code> 方法<br><code>exec()</code> 方法用于检索字符串中的正则表达式的匹配。<br>该函数返回一个数组，其中存放匹配的结果。如果未找到匹配，则返回值为 <code>null</code>。<br>以下实例用于搜索字符串中的字母 <code>e</code>:<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">/e/.exec(&quot;The best things in life are free!&quot;);</div><div class="line">字符串中含有 &quot;e&quot;，所以该实例输出为:</div><div class="line">e</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>比较常用的就是正则表达式的<code>test</code>方法了，因为大多只需要知道：某个字符串是否匹配某正则表达式，是则<code>True</code>，否则为<code>False</code>。</p>
-<h1 id="四、字符串对象中与正则表达式有关的方法"><a href="#四、字符串对象中与正则表达式有关的方法" class="headerlink" title="四、字符串对象中与正则表达式有关的方法"></a>四、字符串对象中与正则表达式有关的方法</h1><p>在 JavaScript 中，正则表达式通常用于两个字符串方法 : <code>search()</code>和 <code>replace()</code>。</p>
-<ul>
-<li><p><code>search()</code> 方法</p>
-<ol>
-<li><p>检索与正则表达式相匹配的子字符串，并返回子串的起始位置。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">//使用正则表达式搜索 &quot;Runoob&quot; 字符串，且不区分大小写：</div><div class="line">var str = &quot;Visit Runoob!&quot;; </div><div class="line">var n = str.search(/Runoob/i);</div><div class="line">//输出结果为：</div><div class="line">6</div></pre></td></tr></table></figure>
-</li>
-<li><p>用于检索字符串中指定的子字符串。<br><code>search</code>方法可使用字符串作为参数。字符串参数会转换为正则表达式：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">//检索字符串中 &quot;Runoob&quot; 的子串：</div><div class="line">var str = &quot;Visit Runoob!&quot;; </div><div class="line">var n = str.search(&quot;Runoob&quot;);</div></pre></td></tr></table></figure>
-</li>
-</ol>
-</li>
-<li><p><code>replace()</code> 方法<br><code>replace()</code> 方法将接收字符串作为参数：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">var str=&quot;Visit W3CSchool!&quot;;</div><div class="line">var n=str.replace(&quot;W3CSchool&quot;,&quot;Runoob&quot;);</div><div class="line">console.log(n);</div><div class="line">//结果Visit Runoob!</div><div class="line">console.log(str);</div><div class="line">//结果Visit W3CSchool!</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<h1 id="五、常用语法分析"><a href="#五、常用语法分析" class="headerlink" title="五、常用语法分析"></a>五、常用语法分析</h1><h2 id="5-1-、-、-的区别"><a href="#5-1-、-、-的区别" class="headerlink" title="5.1 ()、[]、{} 的区别"></a>5.1 ()、[]、{} 的区别</h2><p>先看个例子<br>校验字符串是否全由8位数字组成<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">function isStudentNo(str) &#123;</div><div class="line">	var reg=/^[0-9]&#123;8&#125;$/;   /*定义验证表达式*/</div><div class="line">	return reg.test(str);     /*进行验证*/</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p><code>[]</code>是定义匹配的字符范围。<code>[0-9]</code>表示查找任何从 0 至 9 的数字。</p>
-<p><code>{}</code> 一般用来表示匹配的长度。<code>{8}</code>表示位数为8位。</p>
-<p><code>()</code> 的作用是提取匹配的字符串。表达式中有几个<code>()</code>就会得到几个相应的匹配字符串。比如<code>(\s+)</code>表示连续空格的字符串。</p>
-<h2 id="5-2-和"><a href="#5-2-和" class="headerlink" title="5.2 ^ 和 $"></a>5.2 ^ 和 $</h2><p><code>^</code> 匹配一个字符串的开头，比如 (<code>^a</code>) 就是匹配以字母<code>a</code>开头的字符串</p>
-<p><code>$</code> 匹配一个字符串的结尾,比如 (<code>b$</code>) 就是匹配以字母<code>b</code>结尾的字符串</p>
-<p><code>^</code>还有另个一个作用就是取反，比如<code>[^xyz]</code>表示匹配的字符串不包含<code>xyz</code></p>
-<p>需要注意的是：如果<code>^</code>出现在<code>[]</code>中一般表示取反，而出现在其他地方则是匹配字符串的开头。</p>
-<h2 id="5-3-d-s-w"><a href="#5-3-d-s-w" class="headerlink" title="5.3 \d  \s  \w  ."></a>5.3 \d  \s  \w  .</h2><p><code>\d</code> 匹配一个非负整数， 等价于 <code>[0-9]</code>；</p>
-<p><code>\s</code> 匹配一个空白字符；</p>
-<p><code>\w</code> 匹配一个英文字母或数字，等价于<code>[0-9a-zA-Z]</code>；</p>
-<p><code>.</code>  匹配除换行符以外的任意字符，等价于<code>[^\n]</code>。</p>
-<h2 id="5-4"><a href="#5-4" class="headerlink" title="5.4 * + ?"></a>5.4 * + ?</h2><p><code>*</code>表示匹配前面元素0次或多次，比如<code>(\s*)</code>就是匹配0个或多个空格；</p>
-<p><code>+</code> 表示匹配前面元素1次或多次，比如<code>(\d+)</code>就是匹配由至少1个整数组成的字符串；</p>
-<p><code>?</code>表示匹配前面元素0次或1次，相当于<code>{0,1}</code>，比如<code>(\w?)</code> 就是匹配最多由1个字母或数字组成的字符串 。</p>
-<h1 id="六、语法大全"><a href="#六、语法大全" class="headerlink" title="六、语法大全"></a>六、语法大全</h1><p><strong>修饰符</strong><br>修饰符用于执行区分大小写和全局匹配:</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:left">修饰符</th>
-<th style="text-align:left">描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left"><code>i</code></td>
-<td style="text-align:left">执行对大小写不敏感的匹配。</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>g</code></td>
-<td style="text-align:left">执行全局匹配（查找所有匹配而非在找到第一个匹配后停止）。</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>m</code></td>
-<td style="text-align:left">执行多行匹配。</td>
-</tr>
-</tbody>
-</table>
-<p><strong>方括号</strong><br>方括号用于查找某个范围内的字符：</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:left">表达式</th>
-<th style="text-align:left">描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left"><code>[abc]</code></td>
-<td style="text-align:left">查找方括号之间的任何字符。</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>[^abc]</code></td>
-<td style="text-align:left">查找任何不在方括号之间的字符。</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>[0-9]</code></td>
-<td style="text-align:left">查找任何从 0 至 9 的数字。</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>[a-z]</code></td>
-<td style="text-align:left">查找任何从小写 a 到小写 z 的字符。</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>[A-Z]</code></td>
-<td style="text-align:left">查找任何从大写 A 到大写 Z 的字符。</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>[A-z]</code></td>
-<td style="text-align:left">查找任何从大写 A 到小写 z 的字符。</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>[adgk]</code></td>
-<td style="text-align:left">查找给定集合内的任何字符。</td>
-</tr>
-<tr>
-<td style="text-align:left">`[^adgk</td>
-<td style="text-align:left">]`</td>
-<td>查找给定集合外的任何字符。</td>
-</tr>
-</tbody>
-</table>
-<p><strong>元字符</strong><br>元字符（<code>Metacharacter</code>）是拥有特殊含义的字符：</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:left">元字符</th>
-<th style="text-align:left">描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left"><code>.</code></td>
-<td style="text-align:left">查找单个字符，除了换行和行结束符。</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>\w</code></td>
-<td style="text-align:left">查找单词字符。</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>\W</code></td>
-<td style="text-align:left">查找非单词字符。</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>\d</code></td>
-<td style="text-align:left">查找数字。</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>\D</code></td>
-<td style="text-align:left">查找非数字字符。</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>\s</code></td>
-<td style="text-align:left">查找空白字符。</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>\S</code></td>
-<td style="text-align:left">查找非空白字符。</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>\b</code></td>
-<td style="text-align:left">匹配单词边界。</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>\B</code></td>
-<td style="text-align:left">匹配非单词边界。</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>\0</code></td>
-<td style="text-align:left">查找 NULL 字符。</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>\n</code></td>
-<td style="text-align:left">查找换行符。</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>\f</code></td>
-<td style="text-align:left">查找换页符。</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>\r</code></td>
-<td style="text-align:left">查找回车符。</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>\t</code></td>
-<td style="text-align:left">查找制表符。</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>\v</code></td>
-<td style="text-align:left">查找垂直制表符。</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>\xxx</code></td>
-<td style="text-align:left">查找以八进制数 xxx 规定的字符。</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>\xdd</code></td>
-<td style="text-align:left">查找以十六进制数 dd 规定的字符。</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>\uxxxx</code></td>
-<td style="text-align:left">查找以十六进制数 xxxx 规定的 Unicode 字符。</td>
-</tr>
-</tbody>
-</table>
-<p><strong>量词</strong></p>
-<table>
-<thead>
-<tr>
-<th style="text-align:left">量词</th>
-<th style="text-align:left">描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left"><code>n+</code></td>
-<td style="text-align:left">匹配任何包含至少一个 <code>n</code>的字符串。例如，<code>/a+/</code> 匹配 <code>candy</code>中的 <code>a</code>，<code>caaaaaaandy</code> 中所有的<code>a</code>。</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>n*</code></td>
-<td style="text-align:left">匹配任何包含零个或多个 <code>n</code> 的字符串。例如，<code>/bo*/</code>匹配 <code>A ghost booooed</code> 中的 <code>boooo</code>，<code>A bird warbled</code> 中的 <code>b</code>，但是不匹配 <code>A goat grunted</code>。</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>n?</code></td>
-<td style="text-align:left">匹配任何包含零个或一个 <code>n</code> 的字符串。例如，<code>/e?le?/</code> 匹配 <code>angel</code> 中的 <code>el</code>，<code>angle</code> 中的 <code>le</code>。</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>n{X}</code></td>
-<td style="text-align:left">匹配包含<code>X</code> 个<code>n</code>的序列的字符串。例如，<code>/a{2}/</code>不匹配 <code>candy,</code> 中的 <code>a</code>，但是匹配 <code>caandy,</code> 中的两个 <code>a</code>，且匹配 <code>caaandy.</code> 中的前两个 <code>a</code>。</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>n{X,}</code></td>
-<td style="text-align:left"><code>X</code> 是一个正整数。前面的模式 <code>n</code> 连续出现至少<code>X</code> 次时匹配。例如，<code>/a{2,}/</code>不匹配 <code>candy</code> 中的 <code>a</code>，但是匹配 <code>caandy</code> 和 <code>caaaaaaandy.</code> 中所有的 <code>a</code>。</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>n{X,Y}</code></td>
-<td style="text-align:left"><code>X</code>和 <code>Y</code> 为正整数。前面的模式<code>n</code> 连续出现至少 <code>X</code>次，至多 <code>Y</code>次时匹配。例如，<code>/a{1,3}/</code> 不匹配 <code>cndy</code>，匹配 <code>candy,</code> 中的 <code>a</code>，<code>caandy,</code> 中的两个 <code>a</code>，匹配 <code>caaaaaaandy</code> 中的前面三个 <code>a</code>。注意，当匹配 <code>caaaaaaandy</code> 时，即使原始字符串拥有更多的 <code>a</code>，匹配项也是 <code>aaa</code>。</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>n{X,}</code></td>
-<td style="text-align:left">匹配包含至少 <code>X</code> 个<code>n</code> 的序列的字符串。</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>n$</code></td>
-<td style="text-align:left">匹配任何结尾为 <code>n</code>的字符串。</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>^n</code></td>
-<td style="text-align:left">匹配任何开头为<code>n</code>的字符串。</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>?=n</code></td>
-<td style="text-align:left">匹配任何其后紧接指定字符串<code>n</code> 的字符串。</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>?!n</code></td>
-<td style="text-align:left">匹配任何其后没有紧接指定字符串 <code>n</code> 的字符串。</td>
-</tr>
-</tbody>
-</table>
-<h1 id="七、12个常用的js正则表达式"><a href="#七、12个常用的js正则表达式" class="headerlink" title="七、12个常用的js正则表达式"></a>七、12个常用的js正则表达式</h1><ol>
-<li><p>在input框中只能输入金额，其实就是只能输入最多有两位小数的数字</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">//第一种在input输入框限制</div><div class="line"> &lt;input type=&quot;text&quot; maxlength=&quot;8&quot; class=&quot;form-control&quot; id=&quot;amount&quot; style=&quot;margin-right: 2px;&quot; value=&quot;&quot; onChange=&quot;count();&quot; onkeyup=&quot;if (this.value==this.value2) return; if (this.value.search(/^\d*(?:\.\d&#123;0,2&#125;)?$/)==-1) this.value=(this.value2)?this.value2:&apos;&apos;;else this.value2=this.value;&quot;&gt;元</div><div class="line">//第二种对于表单动态增加的方式，只能在js方法中验证。</div><div class="line"> var amount=$(&quot;#amount&quot;).val();</div><div class="line"> if (amount.search(/^\d*(?:\.\d&#123;0,2&#125;)?$/)==-1) &#123;</div><div class="line">   alert(&quot;金额格式不对，最多有两位小数&quot;);</div><div class="line">   return false;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-<li><p>验证邮箱格式</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">var reg=/\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/;</div><div class="line"> var email=$(&quot;#email&quot;).val();</div><div class="line"> if(!reg.test(email) )&#123;</div><div class="line">    alert(&quot;请输入符合规范的邮箱账号！&quot;);</div><div class="line">    return false;</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
-</li>
-<li><p>密码采用数字、字母、特殊字符且长度为8-20位</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">function validatePwd(str) &#123;</div><div class="line">if (/^.*?[\d]+.*$/.test(str) &amp;&amp; /^.*?[A-Za-z]/.test(str)</div><div class="line">&amp;&amp; /^.*?[~/`!@#$%^&amp;*()_+|&#123;&#125;?;:&gt;&lt;\-\]\\[\/].*$/.test(str) &amp;&amp; /^.&#123;8,20&#125;$/.test(str)) &#123;</div><div class="line">return true;</div><div class="line">&#125;</div><div class="line">return false;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-<li><p>验证电话号码</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * 验证电话号码</div><div class="line"> * @param phoneValue 要验证的电话号码</div><div class="line"> * @returns 匹配返回true 不匹配返回false</div><div class="line"> */</div><div class="line">function validatePhone(phoneValue) &#123;</div><div class="line"> phoneValue = valueTrim(phoneValue);</div><div class="line"> var reg = /^[1][0-9]&#123;10&#125;$/;</div><div class="line"> return reg.test(phoneValue);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-<li><p>判断是否是汉字</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * 判断是否是汉字</div><div class="line"> *</div><div class="line"> * @param charValue</div><div class="line"> *   要验证的数据</div><div class="line"> * @returns 匹配返回true 不匹配返回false</div><div class="line"> */</div><div class="line">function isCharacter(charValue) &#123;</div><div class="line"> var reg = /^[\u4e00-\u9fa5]&#123;0,&#125;$/;</div><div class="line"> return reg.test(charValue);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-<li><p>是否为字母:true:是，false:不是</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">function isChar(charValue)&#123;</div><div class="line"> var charPattern=/^[a-zA-Z]*$/; //是否为字母</div><div class="line"> result=charPattern.test(charValue);</div><div class="line"> return result;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-<li><p>判断是否为数字</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">function isNum(numValue)&#123;</div><div class="line"> var numPattern=/^\d*$/; //数字的正则表达式</div><div class="line"> result=numPattern.test(numValue);</div><div class="line"> return result;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-<li><p>整数的正则表达式</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">function isInt(intValue)&#123;</div><div class="line">  var intPattern=/^0$|^[1-9]\d*$/; //整数的正则表达式</div><div class="line"> result=intPattern.test(intValue);</div><div class="line">  return result;</div><div class="line"> &#125;</div></pre></td></tr></table></figure>
-</li>
-<li><p>是否为字母和数字</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">function isCharNum(flagValue)&#123;</div><div class="line"> var flagPattern=/^[a-zA-Z0-9]*$/; //是否为字母和数字</div><div class="line"> result=flagPattern.test(flagValue);</div><div class="line"> return result;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-<li><p>检验18位身份证号码</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * 检验18位身份证号码（15位号码可以只检测生日是否正确即可，自行解决）</div><div class="line"> *</div><div class="line"> * @param idCardValue</div><div class="line"> *   18位身份证号</div><div class="line"> * @returns 匹配返回true 不匹配返回false</div><div class="line"> */</div><div class="line">function idCardVildate(cid) &#123;</div><div class="line">var arrExp = [ 7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2 ];// 加权因子</div><div class="line">var arrValid = [ 1, 0, &quot;X&quot;, 9, 8, 7, 6, 5, 4, 3, 2 ];// 校验码</div><div class="line">var reg = /^[1-9]\d&#123;5&#125;[1-9]\d&#123;3&#125;((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d&#123;3&#125;([0-9]|X)$/;</div><div class="line">if (reg.test(cid)) &#123;</div><div class="line">var sum = 0, idx;</div><div class="line">for (var i = 0; i &lt; cid.length - 1; i++) &#123;</div><div class="line">// 对前17位数字与权值乘积求和</div><div class="line">sum += parseInt(cid.substr(i, 1), 10) * arrExp[i];</div><div class="line">&#125;</div><div class="line">// 计算模（固定算法）</div><div class="line">idx = sum % 11;</div><div class="line">// 检验第18为是否与校验码相等</div><div class="line">return arrValid[idx] == cid.substr(17, 1).toUpperCase();</div><div class="line">&#125; else &#123;</div><div class="line">return false;</div><div class="line">&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-<li><p>验证15位数身份证号码中的生日是否是有效生日</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">function isValidityBrithBy15IdCard(idCard15) &#123;</div><div class="line"> var year = idCard15.substring(6, 8);</div><div class="line"> var month = idCard15.substring(8, 10);</div><div class="line"> var day = idCard15.substring(10, 12);</div><div class="line"> var temp_date = new Date(year, parseFloat(month) - 1, parseFloat(day));</div><div class="line"> // 对于老身份证中的你年龄则不需考虑千年虫问题而使用getYear()方法</div><div class="line"> if (temp_date.getYear() != parseFloat(year)</div><div class="line">   || temp_date.getMonth() != parseFloat(month) - 1</div><div class="line">   || temp_date.getDate() != parseFloat(day)) &#123;</div><div class="line">  return false;</div><div class="line"> &#125; else &#123;</div><div class="line">  return true;</div><div class="line"> &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-<li><p>验证18位数身份证号码中的生日是否是有效生日</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">function isValidityBrithBy18IdCard(idCard18) &#123;</div><div class="line"> var year = idCard18.substring(6, 10);</div><div class="line"> var month = idCard18.substring(10, 12);</div><div class="line"> var day = idCard18.substring(12, 14);</div><div class="line"> var temp_date = new Date(year, parseFloat(month) - 1, parseFloat(day));</div><div class="line"> // 这里用getFullYear()获取年份，避免千年虫问题</div><div class="line"> if (temp_date.getFullYear() != parseFloat(year)</div><div class="line">   || temp_date.getMonth() != parseFloat(month) - 1</div><div class="line">   || temp_date.getDate() != parseFloat(day)) &#123;</div><div class="line">  return false;</div><div class="line"> &#125; else &#123;</div><div class="line">  return true;</div><div class="line"> &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>参考资料：<br><a href="http://www.cnblogs.com/yangmingming/archive/2010/03/10/1682470.html" target="_blank" rel="external">JS中正则表达式概述</a><br><a href="http://www.cnblogs.com/onepixel/p/5218904.html" target="_blank" rel="external">JS正则表达式常用总结</a><br><a href="http://www.jb51.net/article/75152.htm" target="_blank" rel="external">12个常用的js正则表达式</a><br><a href="http://www.runoob.com/jsref/jsref-obj-regexp.html" target="_blank" rel="external">JavaScript RegExp 对象</a></p>
-
-          
+          一、什么是正则表达式正则表达式是由一个字符序列形成的搜索模式，搜索模式可用于文本搜索和文本替换。
+二、创建正则表达式JS正则表达式的创建有两种方式： new RegExp() 和 直接字面量。123456var re=new RegExp ();//RegExp 是JS中的类，同Array类似。然而
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/04/20/JS正则表达式实用总结/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1333,22 +1018,19 @@
       
         
           
-            <ol>
-<li><code>Math.random()</code>; 结果为0-1间的一个随机数(包括0,不包括1) </li>
-<li><code>Math.floor(num)</code>; 参数num为一个数值，函数结果为num的整数部分。 </li>
-<li><code>Math.round(num)</code>; 参数num为一个数值，函数结果为num四舍五入后的整数。</li>
-<li><code>Math.ceil(n)</code>; 返回大于等于n的最小整数。</li>
-</ol>
-<hr>
-<ul>
-<li>用<code>Math.ceil(Math.random()*10)</code>;时，主要获取1到10的随机整数，取0的几率极小。</li>
-<li>用<code>Math.round(Math.random())</code>;可均衡获取0到1的随机整数。</li>
-<li>用<code>Math.round(Math.random()*10)</code>;时，可基本均衡获取0到10的随机整数，其中获取最小值0和最大值10的几率少一半。</li>
-<li>用<code>Math.floor(Math.random()*10)</code>;时，可均衡获取0到9的随机整数。</li>
-<li>用<code>Math.floor(Math.random()*50+50)</code>;时，可均衡获取50到100的随机整数。</li>
-</ul>
-
           
+Math.random(); 结果为0-1间的一个随机数(包括0,不包括1) 
+Math.floor(num); 参数num为一个数值，函数结果为num的整数部分。 
+Math.round(num); 参数num为一个数值，函数结果为num四舍五入后的整数。
+Math.ceil(n); 返回大于等
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/04/19/JS产生随机数/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1522,51 +1204,20 @@
       
         
           
-            <p>先放结论：<code>[].slice.call(arguments)</code>能将具有<code>length</code>属性的对象转成数组。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3067059-d2c6a7d29e7aa63e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Paste_Image.png"></p>
-<h1 id="1、基础知识"><a href="#1、基础知识" class="headerlink" title="1、基础知识"></a>1、基础知识</h1><ul>
-<li><p><code>.slice()</code>方法</p>
-<ul>
-<li><p>定义和用法<br><code>slice(start, end)</code> 方法可提取数组的某个部分，并以新的数组返回被提取的部分。<br>使用<code>start</code>（包含） 和 <code>end</code>（不包含） 参数来指定提取数组开始和结束的部分。</p>
-<ul>
-<li>如果未指定start和end，则返回整个数组。</li>
-<li>如果指指定一个参数，该参数作为start使用，返回包括start位置之后的全部数组。</li>
-<li>如果是负数，则该参数规定的是从数组的尾部开始算起的位置。也就是说，-1 指数组的最后一项，-2 指倒数第二个项，以此类推。</li>
-</ul>
-</li>
-<li><p>实例</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">//在数组中读取元素：</div><div class="line">var fruits = [&quot;Banana&quot;, &quot;Orange&quot;, &quot;Lemon&quot;, &quot;Apple&quot;, &quot;Mango&quot;];</div><div class="line">var citrus = fruits.slice(-3,-1);</div><div class="line">citrus 结果输出:</div><div class="line">[&quot;Lemon&quot;, &quot;Apple&quot;]</div></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p><code>.call()</code>方法</p>
-<ul>
-<li>定义和用法<br><code>call()</code>函数用于调用当前函数<code>functionObject</code>，并可同时使用指定对象<code>thisObj</code>作为本次执行时<code>functionObject</code>函数内部的<code>this</code>指针引用。</li>
-<li>实例<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">var obj = &#123;name: &quot;李四&quot;, age: 20&#125;;</div><div class="line">function foo(a, b)&#123;</div><div class="line">    document.writeln(this.name);    </div><div class="line">    document.writeln(a);    </div><div class="line">    document.writeln(b);    </div><div class="line">&#125;</div><div class="line">// 改变this引用为obj，同时传递两个参数</div><div class="line">foo.call(obj, 12, true); // 李四 12 true</div></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-</ul>
-<h1 id="2-进入正题"><a href="#2-进入正题" class="headerlink" title="2.进入正题"></a>2.进入正题</h1><p>当我看到<code>var args = [].slice.call(arguments, 0);</code>这种写法的时候是一脸懵逼的（黑人问号脸）。<br><a href="http://www.cnblogs.com/lwbqqyumidi/archive/2012/12/03/2799833.html" target="_blank" rel="external"><code>arguments</code></a>是一个对象而不是数组，最多算是一个<a href="http://www.cnblogs.com/lwbqqyumidi/archive/2012/12/03/2799833.html" target="_blank" rel="external">伪数组</a>，而且自身的原型链上也没有<code>slice</code>这个方法。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">/*确定arguments的类型</div><div class="line">    * 返回 3,Object, true;</div><div class="line">    */</div><div class="line">    (function(a,b,c)&#123;</div><div class="line">       console.log(arguments.length);</div><div class="line">       console.log(typeof arguments);</div><div class="line">       console.log( arguments instanceof Object);</div><div class="line"></div><div class="line">    &#125;(1,2,3))</div></pre></td></tr></table></figure></p>
-<blockquote>
-<p><code>[].slice.call(arguments)</code>能将具有<code>length</code>属性的对象转成数组：</p>
-</blockquote>
-<ul>
-<li><p><code>[]</code>自身也是也是一个对象.而数组原型链上有这个<code>slice</code>这个方法。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">/*此处的返回值是true*/</div><div class="line">  [].slice === Array.prototype.slice;</div></pre></td></tr></table></figure>
-</li>
-<li><p>通过<code>call</code>显式绑定来实现<code>arguments</code>变相有<code>slice</code>这个方法。</p>
-</li>
-<li>这就是说：<code>Array.prototype.slice.call(arguments,0)</code>这句里，就是把 <code>arguments</code> 当做当前对象<br>﻿也就是说 要调用的是 <code>arguments</code> 的<code>slice</code> 方法，后面的 参数 0 也就成了 <code>slice</code> 的第一个参数，<code>slice(0)</code>就是获取所有。</li>
-</ul>
-<p><strong>补充： </strong><br>将函数的实际参数转换成数组的方法</p>
-<p>方法一：<code>var args = Array.prototype.slice.call(arguments);</code></p>
-<p>方法二：<code>var args = [].slice.call(arguments, 0);</code></p>
-<p>方法三：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">var args = []; </div><div class="line">for (var i = 1; i &lt; arguments.length; i++) &#123; </div><div class="line">    args.push(arguments[i]);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>最后，附个转成数组的通用函数<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">var toArray = function(s)&#123;</div><div class="line">    //try语句允许我们定义在执行时进行错误测试的代码块。</div><div class="line">   //catch 语句允许我们定义当 try 代码块发生错误时，所执行的代码块。</div><div class="line">    try&#123;</div><div class="line">        return Array.prototype.slice.call(s);</div><div class="line">    &#125; catch(e)&#123;</div><div class="line">        var arr = [];</div><div class="line">        for(var i = 0,len = s.length; i &lt; len; i++)&#123;</div><div class="line">            //arr.push(s[i]);</div><div class="line">               arr[i] = s[i];  //据说这样比push快</div><div class="line">        &#125;</div><div class="line">         return arr;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>参考资料：<br><a href="http://www.cnblogs.com/dingxiaoyue/p/4948166.html" target="_blank" rel="external">Array.prototype.slice.call()方法详解</a><br> <a href="http://blog.csdn.net/crper/article/details/51396063" target="_blank" rel="external">对[].slice.call(arguments,1) 的一丢丢见解</a><br><a href="http://www.cnblogs.com/lwbqqyumidi/archive/2012/12/03/2799833.html" target="_blank" rel="external">JavaScript arguments对象</a><br><a href="http://www.365mini.com/page/javascript-function-call.htm" target="_blank" rel="external">JavaScript Function.call() 函数详解</a></p>
+          先放结论：[].slice.call(arguments)能将具有length属性的对象转成数组。
 
-          
+1、基础知识
+.slice()方法
+
+定义和用法slice(start, end) 方法可提取数组的某个部分，并以新的数组返回被提取的部分。使用start（包含） 和 end（不包含） 参数来指定提
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/04/19/你遇到过-slice-call-吗？/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1740,114 +1391,16 @@
       
         
           
-            <p>本篇文章全部摘自阮一峰老师的<a href="http://www.ruanyifeng.com/blog/2015/07/flex-grammar.html" target="_blank" rel="external">Flex 布局教程</a>。</p>
-<p>之前我一直在用布局的传统解决方案，基于<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/box_model" target="_blank" rel="external">盒状模型</a>，依赖 <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/display" target="_blank" rel="external">display</a>属性 + <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/position" target="_blank" rel="external">position</a>属性 + <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/float" target="_blank" rel="external">float</a>属性。它对于那些特殊布局非常不方便，比如，<a href="https://css-tricks.com/centering-css-complete-guide/" target="_blank" rel="external">垂直居中</a>就不容易实现。最近在做百度前端技术学院的作业时发现很多人都在用Flex 布局，简单几行代码就能实现特殊的布局，所以我找了点资料，开始学习弹性布局。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3067059-3ad4df37871149ad.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="弹性布局"></p>
-<h1 id="一、Flex布局是什么？"><a href="#一、Flex布局是什么？" class="headerlink" title="一、Flex布局是什么？"></a>一、Flex布局是什么？</h1><p>Flex是Flexible Box的缩写，意为”弹性布局”，用来为盒状模型提供最大的灵活性。</p>
-<ul>
-<li><p>任何一个容器都可以指定为Flex布局。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">.box&#123;</div><div class="line">    display: flex;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-<li><p>行内元素也可以使用Flex布局。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">.box&#123;</div><div class="line">    display: inline-flex;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-<li><p>Webkit内核的浏览器，必须加上<code>-webkit</code>前缀。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">.box&#123;</div><div class="line">    display: -webkit-flex; /* Safari */</div><div class="line">    display: flex;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<p><strong>注意：</strong>设为Flex布局以后，子元素的<code>float</code>、<code>clear</code>和<code>vertical-align</code>属性将失效。因为一山不容二虎，<code>float</code>、<code>clear</code>和<code>vertical-align</code>属性都是用来布局的属性，一旦使用<code>flex</code>，原来这些古老的属性不失效还留着干什么？</p>
-<h1 id="二、基本概念"><a href="#二、基本概念" class="headerlink" title="二、基本概念"></a>二、基本概念</h1><p>采用Flex布局的元素，称为Flex容器（<code>flex container</code>），简称”容器”。它的所有子元素自动成为容器成员，称为Flex项目（<code>flex item</code>），简称”项目”。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3067059-2c10c4045e26dd54.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="容器和项目"><br>容器默认存在两根轴：水平的主轴（<code>main axis</code>）和垂直的交叉轴（<code>cross axis</code>）。主轴的开始位置（与边框的交叉点）叫做<code>main start</code>，结束位置叫做<code>main end</code>；交叉轴的开始位置叫做<code>cross start</code>，结束位置叫做<code>cross end</code>。<br>项目默认沿主轴排列。单个项目占据的主轴空间叫做<code>main size</code>，占据的交叉轴空间叫做<code>cross size</code>。</p>
-<h1 id="三、容器的属性"><a href="#三、容器的属性" class="headerlink" title="三、容器的属性"></a>三、容器的属性</h1><p>以下6个属性设置在容器上。</p>
-<blockquote>
-<ul>
-<li><code>flex-direction</code></li>
-<li><code>flex-wrap</code></li>
-<li><code>flex-flow</code></li>
-<li><code>justify-content</code></li>
-<li><code>align-items</code></li>
-<li><code>align-content</code></li>
-</ul>
-</blockquote>
-<h2 id="3-1-flex-direction属性"><a href="#3-1-flex-direction属性" class="headerlink" title="3.1 flex-direction属性"></a>3.1 flex-direction属性</h2><p><code>flex-direction</code>属性决定主轴的方向（即项目的排列方向）。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">.box &#123;</div><div class="line">    flex-direction: row | row-reverse | column | column-reverse;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3067059-3f6e22fa09e9149d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="flex-direction属性"></p>
-<blockquote>
-<ul>
-<li><code>row</code>（默认值）：主轴为水平方向，起点在左端。</li>
-<li><code>row-reverse</code>：主轴为水平方向，起点在右端。</li>
-<li><code>column</code>：主轴为垂直方向，起点在上沿。</li>
-<li><code>column-reverse</code>：主轴为垂直方向，起点在下沿。</li>
-</ul>
-</blockquote>
-<h2 id="3-2-flex-wrap属性"><a href="#3-2-flex-wrap属性" class="headerlink" title="3.2 flex-wrap属性"></a>3.2 flex-wrap属性</h2><p>默认情况下，项目都排在一条线（又称”轴线”）上。<code>flex-wrap</code>属性定义，如果一条轴线排不下，如何换行。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3067059-1f3882fb778396ab.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="flex-wrap属性"><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">.box&#123;</div><div class="line">    flex-wrap: nowrap | wrap | wrap-reverse;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>它可能取三个值。<br>（1）<code>nowrap</code>（默认）：不换行。<br><img src="http://upload-images.jianshu.io/upload_images/3067059-bf42e9e30e099722.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br>（2）<code>wrap</code>：换行，第一行在上方。<br><img src="http://upload-images.jianshu.io/upload_images/3067059-3c23e68d73eecd14.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br>（3）<code>wrap-reverse</code>：换行，第一行在下方。<br><img src="http://upload-images.jianshu.io/upload_images/3067059-5c0dbc9c6f625ac6.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-<h2 id="3-3-flex-flow"><a href="#3-3-flex-flow" class="headerlink" title="3.3 flex-flow"></a>3.3 flex-flow</h2><p><code>flex-flow</code>属性是<code>flex-direction</code>属性和<code>flex-wrap</code>属性的简写形式，默认值为<code>row nowrap</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">.box &#123;</div><div class="line">    flex-flow: &lt;flex-direction&gt; || &lt;flex-wrap&gt;;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<h2 id="3-4-justify-content属性"><a href="#3-4-justify-content属性" class="headerlink" title="3.4 justify-content属性"></a>3.4 justify-content属性</h2><p><code>justify-content</code>属性定义了项目在主轴上的对齐方式。<a href="http://www.runoob.com/try/playit.php?f=playcss_justify-content&amp;preval=flex-start" target="_blank" rel="external">各属性演示地址</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">.box &#123;</div><div class="line">    justify-content: flex-start | flex-end | center | space-between | space-around;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<blockquote>
-<ul>
-<li><code>flex-start</code>（默认值）：左对齐</li>
-<li><code>flex-end</code>：右对齐</li>
-<li><code>center</code>： 居中</li>
-<li><code>space-between</code>：两端对齐，项目之间的间隔都相等。</li>
-<li><code>space-around</code>：每个项目两侧的间隔相等。所以，项目之间的间隔比项目与边框的间隔大一倍。</li>
-</ul>
-</blockquote>
-<p><img src="http://upload-images.jianshu.io/upload_images/3067059-43113273448cceb6.gif?imageMogr2/auto-orient/strip" alt="justify-content属性.gif"></p>
-<h2 id="3-5-align-items属性"><a href="#3-5-align-items属性" class="headerlink" title="3.5 align-items属性"></a>3.5 align-items属性</h2><p><code>align-items</code>属性定义项目在交叉轴（垂直轴）上如何对齐。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">.box &#123;</div><div class="line">    align-items: flex-start | flex-end | center | baseline | stretch;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<blockquote>
-<ul>
-<li><code>flex-start</code>：交叉轴的起点对齐。</li>
-<li><code>flex-end</code>：交叉轴的终点对齐。</li>
-<li><code>center</code>：交叉轴的中点对齐。</li>
-<li><code>baseline</code>: 项目的第一行文字的基线对齐。</li>
-<li><code>stretch</code>（默认值）：如果项目未设置高度或设为<code>auto</code>，将占满整个容器的高度。</li>
-</ul>
-</blockquote>
-<p><img src="http://upload-images.jianshu.io/upload_images/3067059-12ae81dbb43d5193.gif?imageMogr2/auto-orient/strip" alt="align-items属性.gif"></p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3067059-6adeaa2924bdf589.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="align-items属性"></p>
-<h2 id="3-6-align-content属性"><a href="#3-6-align-content属性" class="headerlink" title="3.6 align-content属性"></a>3.6 align-content属性</h2><p><code>align-content</code>属性定义了多根轴线的对齐方式。如果项目只有一根轴线，该属性不起作用。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">.box &#123;</div><div class="line">    align-content: flex-start | flex-end | center | space-between | space-around | stretch;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<blockquote>
-<ul>
-<li><code>flex-start</code>：与交叉轴的起点对齐。</li>
-<li><code>flex-end</code>：与交叉轴的终点对齐。</li>
-<li><code>center</code>：与交叉轴的中点对齐。</li>
-<li><code>space-between</code>：与交叉轴两端对齐，轴线之间的间隔平均分布。</li>
-<li><code>space-around</code>：每根轴线两侧的间隔都相等。所以，轴线之间的间隔比轴线与边框的间隔大一倍。</li>
-<li><code>stretch</code>（默认值）：轴线占满整个交叉轴。</li>
-</ul>
-</blockquote>
-<p><img src="http://upload-images.jianshu.io/upload_images/3067059-5490c62702540900.gif?imageMogr2/auto-orient/strip" alt="align-content属性.gif"></p>
-<h1 id="四、项目的属性"><a href="#四、项目的属性" class="headerlink" title="四、项目的属性"></a>四、项目的属性</h1><p>以下6个属性设置在项目上。</p>
-<ul>
-<li>order</li>
-<li>flex-grow</li>
-<li>flex-shrink</li>
-<li>flex-basis</li>
-<li>flex</li>
-<li>align-self</li>
-</ul>
-<h2 id="4-1-order属性"><a href="#4-1-order属性" class="headerlink" title="4.1 order属性"></a>4.1 order属性</h2><p><code>order</code>属性定义项目的排列顺序。数值越小，排列越靠前，默认为0。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">.item &#123; order: &lt;integer&gt;;&#125;</div></pre></td></tr></table></figure></p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3067059-90840984f54affb3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="order属性"></p>
-<h2 id="4-2-flex-grow属性"><a href="#4-2-flex-grow属性" class="headerlink" title="4.2 flex-grow属性"></a>4.2 flex-grow属性</h2><p><code>flex-grow</code>属性定义项目的放大比例，默认为0，即如果存在剩余空间，也不放大。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">.item &#123; flex-grow: &lt;number&gt;; /* default 0 */&#125;</div></pre></td></tr></table></figure></p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3067059-00191691fa41f40d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="flex-grow属性"><br>如果所有项目的<code>flex-grow</code>属性都为1，则它们将等分剩余空间（如果有的话）。<br>如果一个项目的<code>flex-grow</code>属性为2，其他项目都为1，则前者占据的剩余空间将比其他项多一倍。</p>
-<h2 id="4-3-flex-shrink属性"><a href="#4-3-flex-shrink属性" class="headerlink" title="4.3 flex-shrink属性"></a>4.3 flex-shrink属性</h2><p><code>flex-shrink</code>属性定义了项目的缩小比例，默认为1，即如果空间不足，该项目将缩小。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">.item &#123; flex-shrink: &lt;number&gt;; /* default 1 */&#125;</div></pre></td></tr></table></figure></p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3067059-285e7a8679fce497.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="flex-shrink属性"><br>如果所有项目的<code>flex-shrink</code>属性都为1，当空间不足时，都将等比例缩小。如果一个项目的<code>flex-shrink</code>属性为0，其他项目都为1，则空间不足时，前者不缩小。负值对该属性无效。</p>
-<h2 id="4-4-flex-basis属性"><a href="#4-4-flex-basis属性" class="headerlink" title="4.4 flex-basis属性"></a>4.4 flex-basis属性</h2><p><code>flex-basis</code>属性定义了在分配多余空间之前，项目占据的主轴空间（<code>main size</code>）。浏览器根据这个属性，计算主轴是否有多余空间。它的默认值为<code>auto</code>，即项目的本来大小。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">.item &#123; flex-basis: &lt;length&gt; | auto; /* default auto */&#125;</div></pre></td></tr></table></figure></p>
-<p>它可以设为跟<code>width</code>或<code>height</code>属性一样的值（比如<code>350px</code>），则项目将占据固定空间。</p>
-<h2 id="4-5-flex属性"><a href="#4-5-flex属性" class="headerlink" title="4.5 flex属性"></a>4.5 flex属性</h2><p><code>flex</code>属性是<code>flex-grow</code>,<code>flex-shrink</code>和 <code>flex-basis</code>的简写，默认值为<code>0 1 auto</code>。后两个属性可选。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">.item &#123; flex: none | [ &lt;&apos;flex-grow&apos;&gt; &lt;&apos;flex-shrink&apos;&gt;? || &lt;&apos;flex-basis&apos;&gt; ]&#125;</div></pre></td></tr></table></figure></p>
-<p>该属性有两个快捷值：<code>auto</code>(<code>1 1 auto</code>) 和 <code>none</code> (<code>0 0 auto</code>)。建议优先使用这个属性，而不是单独写三个分离的属性，因为浏览器会推算相关值。</p>
-<h2 id="4-6-align-self属性"><a href="#4-6-align-self属性" class="headerlink" title="4.6 align-self属性"></a>4.6 align-self属性</h2><p><code>align-self</code>属性允许单个项目有与其他项目不一样的对齐方式，可覆盖<code>align-items</code>属性。默认值为<code>auto</code>，表示继承父元素的<code>align-items</code>属性，如果没有父元素，则等同于<code>stretch</code>。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">.item &#123; align-self: auto | flex-start | flex-end | center | baseline | stretch;&#125;</div></pre></td></tr></table></figure></p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3067059-7855207ca9ebcf64.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br>该属性可能取6个值，除了<code>auto</code>，其他都与<code>align-items</code>属性完全一致。</p>
-<h1 id="五、Flex布局实例链接"><a href="#五、Flex布局实例链接" class="headerlink" title="五、Flex布局实例链接"></a>五、<a href="http://www.ruanyifeng.com/blog/2015/07/flex-examples.html" target="_blank" rel="external">Flex布局实例链接</a></h1><h2 id="5-1-骰子的布局"><a href="#5-1-骰子的布局" class="headerlink" title="5.1 骰子的布局"></a>5.1 骰子的布局</h2><p><img src="http://upload-images.jianshu.io/upload_images/3067059-d88ba5cdfb599d19.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="骰子的布局"></p>
-<h2 id="5-2-网格布局"><a href="#5-2-网格布局" class="headerlink" title="5.2 网格布局"></a>5.2 网格布局</h2><p><img src="http://upload-images.jianshu.io/upload_images/3067059-fd4a3fa531afbe66.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="网格布局"></p>
-<h2 id="5-3-圣杯布局"><a href="#5-3-圣杯布局" class="headerlink" title="5.3 圣杯布局"></a>5.3 圣杯布局</h2><p><img src="http://upload-images.jianshu.io/upload_images/3067059-5be2b6a9c077a369.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="圣杯布局"></p>
-<h2 id="5-4-输入框的布局"><a href="#5-4-输入框的布局" class="headerlink" title="5.4 输入框的布局"></a>5.4 输入框的布局</h2><p><img src="http://upload-images.jianshu.io/upload_images/3067059-704f7c22936d1314.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="输入框的布局"></p>
-<h2 id="5-5-悬挂式布局"><a href="#5-5-悬挂式布局" class="headerlink" title="5.5 悬挂式布局"></a>5.5 悬挂式布局</h2><p><img src="http://upload-images.jianshu.io/upload_images/3067059-ffc9a497e42a8868.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="悬挂式布局"></p>
-<h2 id="5-6-固定的底栏"><a href="#5-6-固定的底栏" class="headerlink" title="5.6 固定的底栏"></a>5.6 固定的底栏</h2><p><img src="http://upload-images.jianshu.io/upload_images/3067059-2809de6494cecd3f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="固定的底栏"></p>
-<h2 id="5-7-流式布局"><a href="#5-7-流式布局" class="headerlink" title="5.7 流式布局"></a>5.7 流式布局</h2><p><img src="http://upload-images.jianshu.io/upload_images/3067059-e670bad2fc7ad90a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="流式布局"></p>
-
-          
+          本篇文章全部摘自阮一峰老师的Flex 布局教程。
+之前我一直在用布局的传统解决方案，基于盒状模型，依赖 display属性 + position属性 + float属性。它对于那些特殊布局非常不方便，比如，垂直居中就不容易实现。最近在做百度前端技术学院的作业时发现很多人都在用Flex 布局，简单几行
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/04/18/灵活方便的布局方式——弹性布局/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -2021,81 +1574,17 @@
       
         
           
-            <p>在计算机科学所使用的排序算法通常被分类为：</p>
-<ul>
-<li>计算的 时间复杂度（最差、平均、和最好性能），依据列表（<code>list</code>）的大小(<code>n</code>)。一般而言，好的性能是<code>O(n log n)</code>，且坏的性能是<code>O(n^2)</code>。对于一个排序理想的性能是<code>O(n)</code>。仅使用一个抽象关键比较运算的排序算法总平均上总是至少需要<code>O(n log n)</code>。</li>
-<li>存储器使用量（以及其他电脑资源的使用）<br>稳定性：稳定排序算法会让原本有相等键值的纪录维持相对次序。也就是如果一个排序算法是稳定的，当有两个相等键值的纪录R和S，且在原本的列表中R出现在S之前，在排序过的列表中R也将会是在S之前。</li>
-<li>依据排序的方法：插入、交换、选择、合并等等。</li>
-</ul>
-<p>依据排序的方法分类的三种排序算法:</p>
-<h1 id="冒泡排序"><a href="#冒泡排序" class="headerlink" title="冒泡排序"></a>冒泡排序</h1><p>冒泡排序对一个需要进行排序的数组进行以下操作:</p>
-<ol>
-<li>比较第一项和第二项;</li>
-<li>如果第一项应该排在第二项之后, 那么两者交换顺序;</li>
-<li>比较第二项和第三项;</li>
-<li>如果第二项应该排在第三项之后, 那么两者交换顺序;</li>
-<li>以此类推直到完成排序;</li>
-</ol>
-<p><img src="http://upload-images.jianshu.io/upload_images/3067059-f305c272618a8975.gif?imageMogr2/auto-orient/strip" alt="冒泡排序.gif"><br><strong>实例说明:</strong></p>
-<p>将数组<code>[3, 2, 4, 5, 1]</code>以从小到大的顺序进行排序:</p>
-<ol>
-<li>3应该在2之后, 因此交换, 得到<code>[2, 3, 4, 5, 1]</code>;</li>
-<li>3, 4顺序不变, 4, 5也不变, 交换5, 1得到<code>[2, 3, 4, 1, 5]</code>;</li>
-<li>第一次遍历结束, 数组中最后一项处于正确位置不会再有变化, 因此下一次遍历可以排除最后一项;</li>
-<li>开始第二次遍历, 最后结果为<code>[2, 3, 1, 4, 5]</code>, 排除后两项进行下一次遍历;</li>
-<li>第三次遍历结果为<code>[2, 1, 3, 4, 5]</code>;</li>
-<li>最后得到<code>[1, 2, 3, 4, 5]</code>, 排序结束;</li>
-</ol>
-<p><strong>代码实现:</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">function swap(items, firstIndex, secondIndex)&#123;</div><div class="line">      var temp = items[firstIndex];</div><div class="line">      items[firstIndex] = items[secondIndex];</div><div class="line">      items[secondIndex] = temp;</div><div class="line">&#125;;</div><div class="line">function bubbleSort(items)&#123;</div><div class="line">      var len = items.length, i, j, stop;</div><div class="line">      for (i = 0; i &lt; len; i++)&#123;</div><div class="line">        for (j = 0, stop = len-i; j &lt; stop; j++)&#123;</div><div class="line">          if (items[j] &gt; items[j+1])&#123;</div><div class="line">            swap(items, j, j+1);</div><div class="line">          &#125;</div><div class="line">        &#125;</div><div class="line">      &#125;</div><div class="line">      return items;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>外层的循环决定需要进行多少次遍历, 内层的循环负责数组内各项的比较, 还通过外层循环的次数和数组长度决定何时停止比较.</p>
-<p>冒泡排序极其低效, 因为处理数据的步骤太多, 对于数组中的每<code>n</code>项, 都需要<code>n^2</code>次操作来实现该算法(实际比<code>n^2</code>略小, 但可以忽略, 具体原因见⤵️), 即时间复杂度为<code>O(n^2)</code>.</p>
-<blockquote>
-<p>对于含有n个元素的数组, 需要进行<code>(n-1)+(n-2)+...+1</code>次操作, 而<code>(n-1)+(n-2)+...+1 = n(n-1)/2 = n^2/2 - n/2</code>, 如果n趋于无限大, 那么n/2的大小对于整个算式的结果影响可以忽略, 因此最终的时间复杂度用<code>O(n^2)</code>表示</p>
-</blockquote>
-<h1 id="选择排序"><a href="#选择排序" class="headerlink" title="选择排序"></a>选择排序</h1><p>选择排序对一个需要进行排序的数组进行以下操作:</p>
-<p>1.假定数组中的第一项为最小值(min);</p>
-<ol>
-<li>比较第一项和第二项的值;</li>
-<li>若第二项比第一项小, 则假定第二项为最小值;</li>
-<li>以此类推直到排序完成.</li>
-</ol>
-<p><img src="http://upload-images.jianshu.io/upload_images/3067059-99aeb01bedaac58e.gif?imageMogr2/auto-orient/strip" alt="选择排序.gif"><br><strong>实例说明:</strong></p>
-<p>将数组<code>[&quot;b&quot;, &quot;a&quot;, &quot;d&quot;, &quot;c&quot;, &quot;e&quot;]</code>以字母<code>a-z</code>的顺序进行排序:</p>
-<ol>
-<li>假定数组中第一项<code>&quot;b&quot;(index0)为min</code>;</li>
-<li>比较第二项”a”与第一项”b”, 因”a”应在”b”之前的顺序, 故<code>&quot;a&quot;(index1)为min</code>;</li>
-<li>然后将min与后面几项比较, 由于”a”就是最小值, 因此min确定在index1的位置;</li>
-<li>第一次遍历结束后, 将假定的<code>min(index0)</code>, 与真实的min(index1)进行比较, 真实的min应该在index0的位置, 因此将两者交换, 第一次遍历交换之后的结果为<code>[&quot;a&quot;, &quot;b&quot;, &quot;d&quot;, &quot;c&quot;, &quot;e&quot;]</code>;</li>
-<li>然后开始第二次遍历, 遍历从第二项(<code>index1</code>的位置)开始, 这次假定第二项为最小值, 将第二项与之后几项逐个比较, 因为”b”就在应该存在的位置, 所以不需要进行交换, 这次遍历之后的结果为<code>[&quot;a&quot;, &quot;b&quot;, &quot;d&quot;, &quot;c&quot;, &quot;e&quot;]</code>;<br>6.之后开始第三次遍历, “c”应为这次遍历的最小值, 交换<code>index2(&quot;d&quot;)</code>,<code>index3(&quot;c&quot;)</code>位置, 最后结果为<code>[&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;, &quot;e&quot;]</code>;</li>
-<li>最后一次遍历, 所有元素在应有位置, 不需要进行交换.</li>
-</ol>
-<p><strong>代码实现:</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">function swap(items, firstIndex, secondIndex)&#123;</div><div class="line">  var temp = items[firstIndex];</div><div class="line">  items[firstIndex] = items[secondIndex];</div><div class="line">  items[secondIndex] = temp;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">function selectionSort()&#123;</div><div class="line">  let items = [...document.querySelectorAll(&apos;.num-queue span&apos;)].map(num =&gt; +num.textContent);</div><div class="line">  let len = items.length, min;</div><div class="line"></div><div class="line">  for (i = 0; i &lt; len; i++)&#123;</div><div class="line">    min = i;</div><div class="line">    for(j = i + 1; j &lt; len; j++)&#123;</div><div class="line">      if(items[j] &lt; items[min])&#123;</div><div class="line">        min = j;</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">    if(i != min)&#123;</div><div class="line">      swap(items, i, min);</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  return items;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
-<p>外层循环决定每次遍历的初始位置, 从数组的第一项开始直到最后一项. 内层循环决定哪一项元素被比较.</p>
-<p>选择排序的时间复杂度为<code>O(n^2)</code>.</p>
-<h1 id="插入排序"><a href="#插入排序" class="headerlink" title="插入排序"></a>插入排序</h1><p>与上述两种排序算法不同, 插入排序是稳定排序算法(<code>stable sort algorithm</code>), 稳定排序算法指不改变列表中相同元素的位置, 冒泡排序和选择排序不是稳定排序算法, 因为排序过程中有可能会改变相同元素位置. 对简单的值(数字或字符串)排序时, 相同元素位置改变与否影响不是很大. 而当列表中的元素是对象, 根据对象的某个属性对列表进行排序时, 使用稳定排序算法就很有必要了.</p>
-<p>一旦算法包含交换(swap)这个步骤, 就不可能是稳定的排序算法. 列表内元素不断交换, 无法保证先前的元素排列为止一直保持原样. 而插入排序的实现过程不包含交换, 而是提取某个元素将其插入数组中正确位置.</p>
-<p>插入排序的实现是将一个数组分为两个部分, 一部分排序完成, 一部分未进行排序. 初始状态下整个数组属于未排序部分, 排序完成部分为空. 然后进行排序, 数组内的第一项被加入排序完成部分, 由于只有一项, 自然属于排序完成状态. 然后对未完成排序的余下部分的元素进行如下操作:</p>
-<ol>
-<li>如果这一项的值应该在排序完成部分最后一项元素之后, 保留这一项在原有位置开始下一步;</li>
-<li>如果这一项的值应该排在排序完成部分最后一项元素之前, 将这一项从未完成部分暂时移开, 将已完成部分的最后一项元素移后一个位置;</li>
-<li>被暂时移开的元素与已完成部分倒数第二项元素进行比较;</li>
-<li>如果被移除元素的值在最后一项与倒数第二项的值之间, 那么将其插入两者之间的位置, 否则继续与前面的元素比较, 将暂移出的元素放置已完成部分合适位置. 以此类推直到所有元素都被移至排序完成部分.</li>
-</ol>
-<p><img src="http://upload-images.jianshu.io/upload_images/3067059-817021c05bb0eede.gif?imageMogr2/auto-orient/strip" alt="插入排序.gif"><br><strong>实例说明:</strong></p>
-<p>现在需要将数组<code>var items = [5, 2, 6, 1, 3, 9];</code>进行插入排序:</p>
-<ol>
-<li>5属于已完成部分, 余下元素为未完成部分. 接下来提取出2, 因为5比2大, 于是5被移至靠右一个位置, 覆盖2, 占用2原本存在的位置. 这样本来存放5的位置(已完成部分的首个位置)就被空出, 而2在比5小, 因此将2置于这个位置, 此时结果为<code>[2, 5, 6, 1, 3, 9]</code>;</li>
-<li>接下来提取出6, 因为6比5大, 所以不操作提取出1, 1与已完成部分各个元素<code>(2, 5, 6)</code>进行比较, 应该在2之前, 因此2, 5, 6各向右移一位, 1置于已完成部分首位, 此时结果为<code>[1, 2, 5, 6, 3, 9]</code>;</li>
-<li>对余下未完成元素进行类似操作, 最后得出结果<code>[1, 2, 3, 5, 6, 9]</code>;</li>
-</ol>
-<p><strong>代码实现:</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">function insertionSort(items) &#123;</div><div class="line">  let len = items.length, value, i, j;</div><div class="line">  for (i = 0; i &lt; len; i++) &#123;</div><div class="line">    value = items[i];</div><div class="line">    for (j = i-1; j &gt; -1 &amp;&amp; items[j] &gt; value; j--) &#123;</div><div class="line">      items[j+1] = items[j];</div><div class="line">    &#125;</div><div class="line">    items[j+1] = value;</div><div class="line">  &#125;</div><div class="line">  return items;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
-<p>外层循环的遍历顺序是从数组的第一位到最后一位, 内层循环的遍历则是从后往前, 内层循环同时负责元素的移位.</p>
-<p>插入排序的时间复杂度为<code>O(n^2)</code></p>
-<p>以上三种排序算法都十分低效, 因此实际应用中不要使用这三种算法, 遇到需要排序的问题, 应该首先使用JavaScript内置的方法<code>Array.prototype.sort();</code></p>
-<p>参考:</p>
-<p><a href="https://www.youtube.com/watch?v=IEOO5UToo6A&amp;list=PLhQjrBD2T383Xfn0zECHrOTpfOSlptPAB&amp;index=7" target="_blank" rel="external">2015-CS50-week-算法</a><br><a href="https://www.nczonline.net/blog/tag/computer-science/" target="_blank" rel="external">排序算法-JavaScript描述</a><br><a href="http://ife.baidu.com/note/detail/id/762" target="_blank" rel="external">三种基础的排序算法</a></p>
+          在计算机科学所使用的排序算法通常被分类为：
 
-          
+计算的 时间复杂度（最差、平均、和最好性能），依据列表（list）的大小(n)。一般而言，好的性能是O(n log n)，且坏的性能是O(n^2)。对于一个排序理想的性能是O(n)。仅使用一个抽象关键比较运算的排序算法总平均上总是至少需要O(n log 
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/04/17/三种基础的排序算法/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -2269,306 +1758,15 @@
       
         
           
-            <h1 id="1-什么是DOM"><a href="#1-什么是DOM" class="headerlink" title="1. 什么是DOM"></a>1. 什么是DOM</h1><p> <a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Document_Object_Model/Introduction" target="_blank" rel="external">文档对象模型 (DOM)</a> 是HTML和XML文档的编程接口。它提供了对文档的结构化的表述，并定义了一种方式可以使从程序中对该结构进行访问，从而改变文档的结构，样式和内容。DOM 将文档解析为一个由节点和对象（包含属性和方法的对象）组成的结构集合。简言之，它会将web页面和脚本或程序语言连接起来。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3067059-f15336068fb3debc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="HTML DOM树"></p>
-<h1 id="2-DOM节点"><a href="#2-DOM节点" class="headerlink" title="2.DOM节点"></a>2.DOM节点</h1><p>在 HTML DOM (Document Object Model) 中 , 每一个元素都是<strong> 节点</strong>:</p>
-<ul>
-<li>整个html文档就是是一个<code>Document</code>。</li>
-<li>所有的HTML元素都是元素节点。</li>
-<li>所有 HTML 属性都是属性节点。</li>
-<li>文本插入到 HTML 元素是文本节点。</li>
-<li>注释是注释节点。</li>
-</ul>
-<h1 id="3-Document-对象"><a href="#3-Document-对象" class="headerlink" title="3. Document 对象"></a>3. Document 对象</h1><ul>
-<li>当浏览器载入 HTML 文档, 它就会成为 <code>document</code>对象。</li>
-<li><code>document</code> 对象是HTML文档的根节点与所有其他节点（元素节点，文本节点，属性节点, 注释节点）。</li>
-<li><code>Document</code>对象使我们可以从脚本中对 HTML 页面中的所有元素进行访问。<br><strong> 提示：</strong><code>Document</code> 对象是 <code>Window</code>对象的一部分，可通过 <code>window.document</code>属性对其进行访问。</li>
-</ul>
-<h1 id="4-Document-对象属性和方法"><a href="#4-Document-对象属性和方法" class="headerlink" title="4. Document 对象属性和方法"></a>4. Document 对象属性和方法</h1><p>下表是DOM对象的全部属性和方法列表，在列表下面，详细地介绍了常见的原生javascript DOM操作。</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:left">属性 / 方法</th>
-<th style="text-align:left">描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left"><code>document.activeElement</code></td>
-<td style="text-align:left">返回当前获取焦点元素</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>document.addEventListener()</code></td>
-<td style="text-align:left">向文档添加句柄</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>document.adoptNode(node)</code></td>
-<td style="text-align:left">从另外一个文档返回 <code>adapded</code>节点到当前文档。</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>document.anchors</code></td>
-<td style="text-align:left">返回对文档中所有 <code>Anchor</code> 对象的引用。</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>document.applets</code></td>
-<td style="text-align:left">返回对文档中所有 <code>Applet</code>对象的引用。</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>document.baseURI</code></td>
-<td style="text-align:left">返回文档的绝对基础 <code>URI</code></td>
-</tr>
-<tr>
-<td style="text-align:left"><code>document.body</code></td>
-<td style="text-align:left">返回文档的<code>body</code>元素</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>document.close()</code></td>
-<td style="text-align:left">关闭用 <code>document.open()</code>方法打开的输出流，并显示选定的数据。</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>document.cookie</code></td>
-<td style="text-align:left">设置或返回与当前文档有关的所有 <code>cookie</code>。</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>document.createAttribute()</code></td>
-<td style="text-align:left">创建一个属性节点</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>document.createComment()</code></td>
-<td style="text-align:left"><code>createComment()</code>方法可创建注释节点。</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>document.createDocumentFragment()</code></td>
-<td style="text-align:left">创建空的 DocumentFragment 对象，并返回此对象。</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>document.createElement()</code></td>
-<td style="text-align:left">创建元素节点。</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>document.createTextNode()</code></td>
-<td style="text-align:left">创建文本节点。</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>document.doctype</code></td>
-<td style="text-align:left">返回与文档相关的文档类型声明 (<code>DTD</code>)。</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>document.documentElement</code></td>
-<td style="text-align:left">返回文档的根节点</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>document.documentMode</code></td>
-<td style="text-align:left">返回用于通过浏览器渲染文档的模式</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>document.documentURI</code></td>
-<td style="text-align:left">设置或返回文档的位置</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>document.domain</code></td>
-<td style="text-align:left">返回当前文档的域名。</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>document.domConfig</code></td>
-<td style="text-align:left">返回<code>normalizeDocument()</code>被调用时所使用的配置</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>document.embeds</code></td>
-<td style="text-align:left">返回文档中所有嵌入的内容（<code>embed</code>）集合</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>document.forms</code></td>
-<td style="text-align:left">返回对文档中所有 <code>Form</code>对象引用。</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>document. getElementsByClassName()</code></td>
-<td style="text-align:left">返回文档中所有指定类名的元素集合。</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>document.getElementById()</code></td>
-<td style="text-align:left">返回对拥有指定 <code>id</code> 的第一个对象的引用。</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>document.getElementsByName()</code></td>
-<td style="text-align:left">返回带有指定名称的对象集合。</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>document.getElementsByTagName()</code></td>
-<td style="text-align:left">返回带有指定标签名的对象集合。</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>document.images</code></td>
-<td style="text-align:left">返回对文档中所有<code>Image</code>对象引用。</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>document.implementation</code></td>
-<td style="text-align:left">返回处理该文档的 DOMImplementation 对象。</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>document.importNode()</code></td>
-<td style="text-align:left">把一个节点从另一个文档复制到该文档以便应用。</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>document.inputEncoding</code></td>
-<td style="text-align:left">返回用于文档的编码方式（在解析时）。</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>document.lastModified</code></td>
-<td style="text-align:left">返回文档被最后修改的日期和时间。</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>document.links</code></td>
-<td style="text-align:left">返回对文档中所有 <code>Area</code> 和<code>Link</code>对象引用。</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>document.normalize()</code></td>
-<td style="text-align:left">删除空文本节点，并连接相邻节点</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>document.normalizeDocument()</code></td>
-<td style="text-align:left">删除空文本节点，并连接相邻节点的</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>document.open()</code></td>
-<td style="text-align:left">打开一个流，以收集来自任何 <code>document.write()</code> 或 <code>document.writeln()</code> 方法的输出。</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>document.querySelector()</code></td>
-<td style="text-align:left">返回文档中匹配指定的CSS选择器的第一元素</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>document.querySelectorAll()</code></td>
-<td style="text-align:left"><code>document.querySelectorAll()</code>是 HTML5中引入的新方法，返回文档中匹配的<code>CSS</code>选择器的所有元素节点列表</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>document.readyState</code></td>
-<td style="text-align:left">返回文档状态 (载入中……)</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>document.referrer</code></td>
-<td style="text-align:left">返回载入当前文档的文档的 <code>URL</code>。</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>document.removeEventListener()</code></td>
-<td style="text-align:left">移除文档中的事件句柄(由 <code>addEventListener()</code>方法添加)</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>document.renameNode()</code></td>
-<td style="text-align:left">重命名元素或者属性节点。</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>document.scripts</code></td>
-<td style="text-align:left">返回页面中所有脚本的集合。</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>document.strictErrorChecking</code></td>
-<td style="text-align:left">设置或返回是否强制进行错误检查。</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>document.title</code></td>
-<td style="text-align:left">返回当前文档的标题。</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>document.URL</code></td>
-<td style="text-align:left">返回文档完整的<code>URL</code></td>
-</tr>
-<tr>
-<td style="text-align:left"><code>document.write()</code></td>
-<td style="text-align:left">向文档写 HTML 表达式 或 JavaScript 代码。</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>document.writeln()</code></td>
-<td style="text-align:left">等同于<code>write()</code>方法，不同的是在每个表达式之后写一个换行符。</td>
-</tr>
-</tbody>
-</table>
-<h1 id="5-常见的原生javascript-DOM操作"><a href="#5-常见的原生javascript-DOM操作" class="headerlink" title="5. 常见的原生javascript DOM操作"></a>5. 常见的原生javascript DOM操作</h1><h2 id="5-1-创建元素"><a href="#5-1-创建元素" class="headerlink" title="5.1 创建元素"></a>5.1 创建元素</h2><ol>
-<li>创建元素节点：<code>document.createElement()</code><br>使用<code>document.createElement()</code>可以创建新元素。这个方法只接受一个参数，即要创建元素的标签名。这个标签名在<code>HTML</code>文档中不区分大小写，在<code>XHTML</code>中区分大小写。<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">var div = document.createElement(&quot;div&quot;);</div></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>此时，新元素尚未被添加到文档树中，因此设置各种特性均不会影响浏览器的显示。要添加到文档树，可用<code>appendChild()</code>、<code>insertBefore()</code>、<code>replaceChild()</code>。（稍后讲到）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">document.body.appendChild(div);</div></pre></td></tr></table></figure></p>
-<p>当把元素添加到文档树中后，这个元素做的任何修改都会实时地反应到浏览器中。</p>
-<ol>
-<li>创建文本节点 ：<code>document.createTextNode()</code><br>使用<code>document.createTextNode()</code>来创建文本节点，这个方法接受一个参数：要插入节点的文本。与设置已有文本节点的值一样，作为参数的文本将按照<code>HTML</code>或<code>XML</code>的格式进行编码。<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">document.createTextNode(&quot;121212&quot;);</div></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>可以添加多个文本节点。假如两个文本节点是相邻的同胞节点，那么两个文本节点会连起来，中间不会有空格。</p>
-<h2 id="5-2-节点关系"><a href="#5-2-节点关系" class="headerlink" title="5.2 节点关系"></a>5.2 节点关系</h2><p>（<code>IE9</code>以前不将换行和空格看做文本节点，其他浏览器会）</p>
-<p>文本关系如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;div id=&quot;div1&quot;&gt;</div><div class="line">    &lt;div id=&quot;div2&quot;&gt;2&lt;/div&gt;</div><div class="line">    &lt;div id=&quot;div3&quot;&gt;3&lt;/div&gt;</div><div class="line">    &lt;div id=&quot;div4&quot;&gt;4&lt;/div&gt;</div><div class="line">&lt;/div&gt;</div></pre></td></tr></table></figure></p>
-<ol>
-<li><p>父节点：<code>parentNode</code><br><code>parentNode</code>是指定节点的父节点。一个元素节点的父节点可能是一个元素(<code>Element</code> )节点，也可能是一个文档(<code>Document</code>)节点，或者是个文档碎片(<code>DocumentFragment</code>)节点。<br>每一个节点都有一个<code>parentNode</code>属性。<br>对于下面的节点类型: <code>Attr</code>, <code>Document</code>，<code>DocumentFragment</code>,<code>Entity</code>, <code>Notation</code>，其<code>parentNode</code>属性返回<code>null</code>。如果当前节点刚刚被建立,还没有被插入到<code>DOM</code>树中，则该节点的<code>parentNode</code>属性也返回<code>null</code>。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">var child2 = document.getElementById(&quot;div2&quot;);</div><div class="line">var parent = child2.parentNode;</div></pre></td></tr></table></figure>
-</li>
-<li><p>子节点：<code>childNodes</code><br><code>childNodes</code> 返回包含指定节点的子节点的<strong> 集合</strong>，该集合为即时更新的集合（<code>live collection</code>）。<br>即时更新就是对节点元素的任意修改都会立即反映到结果里。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">var child2 = document.getElementById(&quot;div2&quot;);</div><div class="line">var parent = child2.parentNode;</div><div class="line">var allChilds = parent.childNodes;</div><div class="line">console.log(allChilds.length) // IE下是3，其他浏览器是7</div><div class="line">var nodeAdd = document.createElement(&quot;div&quot;);</div><div class="line">var textAdd = document.createTextNode(&quot;这是添加的文本节点&quot;);</div><div class="line">nodeAdd.appendChild(textAdd);</div><div class="line">parent.appendChild(nodeAdd);</div><div class="line">console.log(allChilds.length);// IE下是4，其他浏览器是8</div></pre></td></tr></table></figure>
-</li>
-<li><p>兄弟节点：<code>nextSibling</code>，<code>previousSibling</code><br><code>nextSibling</code>返回某节点的下一个兄弟节点，<code>previousSibling</code>返回某节点的上一个兄弟节点，没有的话返回<code>null</code>。<br>注意：可能因为元素换行的原因返回的是<code>text</code>节点。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">var child3 = document.getElementById(&quot;div3&quot;);</div><div class="line">var next = child3.nextSibling;</div><div class="line">var previous = child3.previousSibling;</div><div class="line">console.log(next); // IE下返回div4，其他返回text</div><div class="line">console.log(previous)  // IE下返回div2，其他返回text</div></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>第一个或最后一个子节点：<code>firstChild</code>、<code>lastChild</code><br><code>firstChild</code>返回<code>node</code>的子节点中的第一个节点的引用，没有返回<code>null</code><br><code>lastChild</code>返回<code>node</code>的子节点中的最后一个节点的引用，没有返回<code>null</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">var child3 = document.getElementById(&quot;div3&quot;);</div><div class="line">var parent = child3.parentNode;</div><div class="line">var first = parent.firstChild; // IE是div2，其他是text</div><div class="line">var last = parent.lastChild; // IE是div4，其他是text</div></pre></td></tr></table></figure></p>
-<h2 id="5-3-节点元素关系"><a href="#5-3-节点元素关系" class="headerlink" title="5.3 节点元素关系"></a>5.3 节点元素关系</h2><p>只算元素，不算文本节点。</p>
-<p>以下三个方法用法和节点关系完全一样，只是这三个方法只看元素节点，不管因为空格、换行造成的文本节点或者手动加上去的文本节点。<br><code>children</code>： 返回所有<strong> 元素子节点</strong>（IE5+、ff3.5、opera3、chrome，但在IE8及以下会将注释节点看成一个元素节点）</p>
-<p>以下两个IE9+才支持<br><code>nextElementSibling</code>：返回元素的下一个兄弟元素节点<br><code>previousElementSibling</code>: 返回元素的上一个兄弟元素节点</p>
-<h2 id="5-4-节点操作"><a href="#5-4-节点操作" class="headerlink" title="5.4 节点操作"></a>5.4 节点操作</h2><ol>
-<li><p><code>appendChild()</code><br><code>appendChild()</code>用于向<code>childNodes</code>列表的末尾添加一个节点，并且返回这个新增的节点。<br>如果传入到<code>appendChild()</code>里的节点已经是文档的一部分了，那结果就是将节点从原来的位置转移到新位置，任何一个节点不能同时出现在文档中的多个位置。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">var returnNode = someNode.appendChild(someNode.firstChild);</div><div class="line">// 返回第一个节点</div><div class="line">console.log(returnNode === someNode.firstChild); // false</div><div class="line">console.log(returnNode === someNode.lastChild); // true</div></pre></td></tr></table></figure>
-</li>
-<li><p><code>insetBefore()</code><br><code>insetBefore()</code>可以将节点插入到某个特定的位置。这个方法接受两个参数：要插入的节点和作为参照的节点。<br>插入节点后，被插入的节点变成参照节点的前一个同胞节点，同时被方法返回。 如果参照节点是<code>null</code>，则与<code>appendChild()</code>执行相同的操作。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">// 插入后成为最后一个子节点</div><div class="line">var returnNode = someNode.insetBefore(newNode, null);</div><div class="line">console.log(returnNode === someNode.lastChild); // true</div><div class="line"></div><div class="line">// 插入后成为第一个子节点</div><div class="line">var returnNode = someNode.insetBefore(newNode, someNode.firstChild);</div><div class="line">console.log(returnNode === newNode); // true</div><div class="line">console.log(returnNode === someNode.firstChild); // true</div><div class="line"></div><div class="line">// 插入到最后一个子节点的前面</div><div class="line">var returnNode = someNode.insetBefore(newNode, someNode.lastChild);</div><div class="line">console.log(returnNode === someNode.childNodes[someNode.childnodes.length - 2]) // true</div></pre></td></tr></table></figure>
-</li>
-<li><p>替换节点：<code>replaceChild()</code><br><code>replaceChild()</code>接受两个参数：要插入的节点和要被替换的节点。被替换的节点将由这个方法返回并从文档中被移除，同时由要插入的节点占据其位置。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">// 替换第一个子节点</div><div class="line">var returnNode = someNode.replaceChild(newNode, someNode.firstChild);</div></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>使用<code>replaceChild()</code>后，被替换的节点的所有关系指针都会被复制到插入的节点上面。</p>
-<ol>
-<li><p>删除节点：<code>removeChild()</code><br>该方法移除节点，接受一个参数，即要移除的节点，同时该方法返回被移除的节点。只能是一个节点，不能是一组节点。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">// 移除第一个子节点</div><div class="line">var returnNode = someNode.removeChild(newNode, someNode.firstChild);</div></pre></td></tr></table></figure>
-</li>
-<li><p>克隆节点：<code>cloneNode(true/false)</code><br>返回调用该方法的节点的一个副本。参数表示是否采用深度克隆，如果为<code>true</code>，则该节点的所有后代节点也都会被克隆,如果为<code>false</code>，则只克隆该节点本身，文本或者换行、空格这些不会复制，因为他们都是一个<code>textNode</code>。<br>克隆一个元素节点会拷贝它所有的属性以及属性值,当然也就包括了属性上绑定的事件(比如<code>onclick=&quot;alert(1)&quot;)</code>，但不会拷贝那些使用<code>addEventListener()</code>方法或者<code>node.onclick = fn</code>这种用JavaScript动态绑定的事件。<br>注意:为了防止一个文档中出现两个<code>ID</code>重复的元素,使用cloneNode()方法克隆的节点在需要时应该指定另外一个与原<code>ID</code>值不同的<code>ID</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">var div1 = document.getElementById(&quot;div1&quot;);</div><div class="line">var cloneHtml = div1.cloneNode(true);</div><div class="line">document.body.appendChild(cloneHtml);</div></pre></td></tr></table></figure>
-</li>
-</ol>
-<h2 id="5-5-元素选择"><a href="#5-5-元素选择" class="headerlink" title="5.5 元素选择"></a>5.5 元素选择</h2><p>HTML代码示例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;div id=&quot;div1&quot;&gt;</div><div class="line">    &lt;p id=&quot;div2&quot; class=&quot;one&quot; name=&quot;nameone&quot;&gt;2&lt;/p&gt;</div><div class="line">    &lt;div id=&quot;div3&quot;&gt;3&lt;/div&gt;</div><div class="line">    &lt;div id=&quot;div4&quot; name=&quot;div2&quot;&gt;4&lt;/div&gt;</div><div class="line">&lt;/div&gt;</div></pre></td></tr></table></figure></p>
-<ul>
-<li><code>querySelector</code><br>返回节点子树内与之相匹配的第一个<code>Element</code>节点。如果没有匹配的节点，则返回<code>null</code>。</li>
-<li><code>querySelectorAll</code><br>返回一个包含节点子树内所有与之相匹配的<code>Element</code>节点列表，如果没有相匹配的，则返回一个空节点列表。<br><strong>注意：</strong>由 <code>querySelector()</code>、<code>querySelectorAll()</code>返回的节点列表不是动态实时的（非<code>live Collection</code>）。这和其他DOM查询方法返回动态实时节点列表不一样。<br>选择器方法接受一个或多个用逗号分隔的选择器来确定需要被返回的元素。例如，要选择文档中所有CSS的类(<code>class</code>)是<code>warning</code>或者<code>note</code>的段落(<code>p</code>)元素,可以这样写：<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">var special = document.querySelectorAll( &quot;p.warning, p.note&quot; );</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>也可以通过ID来查询，例如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">var el = document.querySelector( &quot;#main, #basic, #exclamation&quot; );</div></pre></td></tr></table></figure></p>
-<p>执行上面的代码后，<code>el</code>就包含了文档中元素的ID是<code>main</code>，<code>basic</code>或<code>exclamation</code>的所有元素中的第一个元素。<code>querySelector() and querySelectorAll()</code>里可以使用任何CSS选择器，他们<strong>都不是</strong><code>live Collection</code>：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">var notLive = document.querySelectorAll(&quot;p&quot;);</div><div class="line">console.log(notLive);</div><div class="line">document.getElementById(&quot;div1&quot;).removeChild(document.getElementById(&quot;div2&quot;));</div><div class="line">console.log(notLive);</div><div class="line">// 上面两个输出都是输出 `p#div2.one`的引用，没有因为删除了`p`标签而使`notLive`的结果发生变化。</div></pre></td></tr></table></figure></p>
-<ul>
-<li><p><code>document.getElementById()</code>方法</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">返回指定 ID 的元素：</div><div class="line">document.getElementById(&quot;demo&quot;);</div></pre></td></tr></table></figure>
-</li>
-<li><p><code>document.getElementsByTagName()</code>方法</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">返回带有指定标签名的对象的集合:</div><div class="line">document.getElementsByTagName(&quot;P&quot;);</div></pre></td></tr></table></figure>
-</li>
-<li><p><code>document.getElementsByName()</code>方法，常用于表单（数组）</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">var x=document.getElementsByName(&quot;x&quot;);//x为元素name属性值</div><div class="line">alert(x.length);</div></pre></td></tr></table></figure>
-</li>
-<li><p><code>getElementsByClassName()</code>方法<br>当在 <code>document</code>对象上调用此方法时，会检索整个文档，包括根元素。(<code>IE9</code>以下不支持)要匹配多个<code>class</code>，则<code>className</code>用空格分开。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">getElementsByClassName(&quot;class1 class2&quot;);</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<h2 id="5-6-属性操作"><a href="#5-6-属性操作" class="headerlink" title="5.6 属性操作"></a>5.6 属性操作</h2><ul>
-<li><p><code>setAttribute()</code><br>添加一个新属性（<code>attribute</code>）到元素上，或改变元素上已经存在的属性的值。<br>如果指定的属性已经存在，则其值变为传递的值。如果不存在，则创建指定的属性。也可指定为<code>null</code>。如果设置为<code>null</code>，最好使用<code>removeAttribute()</code>。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">var div2 = document.getElementById(&quot;div2&quot;); </div><div class="line">div2.setAttribute(&quot;class&quot;, &quot;new_class&quot;); </div><div class="line">div2.setAttribute(&quot;id&quot;, &quot;new_id&quot;);</div></pre></td></tr></table></figure>
-</li>
-<li><p><code>removeAttribute()</code><br>该方法用于移除元素的属性。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">var div2 = document.getElementById(&quot;div2&quot;);</div><div class="line">div2.removeAttribute(&quot;class&quot;);</div></pre></td></tr></table></figure>
-</li>
-<li><p><code>getAttribute()</code><br>该方法返回元素上指定属性（<code>attribute</code>）的值。如果指定的属性不存在，则返回<code>null</code>或<code>&quot;&quot;</code>（空字符串）。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">var div2 = document.getElementById(&quot;div2&quot;);</div><div class="line">var attr = div2.getAttribute(&quot;class&quot;);</div><div class="line">console.log(attr);</div></pre></td></tr></table></figure>
-</li>
-<li><p><code>hasAttribute()</code><br><code>hasAttribute()</code>返回一个布尔值，指示该元素是否包含有指定的属性（<code>attribute</code>）。</p>
-</li>
-</ul>
-<p>参考资料：<br><a href="https://segmentfault.com/a/1190000004076145" target="_blank" rel="external">常见的原生javascript DOM操作</a><br><a href="http://www.liaoxuefeng.com/wiki/001434446689867b27157e896e74d51a89c25cc8b43bdb3000/001434499851683f7f8d6b7717343248a75d5e7f930def4000" target="_blank" rel="external">廖雪峰的官方网站</a></p>
-
-          
+          1. 什么是DOM 文档对象模型 (DOM) 是HTML和XML文档的编程接口。它提供了对文档的结构化的表述，并定义了一种方式可以使从程序中对该结构进行访问，从而改变文档的结构，样式和内容。DOM 将文档解析为一个由节点和对象（包含属性和方法的对象）组成的结构集合。简言之，它会将web页面和脚本或程
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/04/15/js基础篇（三）——DOM的各种操作/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -2742,17 +1940,17 @@
       
         
           
-            <ol>
-<li><p><code>sort()</code>方法怎么使用？<br><code>sort()</code>方法默认情况下按照升序排列数组项，<code>sort()</code>方法会调用<code>toString()</code>转型方法，然后比较得到的字符串，即使我们比较的是数字，他也会把数字转为字符串以后再排序。<br>请看下面例子：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">var arr1 = [0, 1, 3, 10, 16, 5, 9, 0, 3];</div><div class="line">var arr2 = [&apos;bangbang&apos;, &apos;father&apos;, &apos;mother&apos;, &apos;brother&apos;, &apos;sister&apos;, true, false, 0, 1, 6, 13];</div><div class="line">console.log(arr1.sort()) //很明显，这样不是我们要的结果，[ 0, 0, 1, 10, 16, 3, 3, 5, 9 ]</div><div class="line">console.log(arr2.sort()); //[ 0,1,13,6,&apos;bangbang&apos;,&apos;brother&apos;,false,&apos;father&apos;,&apos;mother&apos;,&apos;sister&apos;,true]</div><div class="line">//传入自定义回调函数之后</div><div class="line">function ascend(a,b)&#123;</div><div class="line">    return a-b;</div><div class="line">&#125;</div><div class="line">//降序排列</div><div class="line">function descend(a,b)&#123;</div><div class="line">    return b-a;</div><div class="line">&#125;</div><div class="line">console.log(arr1.sort(ascend));     //[ 0, 0, 1, 10, 16, 3, 3, 5, 9 ]</div><div class="line">console.log(arr1.sort(descend));    //[ 16, 10, 9, 5, 3, 3, 1, 0, 0 ]</div></pre></td></tr></table></figure>
-</li>
-<li><p>用<code>sort</code>方法进行二维数组的排序</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">var arr1 = [[4,5,7],[11,3,6,100,77],[12,9,12,10],[3,1,2,99,22]];</div><div class="line">function ascend(x,y)&#123;</div><div class="line">    return x[3] - y[3];  //按照数组的第4个值升序排列</div><div class="line">&#125;</div><div class="line">function descend(x,y)&#123;</div><div class="line">    return y[0] - x[0];  //按照数组的第1个值升序排列</div><div class="line">&#125;</div><div class="line">console.log(arr1.sort(ascend));</div><div class="line">console.log(arr1.sort(descend));</div></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>参考资料：<a href="http://blog.csdn.net/flyingpig2016/article/details/52901977" target="_blank" rel="external">JavaScript中用sort方法进行二维数组排序 — 第5.2.5节</a></p>
-
           
+sort()方法怎么使用？sort()方法默认情况下按照升序排列数组项，sort()方法会调用toString()转型方法，然后比较得到的字符串，即使我们比较的是数字，他也会把数字转为字符串以后再排序。请看下面例子：
+1234567891011121314var arr1 = [0, 1, 3, 
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/04/15/对二维数组排序/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -2926,244 +2124,18 @@
       
         
           
-            <p><a href="http://www.jianshu.com/p/cd56b0c64805" target="_blank" rel="external">js基础篇（一）——数组的各种操作</a><br><a href="http://www.jianshu.com/p/be3c0e575da9" target="_blank" rel="external">js基础篇（三）——DOM的各种操作</a></p>
-<h1 id="1-创建字符串"><a href="#1-创建字符串" class="headerlink" title="1. 创建字符串"></a>1. 创建字符串</h1><p>一个字符串用于存储一系列字符就像<code>&quot;John Doe&quot;</code>。<br>一个字符串可以使用单引号或双引号：</p>
-<ul>
-<li>实例<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">var txt = new String(&quot;string&quot;);</div><div class="line">//或者更简单方式：</div><div class="line">var txt = &quot;string&quot;;</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<h1 id="2-访问字符串"><a href="#2-访问字符串" class="headerlink" title="2. 访问字符串"></a>2. 访问字符串</h1><p>你使用位置（索引）可以访问字符串中任何的字符：</p>
-<ul>
-<li>实例<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">var character=carname[7];</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>字符串的索引从零开始, 所以字符串第一字符为 [0],第二个字符为 [1], 等等。</p>
-<h1 id="3-字符串的属性和方法"><a href="#3-字符串的属性和方法" class="headerlink" title="3. 字符串的属性和方法"></a>3. 字符串的属性和方法</h1><h2 id="3-1-属性"><a href="#3-1-属性" class="headerlink" title="3.1 属性"></a>3.1 属性</h2><table>
-<thead>
-<tr>
-<th style="text-align:left">属性</th>
-<th style="text-align:left">描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left"><code>constructor</code></td>
-<td style="text-align:left">对创建该对象的函数的引用</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>length</code></td>
-<td style="text-align:left">字符串的长度</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>prototype</code></td>
-<td style="text-align:left">允许您向对象添加属性和方法</td>
-</tr>
-</tbody>
-</table>
-<h2 id="3-2-方法"><a href="#3-2-方法" class="headerlink" title="3.2 方法"></a>3.2 方法</h2><p>下面的表格是总结，每个方法的示例在下面。</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:left">方法</th>
-<th style="text-align:left">描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left"><code>charAt()</code></td>
-<td style="text-align:left">返回在指定位置的字符。</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>charCodeAt()</code></td>
-<td style="text-align:left">返回在指定的位置的字符的 Unicode 编码。</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>concat()</code></td>
-<td style="text-align:left">连接两个或更多字符串，并返回新的字符串。</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>fromCharCode()</code></td>
-<td style="text-align:left">将 Unicode 编码转为字符。</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>indexOf()</code></td>
-<td style="text-align:left">返回某个指定的字符串值在字符串中首次出现的位置。</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>lastIndexOf()</code></td>
-<td style="text-align:left">从后向前搜索字符串，并从起始位置（0）开始计算返回字符串最后出现的位置。</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>match()</code></td>
-<td style="text-align:left">查找找到一个或多个正则表达式的匹配。</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>replace()</code></td>
-<td style="text-align:left">在字符串中查找匹配的子串， 并替换与正则表达式匹配的子串。</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>search()</code></td>
-<td style="text-align:left">查找与正则表达式相匹配的值。</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>slice()</code></td>
-<td style="text-align:left">提取字符串的片断，并在新的字符串中返回被提取的部分。</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>split()</code></td>
-<td style="text-align:left">把字符串分割为字符串数组。</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>substr()</code></td>
-<td style="text-align:left">从起始索引号提取字符串中指定数目的字符。</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>substring()</code></td>
-<td style="text-align:left">提取字符串中两个指定的索引号之间的字符。</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>toLowerCase()</code></td>
-<td style="text-align:left">把字符串转换为小写。</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>toUpperCase()</code></td>
-<td style="text-align:left">把字符串转换为大写。</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>trim()</code></td>
-<td style="text-align:left">去除字符串两边的空白</td>
-</tr>
-<tr>
-<td style="text-align:left"><code>valueOf()</code></td>
-<td style="text-align:left">返回某个字符串对象的原始值。</td>
-</tr>
-</tbody>
-</table>
-<ol>
-<li><p><code>charAt()</code>方法</p>
-<ul>
-<li>定义和用法<br><code>charAt()</code> 方法可返回指定位置的字符。<br>第一个字符位置为 0, 第二个字符位置为 1,以此类推.</li>
-<li>实例<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">返回字符串中的第三个字符:</div><div class="line">var str = &quot;HELLO WORLD&quot;;</div><div class="line">var n = str.charAt(2)</div><div class="line">n输出结果:</div><div class="line">L</div></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p><code>charCodeAt()</code>方法</p>
-<ul>
-<li>定义和用法<br><code>charCodeAt()</code>方法可返回指定位置的字符的 Unicode 编码。<br>字符串中第一个字符的位置为 0， 第二个字符位置为 1，以此类推。</li>
-<li>实例<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">返回字符串第一个字符的 Unicode 编码:</div><div class="line">var str = &quot;HELLO WORLD&quot;;</div><div class="line">var n = str.charCodeAt(0);</div><div class="line">n 输出结果:</div><div class="line">72</div></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p><code>concat()</code>方法</p>
-<ul>
-<li>定义和用法<br><code>concat()</code> 方法用于连接两个或多个字符串。<br>该方法没有改变原有字符串，但是会返回连接两个或多个字符串新字符串。</li>
-<li>实例<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">连接两个字符串:</div><div class="line">var str1 = &quot;Hello &quot;;</div><div class="line">var str2 = &quot;world!&quot;;</div><div class="line">var n = str1.concat(str2);</div><div class="line">n 输出结果:</div><div class="line">Hello world!</div></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p><code>fromCharCode()</code>方法</p>
-<ul>
-<li>定义和用法<br><code>fromCharCode()</code>可接受一个指定的 Unicode 值，然后返回一个字符串。<br>注意：该方法是 <code>String</code> 的静态方法，字符串中的每个字符都由单独的 Unicode 数字编码指定。</li>
-<li>实例<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">将 Unicode 编码转为一个字符:</div><div class="line">var n = String.fromCharCode(65);</div><div class="line">n 输出结果:</div><div class="line">A</div></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p><code>indexOf()</code>方法</p>
-<ul>
-<li>定义和用法<br><code>indexOf()</code>方法可返回某个指定的字符串值在字符串中首次出现的位置。<br>如果没有找到匹配的字符串则返回 -1。<br>注意： <code>indexOf()</code>方法区分大小写。<br>提示： 同样你可以查看类似方法<code>lastIndexOf()</code> 。</li>
-<li>实例<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">查找字符串 &quot;welcome&quot;:</div><div class="line">var str=&quot;Hello world, welcome to the universe.&quot;;</div><div class="line">var n=str.indexOf(&quot;welcome&quot;);</div><div class="line">n 输出结果:</div><div class="line">13</div></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p><code>lastIndexOf()</code>方法</p>
-<ul>
-<li>定义和用法<br><code>lastIndexOf()</code> 方法可返回一个指定的字符串值最后出现的位置。<br>如果没有找到匹配字符串则返回 -1 。<br>注意：<code>lastIndexOf()</code>方法是区分大小写的！<br>提示： 你也可以参照类似方法<code>indexOf()</code> 。</li>
-<li>实例<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">查找字符串 &quot;runoob&quot; 最后出现的位置:</div><div class="line">var str=&quot;I am from runoob，welcome to runoob site.&quot;;</div><div class="line">var n=str.lastIndexOf(&quot;runoob&quot;);</div><div class="line">n 输出结果:</div><div class="line">28</div></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p><code>match()</code>方法</p>
-<ul>
-<li>定义和用法<br><code>match()</code> 方法可在字符串内检索指定的值，或找到一个或多个正则表达式的匹配。<br>如果没有找到任何匹配的文本， <code>match()</code> 将返回 <code>null</code>。否则，它将返回一个数组，其中存放了与它找到的匹配文本有关的信息。</li>
-<li>实例<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">在字符串中查找 &quot;ain&quot;:</div><div class="line">var str=&quot;The rain in SPAIN stays mainly in the plain&quot;; </div><div class="line">var n=str.match(/ain/g);</div><div class="line">n 输出数组结果值:</div><div class="line">ain,ain,ain</div></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p><code>replace()</code>方法</p>
-<ul>
-<li>定义和用法<br><code>replace()</code> 方法用于在字符串中用一些字符替换另一些字符，或替换一个与正则表达式匹配的子串。<br>该方法不会改变原始字符串。</li>
-<li>实例<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">在本例中，我们将执行一次全局替换，每当 &quot;Microsoft&quot; 被找到，它就被替换为 &quot;Runoob&quot;：</div><div class="line">var str=&quot;Visit Microsoft!&quot;;</div><div class="line">var n=str.replace(&quot;Microsoft&quot;,&quot;Runoob&quot;);</div><div class="line">n 输出结果:</div><div class="line">Visit Runoob!</div></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p><code>search()</code>方法</p>
-<ul>
-<li>定义和用法<br><code>search()</code> 方法用于检索字符串中指定的子字符串，或检索与正则表达式相匹配的子字符串。<br>如果没有找到任何匹配的子串，则返回 -1。</li>
-<li>实例<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">查找 &quot;W3CSchool&quot;:</div><div class="line">var str=&quot;Visit W3CSchool!&quot;;</div><div class="line">var n=str.search(&quot;W3CSchool&quot;);</div><div class="line">n 输出结果：</div><div class="line">6</div></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-</ol>
-<p><code>search()</code>方法和<code>indexof()</code>一样返回目标自字符串索引值。<br>首先要明确<code>search()</code>的参数必须是<a href="http://www.baidu.com/s?wd=%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F&amp;ie=gbk&amp;tn=SE_hldp00990_u6vqbx10" target="_blank" rel="external">正则表达式</a>，而<code>indexOf()</code>的参数只是普通字符串。<code>indexOf()</code>是比<code>search()</code>更加底层的方法。很多时候用<code>indexOf()</code>不是为了真的想知道子字符串的位置，而是想知道长字符串中没有包含这个子字符串。</p>
-<ol>
-<li><p><code>slice()</code>方法</p>
-<ul>
-<li>定义和用法<br><code>slice(start, end)</code> 方法可提取字符串的某个部分，并以新的字符串返回被提取的部分。<br>使用<code>start</code>（包含） 和 <code>end</code>（不包含） 参数来指定字符串提取的部分。<br>字符串中第一个字符位置为 0, 第二个字符位置为 1, 以此类推。<br>提示： 如果是负数，则该参数规定的是从字符串的尾部开始算起的位置。也就是说，-1 指字符串的最后一个字符，-2 指倒数第二个字符，以此类推。</li>
-<li>实例<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">提取字符串的片断:</div><div class="line">var str=&quot;Hello world!&quot;;</div><div class="line">var n=str.slice(1,5);</div><div class="line">n 输出结果：</div><div class="line">ello</div></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p><code>split()</code>方法</p>
-<ul>
-<li>定义和用法<br><code>split()</code> 方法用于把一个字符串分割成字符串数组。<br>提示： 如果把空字符串 (<code>&quot;&quot;</code>) 用作 separator，那么 stringObject 中的每个字符之间都会被分割。<br>注意： <code>split()</code>方法不改变原始字符串。</li>
-<li>实例<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">把一个字符串分割成字符串数组:</div><div class="line">var str=&quot;How are you doing today?&quot;;</div><div class="line">var n=str.split(&quot; &quot;);</div><div class="line">n 输出一个数组的值:</div><div class="line">How,are,you,doing,today?</div><div class="line">a=&quot;a|b|c&quot;;</div><div class="line">console.log(a.split(&quot;|&quot;));//[&quot;a&quot;, &quot;b&quot;, &quot;c&quot;]</div><div class="line">a=&quot;a,b,c&quot;;</div><div class="line">console.log(a.split(&quot;,&quot;));//[&quot;a&quot;, &quot;b&quot;, &quot;c&quot;]</div></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p><code>substr()</code>方法</p>
-<ul>
-<li>定义和用法<br><code>substr()</code> 方法可在字符串中抽取从 开始 下标开始的指定数目的字符。<br>提示： substr() 的参数指定的是子串的开始位置和长度，因此它可以替代 <code>substring()</code> 和 <code>slice()</code>来使用。<br>注意： <code>substr()</code> 方法不会改变源字符串。</li>
-<li>实例<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">抽取指定数目的字符：</div><div class="line">var str=&quot;Hello world!&quot;;</div><div class="line">var n=str.substr(2,3)</div><div class="line">n 输出结果:</div><div class="line">llo</div></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p><code>substring()</code>方法<br><code>substring()</code> 方法用于提取字符串中介于两个指定下标之间的字符。<br><code>substring()</code> 方法返回的子串包括 开始 处的字符，但不包括 结束 处的字符。<br><code>substring</code>和<code>slice</code>的区别则是，<code>slice</code>可以接受“负数”，表示从字符串尾部开始计数； 而<code>substring</code>则把负数或其它无效的数，当作0。</p>
-<ul>
-<li>实例<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">在本例中，我们将使用 substring() 从字符串中提取一些字符：:</div><div class="line">var str=&quot;Hello world!&quot;;</div><div class="line">document.write(str.substring(3)+&quot;&lt;br&gt;&quot;);</div><div class="line">document.write(str.substring(3,7));</div><div class="line">以上代码输出结果:</div><div class="line">lo world!</div><div class="line">lo w</div></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p><code>toLowerCase()</code>方法</p>
-<ul>
-<li>定义和用法<br>`toLowerCase() 方法用于把字符串转换为小写。</li>
-<li>实例<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">把字符串转换为小写:</div><div class="line">var str=&quot;Hello World!&quot;;</div><div class="line">document.write(str.toLowerCase());</div></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p><code>toUpperCase()</code>方法</p>
-<ul>
-<li>定义和用法<br>`toUpperCase() 方法用于把字符串转换为大写。</li>
-<li>实例<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">把字符串转换为大写:</div><div class="line">var str=&quot;Hello world!&quot;;</div><div class="line">document.write(str.toUpperCase());</div></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p><code>trim()</code>方法</p>
-<ul>
-<li>定义和用法<br><code>trim()</code> 方法去除字符串两边的空白。</li>
-<li>实例<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">无</div></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p><code>valueOf()</code>方法</p>
-<ul>
-<li>定义和用法<br><code>valueOf()</code> 方法可返回 <code>String</code> 对象的原始值。<br>注意： <code>valueOf()</code> 方法通常由 JavaScript 在后台自动进行调用，而不是显式地处于代码中。</li>
-<li>实例<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">返回 String 对象的原始值:</div><div class="line">var str=&quot;Hello world!&quot;;</div><div class="line">document.write(str.valueOf());</div><div class="line">以上输出结果:</div><div class="line">Hello world!</div></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-</ol>
+          js基础篇（一）——数组的各种操作js基础篇（三）——DOM的各种操作
+1. 创建字符串一个字符串用于存储一系列字符就像&quot;John Doe&quot;。一个字符串可以使用单引号或双引号：
 
-          
+实例123var txt = new String(&quot;string&quot;);//或者
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/04/15/js基础篇（二）——字符串的各种操作/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
