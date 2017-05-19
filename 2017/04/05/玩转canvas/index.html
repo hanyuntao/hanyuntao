@@ -90,21 +90,21 @@
 
 
 
-<meta name="description" content="首先需要知道canvas 元素本身是没有绘图能力的，所有的绘制工作必须在 JavaScript 内部完成。 1. 基础知识找到 &amp;lt;canvas&amp;gt; 元素:1var c=document.getElementById(&amp;quot;myCanvas&amp;quot;); 然后，创建 context对象：1var context=c.getContext(&amp;quot;2d&amp;quot;); getCo">
+<meta name="description" content="首先需要知道canvas 元素本身是没有绘图能力的，所有的绘制工作必须在 JavaScript 内部完成。 基础知识找到 &amp;lt;canvas&amp;gt; 元素:1var c=document.getElementById(&amp;quot;myCanvas&amp;quot;); 然后，创建 context对象：1var context=c.getContext(&amp;quot;2d&amp;quot;); getConte">
 <meta name="keywords" content="web,html5">
 <meta property="og:type" content="article">
 <meta property="og:title" content="玩转canvas">
 <meta property="og:url" content="http://www.hanyuntao.site/2017/04/05/玩转canvas/index.html">
 <meta property="og:site_name" content="前端之路">
-<meta property="og:description" content="首先需要知道canvas 元素本身是没有绘图能力的，所有的绘制工作必须在 JavaScript 内部完成。 1. 基础知识找到 &amp;lt;canvas&amp;gt; 元素:1var c=document.getElementById(&amp;quot;myCanvas&amp;quot;); 然后，创建 context对象：1var context=c.getContext(&amp;quot;2d&amp;quot;); getCo">
+<meta property="og:description" content="首先需要知道canvas 元素本身是没有绘图能力的，所有的绘制工作必须在 JavaScript 内部完成。 基础知识找到 &amp;lt;canvas&amp;gt; 元素:1var c=document.getElementById(&amp;quot;myCanvas&amp;quot;); 然后，创建 context对象：1var context=c.getContext(&amp;quot;2d&amp;quot;); getConte">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3067059-e131e998772c0798.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3067059-824502077b85b3f5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3067059-a75e95d57bb218fb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3067059-847d80a8facee76c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2017-05-19T18:06:38.822Z">
+<meta property="og:updated_time" content="2017-05-19T18:36:00.962Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="玩转canvas">
-<meta name="twitter:description" content="首先需要知道canvas 元素本身是没有绘图能力的，所有的绘制工作必须在 JavaScript 内部完成。 1. 基础知识找到 &amp;lt;canvas&amp;gt; 元素:1var c=document.getElementById(&amp;quot;myCanvas&amp;quot;); 然后，创建 context对象：1var context=c.getContext(&amp;quot;2d&amp;quot;); getCo">
+<meta name="twitter:description" content="首先需要知道canvas 元素本身是没有绘图能力的，所有的绘制工作必须在 JavaScript 内部完成。 基础知识找到 &amp;lt;canvas&amp;gt; 元素:1var c=document.getElementById(&amp;quot;myCanvas&amp;quot;); 然后，创建 context对象：1var context=c.getContext(&amp;quot;2d&amp;quot;); getConte">
 <meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/3067059-e131e998772c0798.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
@@ -442,7 +442,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  712
+                  707
                 </span>
               
 
@@ -477,11 +477,11 @@
 
       
         <p>首先需要知道<code>canvas</code> 元素本身是没有绘图能力的，所有的绘制工作必须在 JavaScript 内部完成。</p>
-<h1 id="1-基础知识"><a href="#1-基础知识" class="headerlink" title="1. 基础知识"></a>1. 基础知识</h1><p>找到 <code>&lt;canvas&gt;</code> 元素:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">var c=document.getElementById(&quot;myCanvas&quot;);</div></pre></td></tr></table></figure></p>
+<h1 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h1><p>找到 <code>&lt;canvas&gt;</code> 元素:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">var c=document.getElementById(&quot;myCanvas&quot;);</div></pre></td></tr></table></figure></p>
 <p>然后，创建 <code>context</code>对象：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">var context=c.getContext(&quot;2d&quot;);</div></pre></td></tr></table></figure></p>
 <p><code>getContext(&quot;2d&quot;)</code> 对象是内建的 HTML5 对象，是一个封装了很多绘图功能的对象。<br>该对象绘制图像的时候有两种方法，分别是<br><code>context.fill()//填充</code><br><code>context.stroke()//绘制边框</code></p>
 <p>   在进行图形绘制前，要设置好绘图的样式<br><code>context.fillStyle//填充的样式</code><br><code>context.strokeStyle//边框样式</code><br><code>context.lineWidth//图形边框宽度</code></p>
-<h1 id="2-矩形"><a href="#2-矩形" class="headerlink" title="2. 矩形"></a>2. 矩形</h1><table>
+<h1 id="矩形"><a href="#矩形" class="headerlink" title="矩形"></a>矩形</h1><table>
 <thead>
 <tr>
 <th style="text-align:center">属性</th>
@@ -510,21 +510,21 @@
 <hr>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">x:矩形起点横坐标（坐标原点为canvas的左上角，当然确切的来说是原始原点，后面写到变形的时候你就懂了，现在暂时不用关系）</div><div class="line">y:矩形起点纵坐标</div><div class="line">width:矩形长度</div><div class="line">height:矩形高度</div></pre></td></tr></table></figure>
 <ul>
-<li>实例<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">//html</div><div class="line">&lt;canvas id=&quot;myCanvas&quot; width=&quot;340&quot; height=&quot;220&quot; style=&quot;border:1px solid #d3d3d3;padding: 20px;&quot;&gt;</div><div class="line">    您的浏览器不支持 HTML5 canvas 标签。</div><div class="line">&lt;/canvas&gt;</div></pre></td></tr></table></figure>
+<li>实例<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">//html</div><div class="line">&lt;canvas id=&quot;myCanvas&quot; width=&quot;340&quot; height=&quot;220&quot; style=&quot;border:1px solid #dd3;padding: 20px;&quot;&gt;</div><div class="line">    您的浏览器不支持 HTML5 canvas 标签。</div><div class="line">&lt;/canvas&gt;</div></pre></td></tr></table></figure>
 </li>
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">//js</div><div class="line">var canvas = document.getElementById(&quot;myCanvas&quot;);</div><div class="line">var context = canvas.getContext(&quot;2d&quot;);</div><div class="line">//实践表明在不设施fillStyle下的默认fillStyle=black;</div><div class="line">context.fillRect(0, 0, 100, 100);//1</div><div class="line">//实践表明在不设施strokeStyle下的默认strokeStyle=black</div><div class="line">context.strokeRect(120, 0, 100, 100);//2</div><div class="line"> //设置纯色</div><div class="line">context.fillStyle = &quot;red&quot;;</div><div class="line">context.strokeStyle = &quot;blue&quot;;</div><div class="line">context.fillRect(0, 120, 100, 100);//3</div><div class="line">context.strokeRect(120, 120, 100, 100);//4</div><div class="line">//设置透明度实践证明透明度值&gt;0,&lt;1值越低，越透明，值&gt;=1时为纯色，值&lt;=0时为完全透明</div><div class="line">context.fillStyle = &quot;rgba(255,0,0,0.2)&quot;;</div><div class="line">context.strokeStyle = &quot;rgba(255,0,0,0.2)&quot;;</div><div class="line">context.fillRect(240,0 , 100, 100);//5</div><div class="line">context.strokeRect(240, 120, 100, 100);//6</div></pre></td></tr></table></figure>
 <p><img src="http://upload-images.jianshu.io/upload_images/3067059-e131e998772c0798.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="示例"><br>清除矩形区域 <code>context.clearRect(x,y,width,height)</code><br>在上述代码中加入 <code>context.clearRect(50, 50, 240, 120);</code>得到如下图形:</p>
 <p><img src="http://upload-images.jianshu.io/upload_images/3067059-824502077b85b3f5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="clearRect"></p>
-<h1 id="3-圆弧"><a href="#3-圆弧" class="headerlink" title="3. 圆弧"></a>3. 圆弧</h1><p><code>context.arc(x, y, radius, starAngle,endAngle, anticlockwise)</code></p>
+<h1 id="圆弧"><a href="#圆弧" class="headerlink" title="圆弧"></a>圆弧</h1><p><code>context.arc(x, y, radius, starAngle,endAngle, anticlockwise)</code></p>
 <hr>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">x:圆心的x坐标</div><div class="line">y:圆心的y坐标</div><div class="line">radius:圆的半径</div><div class="line">straAngle:开始角度</div><div class="line">endAngle:结束角度</div><div class="line">anticlockwise:是否逆时针（true）为逆时针，(false)为顺时针</div></pre></td></tr></table></figure>
 <p><img src="http://upload-images.jianshu.io/upload_images/3067059-a75e95d57bb218fb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">var canvas = document.getElementById(&quot;mycanvas&quot;);</div><div class="line">var context = canvas.getContext(&apos;2d&apos;);</div><div class="line">context.beginPath();</div><div class="line">context.arc(200, 150, 100, 0, Math.PI * 2, true);</div><div class="line">//不关闭路径路径会一直保留下去，当然也可以利用这个特点做出意想不到的效果</div><div class="line">context.closePath();</div><div class="line">context.fillStyle = &apos;rgba(0,255,0,0.25)&apos;;</div><div class="line">context.fill();</div></pre></td></tr></table></figure></p>
 <p><img src="http://upload-images.jianshu.io/upload_images/3067059-847d80a8facee76c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-<h1 id="4-路径"><a href="#4-路径" class="headerlink" title="4. 路径"></a>4. 路径</h1><p><code>context.beginPath()</code>    <code>context.closePath()</code></p>
+<h1 id="路径"><a href="#路径" class="headerlink" title="路径"></a>路径</h1><p><code>context.beginPath()</code>    <code>context.closePath()</code></p>
 <hr>
 <p>记住每次画路径都在前后加<code>context.beginPath()</code>   和<code>context.closePath()</code>。</p>
-<h1 id="5-绘制线段"><a href="#5-绘制线段" class="headerlink" title="5.  绘制线段"></a>5.  绘制线段</h1><p><code>context.moveTo(x,y)</code> <code>context.lineTo(x,y)</code></p>
+<h1 id="绘制线段"><a href="#绘制线段" class="headerlink" title="绘制线段"></a>绘制线段</h1><p><code>context.moveTo(x,y)</code> <code>context.lineTo(x,y)</code></p>
 <hr>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">x:x坐标</div><div class="line"></div><div class="line">y:y坐标</div><div class="line"></div><div class="line">每次画线都从moveTo的点到lineTo的点，</div><div class="line"></div><div class="line">如果没有moveTo那么第一次lineTo的效果和moveTo一样，</div><div class="line"></div><div class="line">每次lineTo后如果没有moveTo，那么下次lineTo的开始点为前一次lineTo的结束点</div></pre></td></tr></table></figure>
 
@@ -734,7 +734,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-基础知识"><span class="nav-number">1.</span> <span class="nav-text">1. 基础知识</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-矩形"><span class="nav-number">2.</span> <span class="nav-text">2. 矩形</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-圆弧"><span class="nav-number">3.</span> <span class="nav-text">3. 圆弧</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-路径"><span class="nav-number">4.</span> <span class="nav-text">4. 路径</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-绘制线段"><span class="nav-number">5.</span> <span class="nav-text">5.  绘制线段</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#基础知识"><span class="nav-number">1.</span> <span class="nav-text">基础知识</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#矩形"><span class="nav-number">2.</span> <span class="nav-text">矩形</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#圆弧"><span class="nav-number">3.</span> <span class="nav-text">圆弧</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#路径"><span class="nav-number">4.</span> <span class="nav-text">路径</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#绘制线段"><span class="nav-number">5.</span> <span class="nav-text">绘制线段</span></a></li></ol></div>
             
 
           </div>
