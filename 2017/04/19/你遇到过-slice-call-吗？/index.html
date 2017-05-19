@@ -74,7 +74,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="web,javascript," />
 
 
 
@@ -90,15 +90,19 @@
 
 
 
-<meta name="description" content="stay hungry stay foolish">
-<meta property="og:type" content="website">
-<meta property="og:title" content="前端之路">
-<meta property="og:url" content="http://www.hanyuntao.site/tags/web/index.html">
+<meta name="description" content="先放结论：[].slice.call(arguments)能将具有length属性的对象转成数组。  1、基础知识 .slice()方法  定义和用法slice(start, end) 方法可提取数组的某个部分，并以新的数组返回被提取的部分。使用start（包含） 和 end（不包含） 参数来指定提取数组开始和结束的部分。  如果未指定start和end，则返回整个数组。 如果指指定一个参数，该参">
+<meta name="keywords" content="web,javascript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="你遇到过[-]-slice-call()吗？">
+<meta property="og:url" content="http://www.hanyuntao.site/2017/04/19/你遇到过-slice-call-吗？/index.html">
 <meta property="og:site_name" content="前端之路">
-<meta property="og:description" content="stay hungry stay foolish">
+<meta property="og:description" content="先放结论：[].slice.call(arguments)能将具有length属性的对象转成数组。  1、基础知识 .slice()方法  定义和用法slice(start, end) 方法可提取数组的某个部分，并以新的数组返回被提取的部分。使用start（包含） 和 end（不包含） 参数来指定提取数组开始和结束的部分。  如果未指定start和end，则返回整个数组。 如果指指定一个参数，该参">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3067059-d2c6a7d29e7aa63e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2017-05-19T18:19:15.695Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="前端之路">
-<meta name="twitter:description" content="stay hungry stay foolish">
+<meta name="twitter:title" content="你遇到过[-]-slice-call()吗？">
+<meta name="twitter:description" content="先放结论：[].slice.call(arguments)能将具有length属性的对象转成数组。  1、基础知识 .slice()方法  定义和用法slice(start, end) 方法可提取数组的某个部分，并以新的数组返回被提取的部分。使用start（包含） 和 end（不包含） 参数来指定提取数组开始和结束的部分。  如果未指定start和end，则返回整个数组。 如果指指定一个参数，该参">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/3067059-d2c6a7d29e7aa63e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
 
@@ -126,13 +130,13 @@
 
 
 
-  <link rel="canonical" href="http://www.hanyuntao.site/tags/web/"/>
+  <link rel="canonical" href="http://www.hanyuntao.site/2017/04/19/你遇到过-slice-call-吗？/"/>
 
 
 
 
 
-  <title>标签: web | 前端之路</title>
+  <title>你遇到过[-]-slice-call()吗？ | 前端之路</title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -169,7 +173,7 @@
   
 
 
-  <div class="container sidebar-position-left  ">
+  <div class="container sidebar-position-left page-post-detail ">
     <div class="headband">
 
       <a href="https://github.com/hanyuntao" style="z-index: 100;"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://camo.githubusercontent.com/c6625ac1f3ee0a12250227cf83ce904423abf351/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f677261795f3664366436642e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_gray_6d6d6d.png"></a>
@@ -321,300 +325,270 @@
           <div id="content" class="content">
             
 
-  <div id="posts" class="posts-collapse">
-    <div class="collection-title">
-      <h1>web<small>标签</small>
-      </h1>
-    </div>
-
+  <div id="posts" class="posts-expand">
     
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/04/29/js里函数调用的四种模式/" itemprop="url">
-              
-                <span itemprop="name">js里函数调用的四种模式</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-04-29T15:02:06+08:00"
-              content="2017-04-29" >
-          04-29
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-    
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/04/21/为什么html里面的onclick函数后面要加-，而js里面不需要？/" itemprop="url">
-              
-                <span itemprop="name">为什么html里面的onclick函数后面要加()，而js里面不需要？</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-04-21T13:15:00+08:00"
-              content="2017-04-21" >
-          04-21
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-    
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/04/20/JS正则表达式实用总结/" itemprop="url">
-              
-                <span itemprop="name">JS正则表达式实用总结</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-04-20T10:46:00+08:00"
-              content="2017-04-20" >
-          04-20
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-    
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/04/19/JS产生随机数/" itemprop="url">
-              
-                <span itemprop="name">JS产生随机数</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-04-19T15:27:00+08:00"
-              content="2017-04-19" >
-          04-19
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-    
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/04/19/你遇到过-slice-call-吗？/" itemprop="url">
-              
-                <span itemprop="name">你遇到过[-]-slice-call()吗？</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-04-19T09:55:35+08:00"
-              content="2017-04-19" >
-          04-19
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-    
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/04/18/灵活方便的布局方式——弹性布局/" itemprop="url">
-              
-                <span itemprop="name">灵活方便的布局方式——弹性布局</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-04-18T12:17:03+08:00"
-              content="2017-04-18" >
-          04-18
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-    
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/04/17/三种基础的排序算法/" itemprop="url">
-              
-                <span itemprop="name">三种基础的排序算法</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-04-17T11:19:39+08:00"
-              content="2017-04-17" >
-          04-17
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-    
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/04/15/js基础篇（三）——DOM的各种操作/" itemprop="url">
-              
-                <span itemprop="name">js基础篇（三）——DOM的各种操作</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-04-15T14:56:54+08:00"
-              content="2017-04-15" >
-          04-15
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-    
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/04/15/对二维数组排序/" itemprop="url">
-              
-                <span itemprop="name">对二维数组排序</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-04-15T12:00:29+08:00"
-              content="2017-04-15" >
-          04-15
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-    
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/04/15/js基础篇（二）——字符串的各种操作/" itemprop="url">
-              
-                <span itemprop="name">js基础篇（二）——字符串的各种操作</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-04-15T10:59:49+08:00"
-              content="2017-04-15" >
-          04-15
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-    
-  </div>
 
   
-  <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/tags/web/page/2/">2</a><a class="page-number" href="/tags/web/page/3/">3</a><a class="extend next" rel="next" href="/tags/web/page/2/"><i class="fa fa-angle-right"></i></a>
-  </nav>
 
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://www.hanyuntao.site/2017/04/19/你遇到过-slice-call-吗？/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Hanyuntao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://oq6k3jdcg.bkt.clouddn.com/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="前端之路">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">你遇到过[-]-slice-call()吗？</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-19T09:55:35+08:00">
+                2017-04-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/javascript/" itemprop="url" rel="index">
+                    <span itemprop="name">javascript</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a class="cloud-tie-join-count" href="/2017/04/19/你遇到过-slice-call-吗？/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count join-count" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2017/04/19/你遇到过-slice-call-吗？/" class="leancloud_visitors" data-flag-title="你遇到过[-]-slice-call()吗？">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  741
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  3
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>先放结论：<code>[].slice.call(arguments)</code>能将具有<code>length</code>属性的对象转成数组。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3067059-d2c6a7d29e7aa63e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Paste_Image.png"></p>
+<h1 id="1、基础知识"><a href="#1、基础知识" class="headerlink" title="1、基础知识"></a>1、基础知识</h1><ul>
+<li><p><code>.slice()</code>方法</p>
+<ul>
+<li><p>定义和用法<br><code>slice(start, end)</code> 方法可提取数组的某个部分，并以新的数组返回被提取的部分。<br>使用<code>start</code>（包含） 和 <code>end</code>（不包含） 参数来指定提取数组开始和结束的部分。</p>
+<ul>
+<li>如果未指定start和end，则返回整个数组。</li>
+<li>如果指指定一个参数，该参数作为start使用，返回包括start位置之后的全部数组。</li>
+<li>如果是负数，则该参数规定的是从数组的尾部开始算起的位置。也就是说，-1 指数组的最后一项，-2 指倒数第二个项，以此类推。</li>
+</ul>
+</li>
+<li><p>实例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">//在数组中读取元素：</div><div class="line">var fruits = [&quot;Banana&quot;, &quot;Orange&quot;, &quot;Lemon&quot;, &quot;Apple&quot;, &quot;Mango&quot;];</div><div class="line">var citrus = fruits.slice(-3,-1);</div><div class="line">citrus 结果输出:</div><div class="line">[&quot;Lemon&quot;, &quot;Apple&quot;]</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p><code>.call()</code>方法</p>
+<ul>
+<li>定义和用法<br><code>call()</code>函数用于调用当前函数<code>functionObject</code>，并可同时使用指定对象<code>thisObj</code>作为本次执行时<code>functionObject</code>函数内部的<code>this</code>指针引用。</li>
+<li>实例<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">var obj = &#123;name: &quot;李四&quot;, age: 20&#125;;</div><div class="line">function foo(a, b)&#123;</div><div class="line">    document.writeln(this.name);    </div><div class="line">    document.writeln(a);    </div><div class="line">    document.writeln(b);    </div><div class="line">&#125;</div><div class="line">// 改变this引用为obj，同时传递两个参数</div><div class="line">foo.call(obj, 12, true); // 李四 12 true</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="2-进入正题"><a href="#2-进入正题" class="headerlink" title="2.进入正题"></a>2.进入正题</h1><p>当我看到<code>var args = [].slice.call(arguments, 0);</code>这种写法的时候是一脸懵逼的（黑人问号脸）。<br><a href="http://www.cnblogs.com/lwbqqyumidi/archive/2012/12/03/2799833.html" target="_blank" rel="external"><code>arguments</code></a>是一个对象而不是数组，最多算是一个<a href="http://www.cnblogs.com/lwbqqyumidi/archive/2012/12/03/2799833.html" target="_blank" rel="external">伪数组</a>，而且自身的原型链上也没有<code>slice</code>这个方法。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">/*确定arguments的类型</div><div class="line">    * 返回 3,Object, true;</div><div class="line">    */</div><div class="line">    (function(a,b,c)&#123;</div><div class="line">       console.log(arguments.length);</div><div class="line">       console.log(typeof arguments);</div><div class="line">       console.log( arguments instanceof Object);</div><div class="line"></div><div class="line">    &#125;(1,2,3))</div></pre></td></tr></table></figure></p>
+<blockquote>
+<p><code>[].slice.call(arguments)</code>能将具有<code>length</code>属性的对象转成数组：</p>
+</blockquote>
+<ul>
+<li><p><code>[]</code>自身也是也是一个对象.而数组原型链上有这个<code>slice</code>这个方法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">/*此处的返回值是true*/</div><div class="line">  [].slice === Array.prototype.slice;</div></pre></td></tr></table></figure>
+</li>
+<li><p>通过<code>call</code>显式绑定来实现<code>arguments</code>变相有<code>slice</code>这个方法。</p>
+</li>
+<li>这就是说：<code>Array.prototype.slice.call(arguments,0)</code>这句里，就是把 <code>arguments</code> 当做当前对象<br>﻿也就是说 要调用的是 <code>arguments</code> 的<code>slice</code> 方法，后面的 参数 0 也就成了 <code>slice</code> 的第一个参数，<code>slice(0)</code>就是获取所有。</li>
+</ul>
+<p><strong>补充： </strong><br>将函数的实际参数转换成数组的方法</p>
+<p>方法一：<code>var args = Array.prototype.slice.call(arguments);</code></p>
+<p>方法二：<code>var args = [].slice.call(arguments, 0);</code></p>
+<p>方法三：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">var args = []; </div><div class="line">for (var i = 1; i &lt; arguments.length; i++) &#123; </div><div class="line">    args.push(arguments[i]);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>最后，附个转成数组的通用函数<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">var toArray = function(s)&#123;</div><div class="line">    //try语句允许我们定义在执行时进行错误测试的代码块。</div><div class="line">   //catch 语句允许我们定义当 try 代码块发生错误时，所执行的代码块。</div><div class="line">    try&#123;</div><div class="line">        return Array.prototype.slice.call(s);</div><div class="line">    &#125; catch(e)&#123;</div><div class="line">        var arr = [];</div><div class="line">        for(var i = 0,len = s.length; i &lt; len; i++)&#123;</div><div class="line">            //arr.push(s[i]);</div><div class="line">               arr[i] = s[i];  //据说这样比push快</div><div class="line">        &#125;</div><div class="line">         return arr;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>参考资料：<br><a href="http://www.cnblogs.com/dingxiaoyue/p/4948166.html" target="_blank" rel="external">Array.prototype.slice.call()方法详解</a><br> <a href="http://blog.csdn.net/crper/article/details/51396063" target="_blank" rel="external">对[].slice.call(arguments,1) 的一丢丢见解</a><br><a href="http://www.cnblogs.com/lwbqqyumidi/archive/2012/12/03/2799833.html" target="_blank" rel="external">JavaScript arguments对象</a><br><a href="http://www.365mini.com/page/javascript-function-call.htm" target="_blank" rel="external">JavaScript Function.call() 函数详解</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/web/" rel="tag"># web</a>
+          
+            <a href="/tags/javascript/" rel="tag"># javascript</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/04/18/灵活方便的布局方式——弹性布局/" rel="next" title="灵活方便的布局方式——弹性布局">
+                <i class="fa fa-chevron-left"></i> 灵活方便的布局方式——弹性布局
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/04/19/JS产生随机数/" rel="prev" title="JS产生随机数">
+                JS产生随机数 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -622,6 +596,12 @@
 
 
           
+  <div class="comments" id="comments">
+    
+      <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+    
+  </div>
+
 
         </div>
         
@@ -641,8 +621,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="http://oq6k3jdcg.bkt.clouddn.com/avatar.jpg"
@@ -724,6 +713,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1、基础知识"><span class="nav-number">1.</span> <span class="nav-text">1、基础知识</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-进入正题"><span class="nav-number">2.</span> <span class="nav-text">2.进入正题</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -844,6 +849,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
 
   
 
