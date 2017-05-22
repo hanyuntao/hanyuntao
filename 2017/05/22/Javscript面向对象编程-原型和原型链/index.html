@@ -90,13 +90,13 @@
 
 
 
-<meta name="description" content="前言在我的上一篇文章中（面向对象的程序设计–理解对象）讲到了使用原型的好处是可以让对象实例共享它所包含的属性和方法，也就是说，不必在构造函数中添加定义对象信息，而是可以直接将这些信息添加到原型中，那这一篇就详细讲一下原型和原型链。 原型函数也是一种对象。他也是属性的集合，你也可以对函数进行自定义属性。  每创建一个函数的同时会为该函数创建一个prototype属性。这个prototype的属性值">
+<meta name="description" content="前言在我的上一篇文章中（面向对象的程序设计–理解对象）讲到了使用原型的好处是可以让对象实例共享它所包含的属性和方法，也就是说，不必在构造函数中添加定义对象信息，而是可以直接将这些信息添加到原型中，那这一篇就详细讲一下原型和原型链。">
 <meta name="keywords" content="web,javascript">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Javscript面向对象编程--原型和原型链">
 <meta property="og:url" content="http://www.hanyuntao.site/2017/05/22/Javscript面向对象编程-原型和原型链/index.html">
 <meta property="og:site_name" content="前端之路">
-<meta property="og:description" content="前言在我的上一篇文章中（面向对象的程序设计–理解对象）讲到了使用原型的好处是可以让对象实例共享它所包含的属性和方法，也就是说，不必在构造函数中添加定义对象信息，而是可以直接将这些信息添加到原型中，那这一篇就详细讲一下原型和原型链。 原型函数也是一种对象。他也是属性的集合，你也可以对函数进行自定义属性。  每创建一个函数的同时会为该函数创建一个prototype属性。这个prototype的属性值">
+<meta property="og:description" content="前言在我的上一篇文章中（面向对象的程序设计–理解对象）讲到了使用原型的好处是可以让对象实例共享它所包含的属性和方法，也就是说，不必在构造函数中添加定义对象信息，而是可以直接将这些信息添加到原型中，那这一篇就详细讲一下原型和原型链。">
 <meta property="og:image" content="http://oq6k3jdcg.bkt.clouddn.com/blog/20170522/121646519.png?imageslim">
 <meta property="og:image" content="http://oq6k3jdcg.bkt.clouddn.com/blog/20170522/141851204.png?imageslim">
 <meta property="og:image" content="http://oq6k3jdcg.bkt.clouddn.com/blog/20170522/142333568.png?imageslim">
@@ -105,10 +105,10 @@
 <meta property="og:image" content="http://oq6k3jdcg.bkt.clouddn.com/blog/20170522/144741313.png?imageslim">
 <meta property="og:image" content="http://oq6k3jdcg.bkt.clouddn.com/blog/20170522/145600860.png?imageslim">
 <meta property="og:image" content="http://oq6k3jdcg.bkt.clouddn.com/blog/20170522/145934809.png?imageslim">
-<meta property="og:updated_time" content="2017-05-22T07:24:40.834Z">
+<meta property="og:updated_time" content="2017-05-22T11:09:56.905Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Javscript面向对象编程--原型和原型链">
-<meta name="twitter:description" content="前言在我的上一篇文章中（面向对象的程序设计–理解对象）讲到了使用原型的好处是可以让对象实例共享它所包含的属性和方法，也就是说，不必在构造函数中添加定义对象信息，而是可以直接将这些信息添加到原型中，那这一篇就详细讲一下原型和原型链。 原型函数也是一种对象。他也是属性的集合，你也可以对函数进行自定义属性。  每创建一个函数的同时会为该函数创建一个prototype属性。这个prototype的属性值">
+<meta name="twitter:description" content="前言在我的上一篇文章中（面向对象的程序设计–理解对象）讲到了使用原型的好处是可以让对象实例共享它所包含的属性和方法，也就是说，不必在构造函数中添加定义对象信息，而是可以直接将这些信息添加到原型中，那这一篇就详细讲一下原型和原型链。">
 <meta name="twitter:image" content="http://oq6k3jdcg.bkt.clouddn.com/blog/20170522/121646519.png?imageslim">
 
 
@@ -277,7 +277,7 @@
       
         
         <li class="menu-item menu-item-demo">
-          <a href="/demo" rel="section">
+          <a href="/demo_menu" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-fire"></i> <br />
             
@@ -488,6 +488,7 @@
       
         <p><img src="http://oq6k3jdcg.bkt.clouddn.com/blog/20170522/121646519.png?imageslim" alt="mark"></p>
 <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>在我的上一篇文章中（<a href="http://hanyuntao.site/2017/05/22/面向对象的程序设计-理解对象/#more" target="_blank" rel="external">面向对象的程序设计–理解对象</a>）讲到了使用原型的好处是可以让对象实例共享它所包含的属性和方法，也就是说，不必在构造函数中添加定义对象信息，而是可以直接将这些信息添加到原型中，那这一篇就详细讲一下原型和原型链。</p>
+<a id="more"></a>
 <h1 id="原型"><a href="#原型" class="headerlink" title="原型"></a>原型</h1><p>函数也是一种对象。他也是属性的集合，你也可以对函数进行自定义属性。</p>
 <blockquote>
 <p>每创建一个函数的同时会为该函数创建一个prototype属性。<br>这个prototype的属性值是一个对象（属性的集合，再次强调！），默认的只有一个叫做constructor的属性，指向这个函数本身。</p>

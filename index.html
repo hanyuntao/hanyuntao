@@ -268,7 +268,7 @@
       
         
         <li class="menu-item menu-item-demo">
-          <a href="/demo" rel="section">
+          <a href="/demo_menu" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-fire"></i> <br />
             
@@ -470,59 +470,15 @@
 
       
         
-          
-            <p><img src="http://oq6k3jdcg.bkt.clouddn.com/blog/20170522/121646519.png?imageslim" alt="mark"></p>
+          <p><img src="http://oq6k3jdcg.bkt.clouddn.com/blog/20170522/121646519.png?imageslim" alt="mark"></p>
 <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>在我的上一篇文章中（<a href="http://hanyuntao.site/2017/05/22/面向对象的程序设计-理解对象/#more" target="_blank" rel="external">面向对象的程序设计–理解对象</a>）讲到了使用原型的好处是可以让对象实例共享它所包含的属性和方法，也就是说，不必在构造函数中添加定义对象信息，而是可以直接将这些信息添加到原型中，那这一篇就详细讲一下原型和原型链。</p>
-<h1 id="原型"><a href="#原型" class="headerlink" title="原型"></a>原型</h1><p>函数也是一种对象。他也是属性的集合，你也可以对函数进行自定义属性。</p>
-<blockquote>
-<p>每创建一个函数的同时会为该函数创建一个prototype属性。<br>这个prototype的属性值是一个对象（属性的集合，再次强调！），默认的只有一个叫做constructor的属性，指向这个函数本身。</p>
-</blockquote>
-<p><img src="http://oq6k3jdcg.bkt.clouddn.com/blog/20170522/141851204.png?imageslim" alt="mark"></p>
-<p>如上图，<code>SuperType</code>是一个函数，右侧的方框就是它的原型。<br>原型既然作为对象，属性的集合，不可能就只弄个constructor来玩玩，肯定可以自定义的增加许多属性。例如这位Object大哥，人家的prototype里面，就有好几个其他属性。</p>
-<p><img src="http://oq6k3jdcg.bkt.clouddn.com/blog/20170522/142333568.png?imageslim" alt="mark"></p>
-<p>你也可以在自己自定义的方法的prototype中新增自己的属性<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Fn</span>(<span class="params"></span>) </span>&#123; &#125;</div><div class="line">        Fn.prototype.name = <span class="string">'王福朋'</span>;</div><div class="line">        Fn.prototype.getYear = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">            <span class="keyword">return</span> <span class="number">1988</span>;</div><div class="line">        &#125;;</div></pre></td></tr></table></figure></p>
-<p><img src="http://oq6k3jdcg.bkt.clouddn.com/blog/20170522/142953452.png?imageslim" alt="mark"></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Fn</span>(<span class="params"></span>) </span>&#123; &#125;</div><div class="line">        Fn.prototype.name = <span class="string">'王福朋'</span>;</div><div class="line">        Fn.prototype.getYear = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">            <span class="keyword">return</span> <span class="number">1988</span>;</div><div class="line">        &#125;;</div><div class="line"></div><div class="line">        <span class="keyword">var</span> fn = <span class="keyword">new</span> Fn();</div><div class="line">        <span class="built_in">console</span>.log(fn.name);</div><div class="line">        <span class="built_in">console</span>.log(fn.getYear());</div></pre></td></tr></table></figure>
-<p>Fn是一个函数，fn对象是从Fn函数new出来的，这样fn对象就可以调用Fn.prototype中的属性。</p>
-<p>因为每个对象都有一个隐藏的属性——<code>__proto__</code>，这个属性引用了创建这个对象的函数的prototype。即：<code>fn.__proto__ === Fn.prototype</code></p>
-<h1 id="隐式原型"><a href="#隐式原型" class="headerlink" title="隐式原型"></a>隐式原型</h1><blockquote>
-<p>每个函数<code>function</code>都有一个<code>prototype</code>，即原型。这里再加一句话——每个对象都有一个<code>__proto__</code>，可成为隐式原型。<code>__proto__</code>用于指向创建它的构造函数的原型对象。</p>
-</blockquote>
-<p>当调用构造函数创建一个实例的时候，实例内部将包含一个内部指针（<code>__proto__</code>）指向构造函数的<code>prototype</code>，这个连接存在于实例和构造函数的<code>prototype</code>之间，而不是实例与构造函数之间。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> obj = &#123;&#125;;</div><div class="line"><span class="built_in">console</span>.log(obj.__proto__=== <span class="built_in">Object</span>.prototype);<span class="comment">//true</span></div></pre></td></tr></table></figure>
-<p>obj这个对象本质上是被Object函数创建的，因此<code>obj.__proto__=== Object.prototype</code>。我们可以用一个图来表示。</p>
-<p><img src="http://oq6k3jdcg.bkt.clouddn.com/blog/20170522/144037221.png?imageslim" alt="mark"></p>
-<p>即，每个对象都有一个<code>__proto__</code>属性，指向创建该对象的函数的<code>prototype</code>。<br>那么上图中的<code>Object prototype</code>也是一个对象，它的<code>__proto__</code>指向哪里？<br>在说明<code>Object.prototype</code>之前，先说一下自定义函数的<code>prototype</code>。自定义函数的<code>prototype</code>本质上就是和 <code>var obj = {}</code> 是一样的，都是被<code>Object</code>创建，所以它的proto指向的就是<code>Object.prototype</code>。</p>
-<p>但是<code>Object.prototype</code>确是一个特例——它的<code>__proto__</code>指向的是<code>null</code>.</p>
-<p><img src="http://oq6k3jdcg.bkt.clouddn.com/blog/20170522/144741313.png?imageslim" alt="mark"></p>
-<p>还有——函数也是一种对象，函数也有<code>__proto__</code>。</p>
-<p>函数也不是从石头缝里蹦出来的，函数也是被创建出来的。谁创建了函数呢？——Function——注意这个大写的“F”。</p>
-<p>且看如下代码。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span> (<span class="params">x,y</span>) </span>&#123;</div><div class="line">	<span class="keyword">return</span> x + y;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> fn = <span class="keyword">new</span> <span class="built_in">Function</span>(<span class="string">"x"</span>,<span class="string">"y"</span>,<span class="string">"return x+y"</span>);</div></pre></td></tr></table></figure>
-<p>以上代码中，第一种方式是比较传统的函数创建方式，第二种是用<code>new Functoin</code>创建。</p>
-<p>首先根本不推荐用第二种方式。</p>
-<p>这里只是向大家演示，函数是被<code>Function</code>创建的。</p>
-<p>好了，根据上面说的一句话——对象的<code>__proto__</code>指向的是创建它的函数的<code>prototype</code>，就会出现：<code>Object.__proto__ === Function.prototype</code>。用一个图来表示。</p>
-<p><img src="http://oq6k3jdcg.bkt.clouddn.com/blog/20170522/145600860.png?imageslim" alt="mark"></p>
-<p>上图中，很明显的标出了：自定义函数<code>Foo.__proto__</code>指向<code>Function.prototype</code>，<code>Object.__proto__</code>指向<code>Function.prototype</code>，唉，怎么还有一个<code>Function.__proto__</code>指向<code>Function.prototype</code>？这不成了循环引用了？<br>对！是一个环形结构。</p>
-<p>其实稍微想一下就明白了。<code>Function</code>也是一个函数，函数是一种对象，也有<code>__proto__</code>属性。既然是函数，那么它一定是被<code>Function</code>创建。所以<code>Function</code>是被自身创建的。所以它的<code>__proto__</code>指向了自身的<code>Prototype</code>。</p>
-<p>最后一个问题:<code>Function.prototype</code>指向的对象，它的<code>__proto__</code>是不是也指向<code>Object.prototype</code>？</p>
-<p>答案是肯定的。因为<code>Function.prototype</code>指向的对象也是一个普通的被<code>Object</code>创建的对象，所以也遵循基本的规则<br><img src="http://oq6k3jdcg.bkt.clouddn.com/blog/20170522/145934809.png?imageslim" alt="mark"></p>
-<h1 id="原型链"><a href="#原型链" class="headerlink" title="原型链"></a>原型链</h1><blockquote>
-<p>访问一个对象的属性时，先在基本属性中查找，如果没有，再沿着<code>__proto__</code>这条链向上找</p>
-</blockquote>
-<p>javascript中的继承是通过原型链来体现的。</p>
-<p><strong>传统原型语法</strong><br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Foo</span>(<span class="params"></span>) </span>&#123;&#125;;</div><div class="line">Foo.prototype.a = <span class="number">100</span>;</div><div class="line">Foo.prototype.b = <span class="number">200</span>;</div><div class="line"><span class="keyword">var</span> f1 = <span class="keyword">new</span> Foo();</div><div class="line">f1.a = <span class="number">10</span>;</div><div class="line">alert(f1.a);  <span class="comment">//10</span></div><div class="line">alert(f1.b);  <span class="comment">//200</span></div></pre></td></tr></table></figure></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Foo</span>(<span class="params"></span>) </span>&#123;&#125;</div><div class="line"><span class="keyword">var</span> f1 = <span class="keyword">new</span> Foo();</div><div class="line">f1.a = <span class="number">10</span>;</div><div class="line">Foo.prototype.a = <span class="number">100</span>;</div><div class="line">Foo.prototype.b = <span class="number">200</span>;</div><div class="line"></div><div class="line">alert(f1.a);  <span class="comment">//10</span></div><div class="line">alert(f1.b);  <span class="comment">//200</span></div></pre></td></tr></table></figure>
-<p><strong>对象字面量方法添加属性和方法的注意事项</strong></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Foo</span>(<span class="params"></span>) </span>&#123;&#125;</div><div class="line">Foo.prototype = &#123;</div><div class="line">    <span class="attr">a</span>: <span class="number">100</span>,</div><div class="line">    <span class="attr">b</span>: <span class="number">200</span></div><div class="line">&#125;</div><div class="line"><span class="keyword">var</span> f1 = <span class="keyword">new</span> Foo();</div><div class="line">f1.a = <span class="number">10</span>;</div><div class="line">alert(f1.a); <span class="comment">//10</span></div><div class="line">alert(f1.b); <span class="comment">//200</span></div></pre></td></tr></table></figure>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Foo</span>(<span class="params"></span>) </span>&#123;&#125;</div><div class="line"><span class="keyword">var</span> f1 = <span class="keyword">new</span> Foo();</div><div class="line">f1.a = <span class="number">10</span>;</div><div class="line">Foo.prototype = &#123;</div><div class="line">    <span class="attr">a</span>: <span class="number">100</span>,</div><div class="line">    <span class="attr">b</span>: <span class="number">200</span></div><div class="line">&#125;</div><div class="line"></div><div class="line">alert(f1.a);  <span class="comment">//10</span></div><div class="line">alert(f1.b);  <span class="comment">//undefined</span></div></pre></td></tr></table></figure>
-<p><strong>对象字面量方法添加属性和方法时注意：原型的属性和方法赋值要在<code>新建实例对象之前</code>，不然无法获得原型的值和属性，alert返回相应的undefined</strong></p>
-<p>如果在实例上添加新属性，这个属性就会屏蔽原型对象中保存的同名属性，就是阻止访问了属性，而不是修改原型的属性。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Foo</span>(<span class="params"></span>) </span>&#123;&#125;;</div><div class="line"></div><div class="line">Foo.prototype = &#123;</div><div class="line">	<span class="attr">a</span>:<span class="number">100</span>,</div><div class="line">	<span class="attr">b</span>:<span class="number">200</span></div><div class="line">&#125;</div><div class="line"><span class="keyword">var</span> fn1 = <span class="keyword">new</span> Foo();</div><div class="line"><span class="keyword">var</span> fn2 = <span class="keyword">new</span> Foo();</div><div class="line"></div><div class="line">fn1.a = <span class="number">10</span>;</div><div class="line"><span class="built_in">console</span>.log(fn1.a); <span class="comment">//10</span></div><div class="line"><span class="built_in">console</span>.log(fn1.b); <span class="comment">//200</span></div><div class="line"><span class="built_in">console</span>.log(fn2.a); <span class="comment">//100</span></div></pre></td></tr></table></figure></p>
-<h1 id="End"><a href="#End" class="headerlink" title="End"></a>End</h1><p>本文的大多数观点都来自<a href="http://www.cnblogs.com/wangfupeng1988/p/3977924.html" target="_blank" rel="external">深入理解javascript原型和闭包</a>，您可以移步该地址查看连续的上下文，以便获得更全面的了解。本文提到了继承，下一篇将会结合高程和阮一峰老师的文章写一下自己对继承的认识。</p>
-<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><p><a href="http://www.cnblogs.com/wangfupeng1988/p/3977924.html" target="_blank" rel="external">深入理解javascript原型和闭包</a><br><br><a href="http://www.ruanyifeng.com/blog/2010/05/object-oriented_javascript_encapsulation.html" target="_blank" rel="external">Javascript 面向对象编程（一）：封装</a><br><br>《javascript高级程序设计》</p>
-
-          
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/05/22/Javscript面向对象编程-原型和原型链/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
