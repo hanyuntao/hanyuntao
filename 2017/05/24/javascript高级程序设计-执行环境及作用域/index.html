@@ -74,7 +74,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="css,web," />
+  <meta name="keywords" content="web,javascript,高程," />
 
 
 
@@ -90,40 +90,29 @@
 
 
 
-<meta name="description" content="本篇文章全部摘自阮一峰老师的Flex 布局教程。 之前我一直在用布局的传统解决方案，基于盒状模型，依赖 display属性 + position属性 + float属性。它对于那些特殊布局非常不方便，比如，垂直居中就不容易实现。最近在做百度前端技术学院的作业时发现很多人都在用Flex 布局，简单几行代码就能实现特殊的布局，所以我找了点资料，开始学习弹性布局。">
-<meta name="keywords" content="css,web">
+<meta name="description" content="前言理解执行环境和作用域是入门javascript的基础，也是难点，但是高程上对这部分的介绍非常吝啬篇幅，结合高程和一些其他的google出来的资料，形成本篇，以备复习。">
+<meta name="keywords" content="web,javascript,高程">
 <meta property="og:type" content="article">
-<meta property="og:title" content="灵活方便的布局方式——弹性布局">
-<meta property="og:url" content="http://www.hanyuntao.site/2017/04/18/灵活方便的布局方式——弹性布局/index.html">
+<meta property="og:title" content="javascript高级程序设计-执行环境及作用域">
+<meta property="og:url" content="http://www.hanyuntao.site/2017/05/24/javascript高级程序设计-执行环境及作用域/index.html">
 <meta property="og:site_name" content="前端之路">
-<meta property="og:description" content="本篇文章全部摘自阮一峰老师的Flex 布局教程。 之前我一直在用布局的传统解决方案，基于盒状模型，依赖 display属性 + position属性 + float属性。它对于那些特殊布局非常不方便，比如，垂直居中就不容易实现。最近在做百度前端技术学院的作业时发现很多人都在用Flex 布局，简单几行代码就能实现特殊的布局，所以我找了点资料，开始学习弹性布局。">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3067059-3ad4df37871149ad.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3067059-2c10c4045e26dd54.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3067059-3f6e22fa09e9149d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3067059-1f3882fb778396ab.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3067059-bf42e9e30e099722.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3067059-3c23e68d73eecd14.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3067059-5c0dbc9c6f625ac6.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3067059-43113273448cceb6.gif?imageMogr2/auto-orient/strip">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3067059-12ae81dbb43d5193.gif?imageMogr2/auto-orient/strip">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3067059-6adeaa2924bdf589.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3067059-5490c62702540900.gif?imageMogr2/auto-orient/strip">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3067059-90840984f54affb3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3067059-00191691fa41f40d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3067059-285e7a8679fce497.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3067059-7855207ca9ebcf64.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3067059-d88ba5cdfb599d19.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3067059-fd4a3fa531afbe66.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3067059-5be2b6a9c077a369.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3067059-704f7c22936d1314.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3067059-ffc9a497e42a8868.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3067059-2809de6494cecd3f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3067059-e670bad2fc7ad90a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2017-05-20T12:31:52.822Z">
+<meta property="og:description" content="前言理解执行环境和作用域是入门javascript的基础，也是难点，但是高程上对这部分的介绍非常吝啬篇幅，结合高程和一些其他的google出来的资料，形成本篇，以备复习。">
+<meta property="og:image" content="http://oq6k3jdcg.bkt.clouddn.com/blog/20170524/120326498.png?imageslim">
+<meta property="og:image" content="http://oq6k3jdcg.bkt.clouddn.com/blog/20170524/123301366.png?imageslim">
+<meta property="og:image" content="http://oq6k3jdcg.bkt.clouddn.com/blog/20170524/123026172.png?imageslim">
+<meta property="og:image" content="http://oq6k3jdcg.bkt.clouddn.com/blog/20170524/153807013.png?imageslim">
+<meta property="og:image" content="http://oq6k3jdcg.bkt.clouddn.com/blog/20170524/154125045.png?imageslim">
+<meta property="og:image" content="http://oq6k3jdcg.bkt.clouddn.com/blog/20170524/154147419.png?imageslim">
+<meta property="og:image" content="http://oq6k3jdcg.bkt.clouddn.com/blog/20170524/154206543.png?imageslim">
+<meta property="og:image" content="http://oq6k3jdcg.bkt.clouddn.com/blog/20170524/154221050.png?imageslim">
+<meta property="og:image" content="http://oq6k3jdcg.bkt.clouddn.com/blog/20170524/154240063.png?imageslim">
+<meta property="og:image" content="http://oq6k3jdcg.bkt.clouddn.com/blog/20170524/154255048.png?imageslim">
+<meta property="og:image" content="http://oq6k3jdcg.bkt.clouddn.com/blog/20170524/154304977.png?imageslim">
+<meta property="og:updated_time" content="2017-05-24T07:51:43.293Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="灵活方便的布局方式——弹性布局">
-<meta name="twitter:description" content="本篇文章全部摘自阮一峰老师的Flex 布局教程。 之前我一直在用布局的传统解决方案，基于盒状模型，依赖 display属性 + position属性 + float属性。它对于那些特殊布局非常不方便，比如，垂直居中就不容易实现。最近在做百度前端技术学院的作业时发现很多人都在用Flex 布局，简单几行代码就能实现特殊的布局，所以我找了点资料，开始学习弹性布局。">
-<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/3067059-3ad4df37871149ad.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta name="twitter:title" content="javascript高级程序设计-执行环境及作用域">
+<meta name="twitter:description" content="前言理解执行环境和作用域是入门javascript的基础，也是难点，但是高程上对这部分的介绍非常吝啬篇幅，结合高程和一些其他的google出来的资料，形成本篇，以备复习。">
+<meta name="twitter:image" content="http://oq6k3jdcg.bkt.clouddn.com/blog/20170524/120326498.png?imageslim">
 
 
 
@@ -151,13 +140,13 @@
 
 
 
-  <link rel="canonical" href="http://www.hanyuntao.site/2017/04/18/灵活方便的布局方式——弹性布局/"/>
+  <link rel="canonical" href="http://www.hanyuntao.site/2017/05/24/javascript高级程序设计-执行环境及作用域/"/>
 
 
 
 
 
-  <title>灵活方便的布局方式——弹性布局 | 前端之路</title>
+  <title>javascript高级程序设计-执行环境及作用域 | 前端之路</title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -362,7 +351,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://www.hanyuntao.site/2017/04/18/灵活方便的布局方式——弹性布局/">
+    <link itemprop="mainEntityOfPage" href="http://www.hanyuntao.site/2017/05/24/javascript高级程序设计-执行环境及作用域/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Hanyuntao">
@@ -379,7 +368,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">灵活方便的布局方式——弹性布局</h1>
+          <h1 class="post-title" itemprop="name headline">javascript高级程序设计-执行环境及作用域</h1>
         
 
         <div class="post-meta">
@@ -391,8 +380,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-18T12:17:03+08:00">
-                2017-04-18
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-24T11:10:42+08:00">
+                2017-05-24
               </time>
             
 
@@ -414,8 +403,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/css/" itemprop="url" rel="index">
-                    <span itemprop="name">css</span>
+                  <a href="/categories/javascript/" itemprop="url" rel="index">
+                    <span itemprop="name">javascript</span>
                   </a>
                 </span>
 
@@ -432,7 +421,7 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a class="cloud-tie-join-count" href="/2017/04/18/灵活方便的布局方式——弹性布局/#comments" itemprop="discussionUrl">
+                <a class="cloud-tie-join-count" href="/2017/05/24/javascript高级程序设计-执行环境及作用域/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count join-count" itemprop="commentCount"></span>
                 </a>
               </span>
@@ -441,7 +430,7 @@
 
           
           
-             <span id="/2017/04/18/灵活方便的布局方式——弹性布局/" class="leancloud_visitors" data-flag-title="灵活方便的布局方式——弹性布局">
+             <span id="/2017/05/24/javascript高级程序设计-执行环境及作用域/" class="leancloud_visitors" data-flag-title="javascript高级程序设计-执行环境及作用域">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -466,7 +455,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  1,699
+                  986
                 </span>
               
 
@@ -482,7 +471,7 @@
                   <span class="post-meta-item-text">阅读时长</span>
                 
                 <span title="阅读时长">
-                  7
+                  4
                 </span>
               
             </div>
@@ -500,112 +489,48 @@
       
 
       
-        <p><img src="http://upload-images.jianshu.io/upload_images/3067059-3ad4df37871149ad.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="弹性布局"><br>本篇文章全部摘自阮一峰老师的<a href="http://www.ruanyifeng.com/blog/2015/07/flex-grammar.html" target="_blank" rel="external">Flex 布局教程</a>。</p>
-<p>之前我一直在用布局的传统解决方案，基于<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/box_model" target="_blank" rel="external">盒状模型</a>，依赖 <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/display" target="_blank" rel="external">display</a>属性 + <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/position" target="_blank" rel="external">position</a>属性 + <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/float" target="_blank" rel="external">float</a>属性。它对于那些特殊布局非常不方便，比如，<a href="https://css-tricks.com/centering-css-complete-guide/" target="_blank" rel="external">垂直居中</a>就不容易实现。最近在做百度前端技术学院的作业时发现很多人都在用Flex 布局，简单几行代码就能实现特殊的布局，所以我找了点资料，开始学习弹性布局。</p>
+        <p><img src="http://oq6k3jdcg.bkt.clouddn.com/blog/20170524/120326498.png?imageslim" alt="mark"></p>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>理解执行环境和作用域是入门javascript的基础，也是难点，但是高程上对这部分的介绍非常吝啬篇幅，结合高程和一些其他的google出来的资料，形成本篇，以备复习。</p>
 <a id="more"></a>
-<h1 id="一、Flex布局是什么？"><a href="#一、Flex布局是什么？" class="headerlink" title="一、Flex布局是什么？"></a>一、Flex布局是什么？</h1><p>Flex是Flexible Box的缩写，意为”弹性布局”，用来为盒状模型提供最大的灵活性。</p>
+<h1 id="代码执行前的准备工作"><a href="#代码执行前的准备工作" class="headerlink" title="代码执行前的准备工作"></a>代码执行前的准备工作</h1><p>javascript在执行一个代码段之前，都会进行这些“准备工作”来生成执行上下文。</p>
 <ul>
-<li><p>任何一个容器都可以指定为Flex布局。</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.box</span>&#123;</div><div class="line">    <span class="attribute">display</span>: flex;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-<li><p>行内元素也可以使用Flex布局。</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.box</span>&#123;</div><div class="line">    <span class="attribute">display</span>: inline-flex;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-<li><p>Webkit内核的浏览器，必须加上<code>-webkit</code>前缀。</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.box</span>&#123;</div><div class="line">    <span class="attribute">display</span>: -webkit-flex; <span class="comment">/* Safari */</span></div><div class="line">    <span class="attribute">display</span>: flex;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
+<li>变量、函数表达式——变量声明，默认赋值为undefined；</li>
+<li>this——赋值；</li>
+<li>函数声明——把函数整个赋值；</li>
 </ul>
-<p><strong>注意：</strong>设为Flex布局以后，子元素的<code>float</code>、<code>clear</code>和<code>vertical-align</code>属性将失效。因为一山不容二虎，<code>float</code>、<code>clear</code>和<code>vertical-align</code>属性都是用来布局的属性，一旦使用<code>flex</code>，原来这些古老的属性不失效还留着干什么？</p>
-<h1 id="二、基本概念"><a href="#二、基本概念" class="headerlink" title="二、基本概念"></a>二、基本概念</h1><p>采用Flex布局的元素，称为Flex容器（<code>flex container</code>），简称”容器”。它的所有子元素自动成为容器成员，称为Flex项目（<code>flex item</code>），简称”项目”。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3067059-2c10c4045e26dd54.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="容器和项目"><br>容器默认存在两根轴：水平的主轴（<code>main axis</code>）和垂直的交叉轴（<code>cross axis</code>）。主轴的开始位置（与边框的交叉点）叫做<code>main start</code>，结束位置叫做<code>main end</code>；交叉轴的开始位置叫做<code>cross start</code>，结束位置叫做<code>cross end</code>。<br>项目默认沿主轴排列。单个项目占据的主轴空间叫做<code>main size</code>，占据的交叉轴空间叫做<code>cross size</code>。</p>
-<h1 id="三、容器的属性"><a href="#三、容器的属性" class="headerlink" title="三、容器的属性"></a>三、容器的属性</h1><p>以下6个属性设置在容器上。</p>
+<p>这个“代码段”其实分三种情况——全局代码，函数体，eval代码。<br><br><span style="font-size: 14px;color: #C8C5C5;">eval代码不常用，不做总结。</span></p>
+<p><img src="http://oq6k3jdcg.bkt.clouddn.com/blog/20170524/123301366.png?imageslim" alt="mark"></p>
+<p><img src="http://oq6k3jdcg.bkt.clouddn.com/blog/20170524/123026172.png?imageslim" alt="mark"></p>
 <blockquote>
-<ul>
-<li><code>flex-direction</code></li>
-<li><code>flex-wrap</code></li>
-<li><code>flex-flow</code></li>
-<li><code>justify-content</code></li>
-<li><code>align-items</code></li>
-<li><code>align-content</code></li>
-</ul>
+<p>数据的准备情况我们称之为<code>执行上下文</code>或者<code>执行上下文环境</code>。</p>
 </blockquote>
-<h2 id="3-1-flex-direction属性"><a href="#3-1-flex-direction属性" class="headerlink" title="3.1 flex-direction属性"></a>3.1 flex-direction属性</h2><p><code>flex-direction</code>属性决定主轴的方向（即项目的排列方向）。<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.box</span> &#123;</div><div class="line">    <span class="attribute">flex-direction</span>: row | row-reverse | column | column-reverse;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3067059-3f6e22fa09e9149d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="flex-direction属性"></p>
+<p>这也是JavaScript 变量提升的原理。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params">x</span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="built_in">arguments</span>); <span class="comment">//Arguments &#123; 0: 10, 等 2 项… &#125;</span></div><div class="line">    <span class="built_in">console</span>.log(x); <span class="comment">//10</span></div><div class="line">&#125;</div><div class="line">fn(<span class="number">10</span>);</div></pre></td></tr></table></figure>
+<p>以上代码展示了在函数体的语句执行之前，<code>arguments</code>变量和函数的参数都已经被赋值。从这里可以看出，函数每被调用一次，都会产生一个新的执行上下文环境。因为不同的调用可能就会有不同的参数。</p>
+<p>另外一点不同在于，函数在定义的时候（不是调用的时候），就已经确定了函数体内部自由变量的作用域。用一个例子说明一下：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> a = <span class="number">10</span>;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(a); <span class="comment">//a是自由变量</span></div><div class="line">    <span class="comment">//函数创建时，就确定了a要取值的作用域</span></div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">bar</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> a = <span class="number">20</span>;</div><div class="line">    fn(); <span class="comment">//打印10不是20</span></div><div class="line">&#125;</div><div class="line">bar(fn); <span class="comment">//10</span></div></pre></td></tr></table></figure></p>
 <blockquote>
-<ul>
-<li><code>row</code>（默认值）：主轴为水平方向，起点在左端。</li>
-<li><code>row-reverse</code>：主轴为水平方向，起点在右端。</li>
-<li><code>column</code>：主轴为垂直方向，起点在上沿。</li>
-<li><code>column-reverse</code>：主轴为垂直方向，起点在下沿。</li>
-</ul>
+<p>给执行上下文环境下一个通俗的定义——在执行代码之前，把将要用到的所有的变量都事先拿出来，有的直接赋值了，有的先用undefined占个空。</p>
 </blockquote>
-<h2 id="3-2-flex-wrap属性"><a href="#3-2-flex-wrap属性" class="headerlink" title="3.2 flex-wrap属性"></a>3.2 flex-wrap属性</h2><p>默认情况下，项目都排在一条线（又称”轴线”）上。<code>flex-wrap</code>属性定义，如果一条轴线排不下，如何换行。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3067059-1f3882fb778396ab.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="flex-wrap属性"><br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.box</span>&#123;</div><div class="line">    <span class="attribute">flex-wrap</span>: nowrap | wrap | wrap-reverse;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>它可能取三个值。<br>（1）<code>nowrap</code>（默认）：不换行。<br><img src="http://upload-images.jianshu.io/upload_images/3067059-bf42e9e30e099722.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br>（2）<code>wrap</code>：换行，第一行在上方。<br><img src="http://upload-images.jianshu.io/upload_images/3067059-3c23e68d73eecd14.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br>（3）<code>wrap-reverse</code>：换行，第一行在下方。<br><img src="http://upload-images.jianshu.io/upload_images/3067059-5c0dbc9c6f625ac6.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-<h2 id="3-3-flex-flow"><a href="#3-3-flex-flow" class="headerlink" title="3.3 flex-flow"></a>3.3 flex-flow</h2><p><code>flex-flow</code>属性是<code>flex-direction</code>属性和<code>flex-wrap</code>属性的简写形式，默认值为<code>row nowrap</code><br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.box</span> &#123;</div><div class="line">    <span class="attribute">flex-flow</span>: &lt;flex-direction&gt; || &lt;flex-wrap&gt;;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<h2 id="3-4-justify-content属性"><a href="#3-4-justify-content属性" class="headerlink" title="3.4 justify-content属性"></a>3.4 justify-content属性</h2><p><code>justify-content</code>属性定义了项目在主轴上的对齐方式。<a href="http://www.runoob.com/try/playit.php?f=playcss_justify-content&amp;preval=flex-start" target="_blank" rel="external">各属性演示地址</a><br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.box</span> &#123;</div><div class="line">    <span class="attribute">justify-content</span>: flex-start | flex-end | center | space-between | space-around;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<blockquote>
-<ul>
-<li><code>flex-start</code>（默认值）：左对齐</li>
-<li><code>flex-end</code>：右对齐</li>
-<li><code>center</code>： 居中</li>
-<li><code>space-between</code>：两端对齐，项目之间的间隔都相等。</li>
-<li><code>space-around</code>：每个项目两侧的间隔相等。所以，项目之间的间隔比项目与边框的间隔大一倍。</li>
-</ul>
-</blockquote>
-<p><img src="http://upload-images.jianshu.io/upload_images/3067059-43113273448cceb6.gif?imageMogr2/auto-orient/strip" alt="justify-content属性.gif"></p>
-<h2 id="3-5-align-items属性"><a href="#3-5-align-items属性" class="headerlink" title="3.5 align-items属性"></a>3.5 align-items属性</h2><p><code>align-items</code>属性定义项目在交叉轴（垂直轴）上如何对齐。<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.box</span> &#123;</div><div class="line">    <span class="attribute">align-items</span>: flex-start | flex-end | center | baseline | stretch;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<blockquote>
-<ul>
-<li><code>flex-start</code>：交叉轴的起点对齐。</li>
-<li><code>flex-end</code>：交叉轴的终点对齐。</li>
-<li><code>center</code>：交叉轴的中点对齐。</li>
-<li><code>baseline</code>: 项目的第一行文字的基线对齐。</li>
-<li><code>stretch</code>（默认值）：如果项目未设置高度或设为<code>auto</code>，将占满整个容器的高度。</li>
-</ul>
-</blockquote>
-<p><img src="http://upload-images.jianshu.io/upload_images/3067059-12ae81dbb43d5193.gif?imageMogr2/auto-orient/strip" alt="align-items属性.gif"></p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3067059-6adeaa2924bdf589.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="align-items属性"></p>
-<h2 id="3-6-align-content属性"><a href="#3-6-align-content属性" class="headerlink" title="3.6 align-content属性"></a>3.6 align-content属性</h2><p><code>align-content</code>属性定义了多根轴线的对齐方式。如果项目只有一根轴线，该属性不起作用。<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.box</span> &#123;</div><div class="line">    <span class="attribute">align-content</span>: flex-start | flex-end | center | space-between | space-around | stretch;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<blockquote>
-<ul>
-<li><code>flex-start</code>：与交叉轴的起点对齐。</li>
-<li><code>flex-end</code>：与交叉轴的终点对齐。</li>
-<li><code>center</code>：与交叉轴的中点对齐。</li>
-<li><code>space-between</code>：与交叉轴两端对齐，轴线之间的间隔平均分布。</li>
-<li><code>space-around</code>：每根轴线两侧的间隔都相等。所以，轴线之间的间隔比轴线与边框的间隔大一倍。</li>
-<li><code>stretch</code>（默认值）：轴线占满整个交叉轴。</li>
-</ul>
-</blockquote>
-<p><img src="http://upload-images.jianshu.io/upload_images/3067059-5490c62702540900.gif?imageMogr2/auto-orient/strip" alt="align-content属性.gif"></p>
-<h1 id="四、项目的属性"><a href="#四、项目的属性" class="headerlink" title="四、项目的属性"></a>四、项目的属性</h1><p>以下6个属性设置在项目上。</p>
-<ul>
-<li>order</li>
-<li>flex-grow</li>
-<li>flex-shrink</li>
-<li>flex-basis</li>
-<li>flex</li>
-<li>align-self</li>
-</ul>
-<h2 id="4-1-order属性"><a href="#4-1-order属性" class="headerlink" title="4.1 order属性"></a>4.1 order属性</h2><p><code>order</code>属性定义项目的排列顺序。数值越小，排列越靠前，默认为0。<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.item</span> &#123; <span class="attribute">order</span>: &lt;integer&gt;;&#125;</div></pre></td></tr></table></figure></p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3067059-90840984f54affb3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="order属性"></p>
-<h2 id="4-2-flex-grow属性"><a href="#4-2-flex-grow属性" class="headerlink" title="4.2 flex-grow属性"></a>4.2 flex-grow属性</h2><p><code>flex-grow</code>属性定义项目的放大比例，默认为0，即如果存在剩余空间，也不放大。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">.item &#123; flex-grow: &lt;number&gt;; /* default 0 */&#125;</div></pre></td></tr></table></figure></p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3067059-00191691fa41f40d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="flex-grow属性"><br>如果所有项目的<code>flex-grow</code>属性都为1，则它们将等分剩余空间（如果有的话）。<br>如果一个项目的<code>flex-grow</code>属性为2，其他项目都为1，则前者占据的剩余空间将比其他项多一倍。</p>
-<h2 id="4-3-flex-shrink属性"><a href="#4-3-flex-shrink属性" class="headerlink" title="4.3 flex-shrink属性"></a>4.3 flex-shrink属性</h2><p><code>flex-shrink</code>属性定义了项目的缩小比例，默认为1，即如果空间不足，该项目将缩小。<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.item</span> &#123; <span class="attribute">flex-shrink</span>: &lt;number&gt;; <span class="comment">/* default 1 */</span>&#125;</div></pre></td></tr></table></figure></p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3067059-285e7a8679fce497.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="flex-shrink属性"><br>如果所有项目的<code>flex-shrink</code>属性都为1，当空间不足时，都将等比例缩小。如果一个项目的<code>flex-shrink</code>属性为0，其他项目都为1，则空间不足时，前者不缩小。负值对该属性无效。</p>
-<h2 id="4-4-flex-basis属性"><a href="#4-4-flex-basis属性" class="headerlink" title="4.4 flex-basis属性"></a>4.4 flex-basis属性</h2><p><code>flex-basis</code>属性定义了在分配多余空间之前，项目占据的主轴空间（<code>main size</code>）。浏览器根据这个属性，计算主轴是否有多余空间。它的默认值为<code>auto</code>，即项目的本来大小。<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.item</span> &#123; <span class="attribute">flex-basis</span>: &lt;length&gt; | auto; <span class="comment">/* default auto */</span>&#125;</div></pre></td></tr></table></figure></p>
-<p>它可以设为跟<code>width</code>或<code>height</code>属性一样的值（比如<code>350px</code>），则项目将占据固定空间。</p>
-<h2 id="4-5-flex属性"><a href="#4-5-flex属性" class="headerlink" title="4.5 flex属性"></a>4.5 flex属性</h2><p><code>flex</code>属性是<code>flex-grow</code>,<code>flex-shrink</code>和 <code>flex-basis</code>的简写，默认值为<code>0 1 auto</code>。后两个属性可选。<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.item</span> &#123; <span class="attribute">flex</span>: none | [ &lt;<span class="string">'flex-grow'</span>&gt; &lt;<span class="string">'flex-shrink'</span>&gt;? || &lt;<span class="string">'flex-basis'</span>&gt; ]&#125;</div></pre></td></tr></table></figure></p>
-<p>该属性有两个快捷值：<code>auto</code>(<code>1 1 auto</code>) 和 <code>none</code> (<code>0 0 auto</code>)。建议优先使用这个属性，而不是单独写三个分离的属性，因为浏览器会推算相关值。</p>
-<h2 id="4-6-align-self属性"><a href="#4-6-align-self属性" class="headerlink" title="4.6 align-self属性"></a>4.6 align-self属性</h2><p><code>align-self</code>属性允许单个项目有与其他项目不一样的对齐方式，可覆盖<code>align-items</code>属性。默认值为<code>auto</code>，表示继承父元素的<code>align-items</code>属性，如果没有父元素，则等同于<code>stretch</code>。<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.item</span> &#123; <span class="attribute">align-self</span>: auto | flex-start | flex-end | center | baseline | stretch;&#125;</div></pre></td></tr></table></figure></p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3067059-7855207ca9ebcf64.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br>该属性可能取6个值，除了<code>auto</code>，其他都与<code>align-items</code>属性完全一致。</p>
-<h1 id="五、Flex布局实例链接"><a href="#五、Flex布局实例链接" class="headerlink" title="五、Flex布局实例链接"></a>五、<a href="http://www.ruanyifeng.com/blog/2015/07/flex-examples.html" target="_blank" rel="external">Flex布局实例链接</a></h1><h2 id="5-1-骰子的布局"><a href="#5-1-骰子的布局" class="headerlink" title="5.1 骰子的布局"></a>5.1 骰子的布局</h2><p><img src="http://upload-images.jianshu.io/upload_images/3067059-d88ba5cdfb599d19.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="骰子的布局"></p>
-<h2 id="5-2-网格布局"><a href="#5-2-网格布局" class="headerlink" title="5.2 网格布局"></a>5.2 网格布局</h2><p><img src="http://upload-images.jianshu.io/upload_images/3067059-fd4a3fa531afbe66.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="网格布局"></p>
-<h2 id="5-3-圣杯布局"><a href="#5-3-圣杯布局" class="headerlink" title="5.3 圣杯布局"></a>5.3 圣杯布局</h2><p><img src="http://upload-images.jianshu.io/upload_images/3067059-5be2b6a9c077a369.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="圣杯布局"></p>
-<h2 id="5-4-输入框的布局"><a href="#5-4-输入框的布局" class="headerlink" title="5.4 输入框的布局"></a>5.4 输入框的布局</h2><p><img src="http://upload-images.jianshu.io/upload_images/3067059-704f7c22936d1314.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="输入框的布局"></p>
-<h2 id="5-5-悬挂式布局"><a href="#5-5-悬挂式布局" class="headerlink" title="5.5 悬挂式布局"></a>5.5 悬挂式布局</h2><p><img src="http://upload-images.jianshu.io/upload_images/3067059-ffc9a497e42a8868.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="悬挂式布局"></p>
-<h2 id="5-6-固定的底栏"><a href="#5-6-固定的底栏" class="headerlink" title="5.6 固定的底栏"></a>5.6 固定的底栏</h2><p><img src="http://upload-images.jianshu.io/upload_images/3067059-2809de6494cecd3f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="固定的底栏"></p>
-<h2 id="5-7-流式布局"><a href="#5-7-流式布局" class="headerlink" title="5.7 流式布局"></a>5.7 流式布局</h2><p><img src="http://upload-images.jianshu.io/upload_images/3067059-e670bad2fc7ad90a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="流式布局"></p>
+<h1 id="执行上下文栈"><a href="#执行上下文栈" class="headerlink" title="执行上下文栈"></a>执行上下文栈</h1><p>执行全局代码时，会产生一个执行上下文环境，每次调用函数都又会产生执行上下文环境。当函数调用完成时，这个上下文环境以及其中的数据都会被消除，再重新回到全局上下文环境。处于活动状态的执行上下文环境只有一个。执行上下文栈就是是一个压栈出栈的过程。</p>
+<p><img src="http://oq6k3jdcg.bkt.clouddn.com/blog/20170524/153807013.png?imageslim" alt="mark"></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> a = <span class="number">10</span>, 		<span class="comment">//1.进入全局上下文环境</span></div><div class="line">fn,</div><div class="line">bar = <span class="function"><span class="keyword">function</span>(<span class="params">x</span>) </span>&#123;</div><div class="line">	<span class="keyword">var</span> b = <span class="number">5</span>;</div><div class="line">	fn(x + b); 		<span class="comment">//3.进入fn函数上下文环境</span></div><div class="line">&#125;;</div><div class="line"></div><div class="line">fn = <span class="function"><span class="keyword">function</span>(<span class="params">y</span>) </span>&#123;</div><div class="line">	<span class="keyword">var</span> c = <span class="number">5</span>;</div><div class="line">	<span class="built_in">console</span>.log(y + c);</div><div class="line">&#125;</div><div class="line"></div><div class="line">ar(<span class="number">10</span>); 			<span class="comment">//2.进入bar函数上下文环境</span></div></pre></td></tr></table></figure>
+<p>在执行代码之前，首先将创建全局上下文环境。</p>
+<p><img src="http://oq6k3jdcg.bkt.clouddn.com/blog/20170524/154125045.png?imageslim" alt="mark"></p>
+<p>然后是代码执行。代码执行到第12行之前，上下文环境中的变量都在执行过程中被赋值。</p>
+<p><img src="http://oq6k3jdcg.bkt.clouddn.com/blog/20170524/154147419.png?imageslim" alt="mark"></p>
+<p>执行到第13行，调用bar函数。</p>
+<p>跳转到bar函数内部，执行函数体语句之前，会创建一个新的执行上下文环境。</p>
+<p><img src="http://oq6k3jdcg.bkt.clouddn.com/blog/20170524/154206543.png?imageslim" alt="mark"></p>
+<p>并将这个执行上下文环境压栈，设置为活动状态。</p>
+<p><img src="http://oq6k3jdcg.bkt.clouddn.com/blog/20170524/154221050.png?imageslim" alt="mark"></p>
+<p>执行到第5行，又调用了fn函数。进入fn函数，在执行函数体语句之前，会创建fn函数的执行上下文环境，并压栈，设置为活动状态。</p>
+<p><img src="http://oq6k3jdcg.bkt.clouddn.com/blog/20170524/154240063.png?imageslim" alt="mark"></p>
+<p>待第5行执行完毕，即fn函数执行完毕后，此次调用fn所生成的上下文环境出栈，并且被销毁（已经用完了，就要及时销毁，释放内存）。</p>
+<p><img src="http://oq6k3jdcg.bkt.clouddn.com/blog/20170524/154255048.png?imageslim" alt="mark"></p>
+<p>同理，待第13行执行完毕，即bar函数执行完毕后，调用bar函数所生成的上下文环境出栈，并且被销毁（已经用完了，就要及时销毁，释放内存）。</p>
+<p><img src="http://oq6k3jdcg.bkt.clouddn.com/blog/20170524/154304977.png?imageslim" alt="mark"></p>
+<p>好了，我很耐心的给大家介绍了一段简短代码的执行上下文环境的变化过程，一个完整的闭环。其中上下文环境的变量赋值过程我省略了许多，因为那些并不难，一看就知道。</p>
+<h1 id="作用域"><a href="#作用域" class="headerlink" title="作用域"></a>作用域</h1><p>未完待续</p>
 
       
     </div>
@@ -656,9 +581,11 @@
       
         <div class="post-tags">
           
-            <a href="/tags/css/" rel="tag"># css</a>
-          
             <a href="/tags/web/" rel="tag"># web</a>
+          
+            <a href="/tags/javascript/" rel="tag"># javascript</a>
+          
+            <a href="/tags/高程/" rel="tag"># 高程</a>
           
         </div>
       
@@ -671,14 +598,18 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2017/05/24/javascript高级程序设计-基本类型和引用类型的值/" rel="next" title="javascript高级程序设计--基本类型和引用类型的值">
+                <i class="fa fa-chevron-left"></i> javascript高级程序设计--基本类型和引用类型的值
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/05/20/利用github-hexo快速搭建自己的博客/" rel="prev" title="利用gitpage+hexo快速搭建自己的博客">
-                利用gitpage+hexo快速搭建自己的博客 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/05/24/javascript高级程序设计-this/" rel="prev" title="javascript高级程序设计-this">
+                javascript高级程序设计-this <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -830,7 +761,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、Flex布局是什么？"><span class="nav-number">1.</span> <span class="nav-text">一、Flex布局是什么？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、基本概念"><span class="nav-number">2.</span> <span class="nav-text">二、基本概念</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三、容器的属性"><span class="nav-number">3.</span> <span class="nav-text">三、容器的属性</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-flex-direction属性"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 flex-direction属性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-flex-wrap属性"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 flex-wrap属性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-3-flex-flow"><span class="nav-number">3.3.</span> <span class="nav-text">3.3 flex-flow</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-4-justify-content属性"><span class="nav-number">3.4.</span> <span class="nav-text">3.4 justify-content属性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-5-align-items属性"><span class="nav-number">3.5.</span> <span class="nav-text">3.5 align-items属性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-6-align-content属性"><span class="nav-number">3.6.</span> <span class="nav-text">3.6 align-content属性</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#四、项目的属性"><span class="nav-number">4.</span> <span class="nav-text">四、项目的属性</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-1-order属性"><span class="nav-number">4.1.</span> <span class="nav-text">4.1 order属性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-2-flex-grow属性"><span class="nav-number">4.2.</span> <span class="nav-text">4.2 flex-grow属性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-3-flex-shrink属性"><span class="nav-number">4.3.</span> <span class="nav-text">4.3 flex-shrink属性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-4-flex-basis属性"><span class="nav-number">4.4.</span> <span class="nav-text">4.4 flex-basis属性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-5-flex属性"><span class="nav-number">4.5.</span> <span class="nav-text">4.5 flex属性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-6-align-self属性"><span class="nav-number">4.6.</span> <span class="nav-text">4.6 align-self属性</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#五、Flex布局实例链接"><span class="nav-number">5.</span> <span class="nav-text">五、Flex布局实例链接</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#5-1-骰子的布局"><span class="nav-number">5.1.</span> <span class="nav-text">5.1 骰子的布局</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-2-网格布局"><span class="nav-number">5.2.</span> <span class="nav-text">5.2 网格布局</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-3-圣杯布局"><span class="nav-number">5.3.</span> <span class="nav-text">5.3 圣杯布局</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-4-输入框的布局"><span class="nav-number">5.4.</span> <span class="nav-text">5.4 输入框的布局</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-5-悬挂式布局"><span class="nav-number">5.5.</span> <span class="nav-text">5.5 悬挂式布局</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-6-固定的底栏"><span class="nav-number">5.6.</span> <span class="nav-text">5.6 固定的底栏</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-7-流式布局"><span class="nav-number">5.7.</span> <span class="nav-text">5.7 流式布局</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#代码执行前的准备工作"><span class="nav-number">2.</span> <span class="nav-text">代码执行前的准备工作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#执行上下文栈"><span class="nav-number">3.</span> <span class="nav-text">执行上下文栈</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#作用域"><span class="nav-number">4.</span> <span class="nav-text">作用域</span></a></li></ol></div>
             
 
           </div>

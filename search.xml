@@ -1,6 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[javascript高级程序设计-this]]></title>
+    <url>%2F2017%2F05%2F24%2Fjavascript%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1-this%2F</url>
+    <content type="text"></content>
+      <categories>
+        <category>javascript</category>
+      </categories>
+      <tags>
+        <tag>web</tag>
+        <tag>javascript</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[javascript高级程序设计-执行环境及作用域]]></title>
+    <url>%2F2017%2F05%2F24%2Fjavascript%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1-%E6%89%A7%E8%A1%8C%E7%8E%AF%E5%A2%83%E5%8F%8A%E4%BD%9C%E7%94%A8%E5%9F%9F%2F</url>
+    <content type="text"><![CDATA[前言理解执行环境和作用域是入门javascript的基础，也是难点，但是高程上对这部分的介绍非常吝啬篇幅，结合高程和一些其他的google出来的资料，形成本篇，以备复习。 代码执行前的准备工作javascript在执行一个代码段之前，都会进行这些“准备工作”来生成执行上下文。 变量、函数表达式——变量声明，默认赋值为undefined； this——赋值； 函数声明——把函数整个赋值； 这个“代码段”其实分三种情况——全局代码，函数体，eval代码。eval代码不常用，不做总结。 数据的准备情况我们称之为执行上下文或者执行上下文环境。 这也是JavaScript 变量提升的原理。 12345function fn(x) &#123; console.log(arguments); //Arguments &#123; 0: 10, 等 2 项… &#125; console.log(x); //10&#125;fn(10); 以上代码展示了在函数体的语句执行之前，arguments变量和函数的参数都已经被赋值。从这里可以看出，函数每被调用一次，都会产生一个新的执行上下文环境。因为不同的调用可能就会有不同的参数。 另外一点不同在于，函数在定义的时候（不是调用的时候），就已经确定了函数体内部自由变量的作用域。用一个例子说明一下：12345678910var a = 10;function fn() &#123; console.log(a); //a是自由变量 //函数创建时，就确定了a要取值的作用域&#125;function bar() &#123; var a = 20; fn(); //打印10不是20&#125;bar(fn); //10 给执行上下文环境下一个通俗的定义——在执行代码之前，把将要用到的所有的变量都事先拿出来，有的直接赋值了，有的先用undefined占个空。 执行上下文栈执行全局代码时，会产生一个执行上下文环境，每次调用函数都又会产生执行上下文环境。当函数调用完成时，这个上下文环境以及其中的数据都会被消除，再重新回到全局上下文环境。处于活动状态的执行上下文环境只有一个。执行上下文栈就是是一个压栈出栈的过程。 12345678910111213var a = 10, //1.进入全局上下文环境fn,bar = function(x) &#123; var b = 5; fn(x + b); //3.进入fn函数上下文环境&#125;;fn = function(y) &#123; var c = 5; console.log(y + c);&#125;ar(10); //2.进入bar函数上下文环境 在执行代码之前，首先将创建全局上下文环境。 然后是代码执行。代码执行到第12行之前，上下文环境中的变量都在执行过程中被赋值。 执行到第13行，调用bar函数。 跳转到bar函数内部，执行函数体语句之前，会创建一个新的执行上下文环境。 并将这个执行上下文环境压栈，设置为活动状态。 执行到第5行，又调用了fn函数。进入fn函数，在执行函数体语句之前，会创建fn函数的执行上下文环境，并压栈，设置为活动状态。 待第5行执行完毕，即fn函数执行完毕后，此次调用fn所生成的上下文环境出栈，并且被销毁（已经用完了，就要及时销毁，释放内存）。 同理，待第13行执行完毕，即bar函数执行完毕后，调用bar函数所生成的上下文环境出栈，并且被销毁（已经用完了，就要及时销毁，释放内存）。 好了，我很耐心的给大家介绍了一段简短代码的执行上下文环境的变化过程，一个完整的闭环。其中上下文环境的变量赋值过程我省略了许多，因为那些并不难，一看就知道。 作用域未完待续]]></content>
+      <categories>
+        <category>javascript</category>
+      </categories>
+      <tags>
+        <tag>web</tag>
+        <tag>javascript</tag>
+        <tag>高程</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[javascript高级程序设计--基本类型和引用类型的值]]></title>
     <url>%2F2017%2F05%2F24%2Fjavascript%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1-%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B%E5%92%8C%E5%BC%95%E7%94%A8%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%80%BC%2F</url>
     <content type="text"><![CDATA[前言JS中变量是松散型变量，变量的值及其数据类型可用在脚本的生命周期内改变。本文为自己的学习笔记，来自高程的第四章内容。 基本类型和引用类型js变量的值分两种：基本类型值和引用类型值。Undefined、Null、Boolean、Number、String这五种基本类型是安值访问。引用类型的值保存在内存中，不直接被访问，当复制保存对象变量时，操作对象的引用。为对象添加属性时操作的则是对象。123var a =123;a.age = 27;alert(a.age);//undefined 上述代码说明，基本类型可以像对象类型一样使用，包括访问其属性、对其属性赋值(尽管实际上不起作用，但是形式上可以)。 之所以能这样去使用基本类型，是因为JavaScript引擎内部在处理对某个基本类型a进行形如a.age的操作时，会在内部临时创建一个对应的包装类型(对数字类型来说就是Number类型)的临时对象(new Number())，并把对基本类型的操作代理到对这个临时对象身上，使得对基本类型的属性访问看起来像对象一样。但是在操作完成后，临时对象就扔掉了，下次再访问时，会重新建立临时对象，当然对之前的临时对象的修改都不会有效了。 复制变量值基本类型值复制时会，会在变量对象创建一个新值，并把值复制到新的位置上。两个变量现在是相互独立的。引用类型值复制的实际同样也是在变量对象创建一个新值，并把值复制到新的位置上。不同的是这个值是一个假身（指向对象位置的指针） 这里要理解的一点就是，复制对象时并不会在堆内存中新生成一个一模一样的对象，只是多了一个保存指向这个对象指针的变量罢了。 函数传参高程中关于函数传递参数一上来就各种强调开发人员会错误的认为参数是按引用传递，其实传参是按值传递的。刚开始不理解，后来各种查，终于明白了。 重点理解:按照引用传递会把整个对象传递给形参，按照值传递是把对象的引用值复制给形参12345678function setName(obj) &#123;//将person的引用值复制给obj obj.name="Nicholas";//也即person.name="Nicholas" obj=new Object( );//生成一个新的对象，并且将该对象的引用值复制给obj obj.name="Greg";//根据值复制的特性，现在obj和person是完全独立的，指向不同的对象&#125;var person=new Object( );setName(person);console.log(person.name);//Nicholas var obj = new Object();会重新给obj分配一个地址，比如是0x321了，这个地址指向新生成的局部对象，而这个局部对象会在函数执行完毕后销毁。 检测类型检测基本数据类型typeof操作符是最佳的工具 用来判断string、number、boolean、undefined、function 123456console.log(typeof("a"));//stringconsole.log(typeof(22));//numberconsole.log(typeof(true));//booleanconsole.log(typeof(a));//undefinedconsole.log(typeof(null));//objectconsole.log(typeof(function()&#123;&#125;));//function 可以看出typeof无法检测null,但是可以检测function。 检测引用类型数据instanceof操作符是最佳的工具 排除基本类型值 1console.log(123 instanceof Object);//flase 判读对象和数组 12console.log(person instanceof Object);console.log(color instanceof Array);]]></content>
@@ -10,6 +35,7 @@
       <tags>
         <tag>web</tag>
         <tag>javascript</tag>
+        <tag>高程</tag>
       </tags>
   </entry>
   <entry>
