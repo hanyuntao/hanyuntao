@@ -1,0 +1,106 @@
+body, button {
+    font-family: "微软雅黑";
+}
+p,body,h3 {
+    margin: 0;
+}
+html,body {
+    width: 100%;
+    height: 100%;
+}
+
+.game-box {
+    position: relative;
+    margin-left: 30%;
+}
+.game-box table {
+    float: left;
+    margin: 50px;
+    border: 1px solid #ddd;
+}
+.game-box td {
+    position: relative;
+    width: 30px;
+    height: 30px;
+    border: 1px solid #ddd;
+    z-index: 0;
+}
+.score {
+    margin-top: 30px;
+    line-height: 50px;
+    font-size: 40px;
+    color: #666;
+}
+.score span {
+    font-size: 50px;
+}
+.box-left {
+    float: left;
+    margin-top: 50px;
+    padding: 20px;
+}
+.next {
+    width: 200px;
+    height: 200px;
+}
+.next-tit {
+    line-height: 50px;
+    font-size: 40px;
+    font-weight: normal;
+    color: #666;
+}
+.next-block {
+    margin: 40px auto 20px;
+
+}
+.next-block td {
+    position: relative;
+    width: 30px;
+    height: 30px;
+    z-index: 0;
+}
+.high {
+    margin-top: 30px;
+    color: #999;
+}
+.btn {
+    margin-top: 70px;
+}
+.btn button {
+    border: none;
+    color: #fff;
+    outline: none;
+}
+.clear:active {
+    background: #888;
+}
+.stop {
+    width: 200px;
+    height: 50px;margin-top: 20px;
+    background: #80BD01;
+    font-size: 20px;
+}
+.stop:active {
+    background: #70A10B;
+}
+.clear {
+    width: 100px;
+    height: 40px;
+    background: #999;
+    font-size: 16px;
+}
+.bor-b {
+    border-bottom: 1px dashed #ddd;
+}
+.great {
+    display: none;
+    position: absolute;
+    left: 55px;
+    top: 300px;
+    width: 355px;
+    background: rgba(255, 242, 0, 0.5);
+    color: #7092BE;
+    font-size: 28px;
+    text-align: center;
+
+}
