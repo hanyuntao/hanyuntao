@@ -90,20 +90,20 @@
 
 
 
-<meta name="description" content="前言JS中变量是松散型变量，变量的值及其数据类型可用在脚本的生命周期内改变。本文为自己的学习笔记，来自高程的第四章内容。 基本类型和引用类型js变量的值分两种：基本类型值和引用类型值。Undefined、Null、Boolean、Number、String这五种基本类型是安值访问。引用类型的值保存在内存中，不直接被访问，当复制保存对象变量时，操作对象的引用。为对象添加属性时操作的则是对象。123">
+<meta name="description" content="前言JS中变量是松散型变量，变量的值及其数据类型可用在脚本的生命周期内改变。本文为自己的学习笔记，来自高程的第四章内容。">
 <meta name="keywords" content="web,javascript">
 <meta property="og:type" content="article">
 <meta property="og:title" content="javascript高级程序设计--基本类型和引用类型的值">
-<meta property="og:url" content="http://www.hanyuntao.site/2017/05/24/javascript高级程序设计-变量作用域和内存问题/index.html">
+<meta property="og:url" content="http://www.hanyuntao.site/2017/05/24/javascript高级程序设计-基本类型和引用类型的值/index.html">
 <meta property="og:site_name" content="前端之路">
-<meta property="og:description" content="前言JS中变量是松散型变量，变量的值及其数据类型可用在脚本的生命周期内改变。本文为自己的学习笔记，来自高程的第四章内容。 基本类型和引用类型js变量的值分两种：基本类型值和引用类型值。Undefined、Null、Boolean、Number、String这五种基本类型是安值访问。引用类型的值保存在内存中，不直接被访问，当复制保存对象变量时，操作对象的引用。为对象添加属性时操作的则是对象。123">
+<meta property="og:description" content="前言JS中变量是松散型变量，变量的值及其数据类型可用在脚本的生命周期内改变。本文为自己的学习笔记，来自高程的第四章内容。">
 <meta property="og:image" content="http://oq6k3jdcg.bkt.clouddn.com/blog/20170524/084530453.jpg">
 <meta property="og:image" content="http://oq6k3jdcg.bkt.clouddn.com/blog/20170524/102416920.png?imageslim">
 <meta property="og:image" content="http://oq6k3jdcg.bkt.clouddn.com/blog/20170524/102358204.png?imageslim">
-<meta property="og:updated_time" content="2017-05-24T03:08:20.641Z">
+<meta property="og:updated_time" content="2017-05-24T03:09:35.226Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="javascript高级程序设计--基本类型和引用类型的值">
-<meta name="twitter:description" content="前言JS中变量是松散型变量，变量的值及其数据类型可用在脚本的生命周期内改变。本文为自己的学习笔记，来自高程的第四章内容。 基本类型和引用类型js变量的值分两种：基本类型值和引用类型值。Undefined、Null、Boolean、Number、String这五种基本类型是安值访问。引用类型的值保存在内存中，不直接被访问，当复制保存对象变量时，操作对象的引用。为对象添加属性时操作的则是对象。123">
+<meta name="twitter:description" content="前言JS中变量是松散型变量，变量的值及其数据类型可用在脚本的生命周期内改变。本文为自己的学习笔记，来自高程的第四章内容。">
 <meta name="twitter:image" content="http://oq6k3jdcg.bkt.clouddn.com/blog/20170524/084530453.jpg">
 
 
@@ -132,7 +132,7 @@
 
 
 
-  <link rel="canonical" href="http://www.hanyuntao.site/2017/05/24/javascript高级程序设计-变量作用域和内存问题/"/>
+  <link rel="canonical" href="http://www.hanyuntao.site/2017/05/24/javascript高级程序设计-基本类型和引用类型的值/"/>
 
 
 
@@ -343,7 +343,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://www.hanyuntao.site/2017/05/24/javascript高级程序设计-变量作用域和内存问题/">
+    <link itemprop="mainEntityOfPage" href="http://www.hanyuntao.site/2017/05/24/javascript高级程序设计-基本类型和引用类型的值/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Hanyuntao">
@@ -413,7 +413,7 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a class="cloud-tie-join-count" href="/2017/05/24/javascript高级程序设计-变量作用域和内存问题/#comments" itemprop="discussionUrl">
+                <a class="cloud-tie-join-count" href="/2017/05/24/javascript高级程序设计-基本类型和引用类型的值/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count join-count" itemprop="commentCount"></span>
                 </a>
               </span>
@@ -422,7 +422,7 @@
 
           
           
-             <span id="/2017/05/24/javascript高级程序设计-变量作用域和内存问题/" class="leancloud_visitors" data-flag-title="javascript高级程序设计--基本类型和引用类型的值">
+             <span id="/2017/05/24/javascript高级程序设计-基本类型和引用类型的值/" class="leancloud_visitors" data-flag-title="javascript高级程序设计--基本类型和引用类型的值">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -483,6 +483,7 @@
       
         <p><img src="http://oq6k3jdcg.bkt.clouddn.com/blog/20170524/084530453.jpg" alt="mark"></p>
 <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>JS中变量是松散型变量，变量的值及其数据类型可用在脚本的生命周期内改变。本文为自己的学习笔记，来自高程的第四章内容。</p>
+<a id="more"></a>
 <h1 id="基本类型和引用类型"><a href="#基本类型和引用类型" class="headerlink" title="基本类型和引用类型"></a>基本类型和引用类型</h1><p>js变量的值分两种：基本类型值和引用类型值。Undefined、Null、Boolean、Number、String这五种基本类型是安值访问。引用类型的值保存在内存中，不直接被访问，当复制保存对象变量时，操作对象的引用。为对象添加属性时操作的则是对象。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> a =<span class="number">123</span>;</div><div class="line">a.age = <span class="number">27</span>;</div><div class="line">alert(a.age);<span class="comment">//undefined</span></div></pre></td></tr></table></figure></p>
 <p>上述代码说明，基本类型可以像对象类型一样使用，包括访问其属性、对其属性赋值(尽管实际上不起作用，但是形式上可以)。</p>
 <p>之所以能这样去使用基本类型，是因为JavaScript引擎内部在处理对某个基本类型a进行形如a.age的操作时，会在内部临时创建一个对应的包装类型(对数字类型来说就是Number类型)的临时对象(<code>new Number()</code>)，并把对基本类型的操作代理到对这个临时对象身上，使得对基本类型的属性访问看起来像对象一样。但是在操作完成后，临时对象就扔掉了，下次再访问时，会重新建立临时对象，当然对之前的临时对象的修改都不会有效了。</p>

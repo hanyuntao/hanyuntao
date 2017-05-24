@@ -339,7 +339,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://www.hanyuntao.site/2017/05/24/javascript高级程序设计-变量作用域和内存问题/">
+    <link itemprop="mainEntityOfPage" href="http://www.hanyuntao.site/2017/05/24/javascript高级程序设计-基本类型和引用类型的值/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Hanyuntao">
@@ -358,7 +358,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/05/24/javascript高级程序设计-变量作用域和内存问题/" itemprop="url">javascript高级程序设计--基本类型和引用类型的值</a></h1>
+                <a class="post-title-link" href="/2017/05/24/javascript高级程序设计-基本类型和引用类型的值/" itemprop="url">javascript高级程序设计--基本类型和引用类型的值</a></h1>
         
 
         <div class="post-meta">
@@ -410,7 +410,7 @@
 
           
           
-             <span id="/2017/05/24/javascript高级程序设计-变量作用域和内存问题/" class="leancloud_visitors" data-flag-title="javascript高级程序设计--基本类型和引用类型的值">
+             <span id="/2017/05/24/javascript高级程序设计-基本类型和引用类型的值/" class="leancloud_visitors" data-flag-title="javascript高级程序设计--基本类型和引用类型的值">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -470,35 +470,15 @@
 
       
         
-          
-            <p><img src="http://oq6k3jdcg.bkt.clouddn.com/blog/20170524/084530453.jpg" alt="mark"></p>
+          <p><img src="http://oq6k3jdcg.bkt.clouddn.com/blog/20170524/084530453.jpg" alt="mark"></p>
 <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>JS中变量是松散型变量，变量的值及其数据类型可用在脚本的生命周期内改变。本文为自己的学习笔记，来自高程的第四章内容。</p>
-<h1 id="基本类型和引用类型"><a href="#基本类型和引用类型" class="headerlink" title="基本类型和引用类型"></a>基本类型和引用类型</h1><p>js变量的值分两种：基本类型值和引用类型值。Undefined、Null、Boolean、Number、String这五种基本类型是安值访问。引用类型的值保存在内存中，不直接被访问，当复制保存对象变量时，操作对象的引用。为对象添加属性时操作的则是对象。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> a =<span class="number">123</span>;</div><div class="line">a.age = <span class="number">27</span>;</div><div class="line">alert(a.age);<span class="comment">//undefined</span></div></pre></td></tr></table></figure></p>
-<p>上述代码说明，基本类型可以像对象类型一样使用，包括访问其属性、对其属性赋值(尽管实际上不起作用，但是形式上可以)。</p>
-<p>之所以能这样去使用基本类型，是因为JavaScript引擎内部在处理对某个基本类型a进行形如a.age的操作时，会在内部临时创建一个对应的包装类型(对数字类型来说就是Number类型)的临时对象(<code>new Number()</code>)，并把对基本类型的操作代理到对这个临时对象身上，使得对基本类型的属性访问看起来像对象一样。但是在操作完成后，临时对象就扔掉了，下次再访问时，会重新建立临时对象，当然对之前的临时对象的修改都不会有效了。</p>
-<h2 id="复制变量值"><a href="#复制变量值" class="headerlink" title="复制变量值"></a>复制变量值</h2><p>基本类型值复制时会，会在变量对象创建一个新值，并把值复制到新的位置上。两个变量现在是相互独立的。<br>引用类型值复制的实际同样也是在变量对象创建一个新值，并把值复制到新的位置上。不同的是这个值是一个假身（指向对象位置的指针）</p>
-<blockquote>
-<p>这里要理解的一点就是，复制对象时并不会在堆内存中新生成一个一模一样的对象，只是多了一个保存指向这个对象指针的变量罢了。</p>
-</blockquote>
-<p><img src="http://oq6k3jdcg.bkt.clouddn.com/blog/20170524/102416920.png?imageslim" style="width: 400px;"><br><img src="http://oq6k3jdcg.bkt.clouddn.com/blog/20170524/102358204.png?imageslim" style="width: 400px;"></p>
-<h2 id="函数传参"><a href="#函数传参" class="headerlink" title="函数传参"></a>函数传参</h2><p>高程中关于函数传递参数一上来就各种强调开发人员会错误的认为参数是按引用传递，其实传参是按值传递的。刚开始不理解，后来各种查，终于明白了。<br></p>
-<p><strong style="font-size: 20px;background-color: #F2FA63;">重点理解:<code>按照引用传递会把整个对象传递给形参，按照值传递是把对象的引用值复制给形参</code></strong><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">setName</span>(<span class="params">obj</span>) </span>&#123;<span class="comment">//将person的引用值复制给obj</span></div><div class="line">    obj.name=<span class="string">"Nicholas"</span>;<span class="comment">//也即person.name="Nicholas"</span></div><div class="line">    obj=<span class="keyword">new</span> <span class="built_in">Object</span>( );<span class="comment">//生成一个新的对象，并且将该对象的引用值复制给obj</span></div><div class="line">    obj.name=<span class="string">"Greg"</span>;<span class="comment">//根据值复制的特性，现在obj和person是完全独立的，指向不同的对象</span></div><div class="line">&#125;</div><div class="line"><span class="keyword">var</span> person=<span class="keyword">new</span> <span class="built_in">Object</span>( );</div><div class="line">setName(person);</div><div class="line"><span class="built_in">console</span>.log(person.name);<span class="comment">//Nicholas</span></div></pre></td></tr></table></figure></p>
-<p><code>var obj = new Object();</code>会重新给obj分配一个地址，比如是0x321了，这个地址指向新生成的局部对象，而这个局部对象会在函数执行完毕后销毁。</p>
-<h1 id="检测类型"><a href="#检测类型" class="headerlink" title="检测类型"></a>检测类型</h1><h2 id="检测基本数据类型"><a href="#检测基本数据类型" class="headerlink" title="检测基本数据类型"></a>检测基本数据类型</h2><p><code>typeof</code>操作符是最佳的工具</p>
-<p>用来判断<code>string</code>、<code>number</code>、<code>boolean</code>、<code>undefined</code>、<code>function</code></p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span>(<span class="string">"a"</span>));<span class="comment">//string</span></div><div class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span>(<span class="number">22</span>));<span class="comment">//number</span></div><div class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span>(<span class="literal">true</span>));<span class="comment">//boolean</span></div><div class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span>(a));<span class="comment">//undefined</span></div><div class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span>(<span class="literal">null</span>));<span class="comment">//object</span></div><div class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span>(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;));<span class="comment">//function</span></div></pre></td></tr></table></figure>
-<p>可以看出<code>typeof</code>无法检测null,但是可以检测function。</p>
-<h2 id="检测引用类型数据"><a href="#检测引用类型数据" class="headerlink" title="检测引用类型数据"></a>检测引用类型数据</h2><p><code>instanceof</code>操作符是最佳的工具</p>
-<ul>
-<li><p>排除基本类型值</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">console</span>.log(<span class="number">123</span> <span class="keyword">instanceof</span> <span class="built_in">Object</span>);<span class="comment">//flase</span></div></pre></td></tr></table></figure>
-</li>
-<li><p>判读对象和数组</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">console</span>.log(person <span class="keyword">instanceof</span> <span class="built_in">Object</span>);</div><div class="line"><span class="built_in">console</span>.log(color <span class="keyword">instanceof</span> <span class="built_in">Array</span>);</div></pre></td></tr></table></figure>
-</li>
-</ul>
-
-          
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/05/24/javascript高级程序设计-基本类型和引用类型的值/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
