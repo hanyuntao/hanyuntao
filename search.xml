@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[javascript高级程序设计--基本类型和引用类型的值]]></title>
+    <url>%2F2017%2F05%2F24%2Fjavascript%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1-%E5%8F%98%E9%87%8F%E4%BD%9C%E7%94%A8%E5%9F%9F%E5%92%8C%E5%86%85%E5%AD%98%E9%97%AE%E9%A2%98%2F</url>
+    <content type="text"><![CDATA[前言JS中变量是松散型变量，变量的值及其数据类型可用在脚本的生命周期内改变。本文为自己的学习笔记，来自高程的第四章内容。 基本类型和引用类型js变量的值分两种：基本类型值和引用类型值。Undefined、Null、Boolean、Number、String这五种基本类型是安值访问。引用类型的值保存在内存中，不直接被访问，当复制保存对象变量时，操作对象的引用。为对象添加属性时操作的则是对象。123var a =123;a.age = 27;alert(a.age);//undefined 上述代码说明，基本类型可以像对象类型一样使用，包括访问其属性、对其属性赋值(尽管实际上不起作用，但是形式上可以)。 之所以能这样去使用基本类型，是因为JavaScript引擎内部在处理对某个基本类型a进行形如a.age的操作时，会在内部临时创建一个对应的包装类型(对数字类型来说就是Number类型)的临时对象(new Number())，并把对基本类型的操作代理到对这个临时对象身上，使得对基本类型的属性访问看起来像对象一样。但是在操作完成后，临时对象就扔掉了，下次再访问时，会重新建立临时对象，当然对之前的临时对象的修改都不会有效了。 复制变量值基本类型值复制时会，会在变量对象创建一个新值，并把值复制到新的位置上。两个变量现在是相互独立的。引用类型值复制的实际同样也是在变量对象创建一个新值，并把值复制到新的位置上。不同的是这个值是一个假身（指向对象位置的指针） 这里要理解的一点就是，复制对象时并不会在堆内存中新生成一个一模一样的对象，只是多了一个保存指向这个对象指针的变量罢了。 函数传参高程中关于函数传递参数一上来就各种强调开发人员会错误的认为参数是按引用传递，其实传参是按值传递的。刚开始不理解，后来各种查，终于明白了。 重点理解:按照引用传递会把整个对象传递给形参，按照值传递是把对象的引用值复制给形参12345678function setName(obj) &#123;//将person的引用值复制给obj obj.name="Nicholas";//也即person.name="Nicholas" obj=new Object( );//生成一个新的对象，并且将该对象的引用值复制给obj obj.name="Greg";//根据值复制的特性，现在obj和person是完全独立的，指向不同的对象&#125;var person=new Object( );setName(person);console.log(person.name);//Nicholas var obj = new Object();会重新给obj分配一个地址，比如是0x321了，这个地址指向新生成的局部对象，而这个局部对象会在函数执行完毕后销毁。 检测类型检测基本数据类型typeof操作符是最佳的工具 用来判断string、number、boolean、undefined、function 123456console.log(typeof("a"));//stringconsole.log(typeof(22));//numberconsole.log(typeof(true));//booleanconsole.log(typeof(a));//undefinedconsole.log(typeof(null));//objectconsole.log(typeof(function()&#123;&#125;));//function 可以看出typeof无法检测null,但是可以检测function。 检测引用类型数据instanceof操作符是最佳的工具 排除基本类型值 1console.log(123 instanceof Object);//flase 判读对象和数组 12console.log(person instanceof Object);console.log(color instanceof Array);]]></content>
+      <categories>
+        <category>javascript</category>
+      </categories>
+      <tags>
+        <tag>web</tag>
+        <tag>javascript</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Javscript面向对象编程-继承]]></title>
     <url>%2F2017%2F05%2F23%2FJavscript%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B-%E7%BB%A7%E6%89%BF%2F</url>
     <content type="text"><![CDATA[构造函数、实例和原型对象的关系ECMAscript中描述了原型的概念，并将原型链作为实现继承的主要方法。其基本思想是利用原型让一个引用类型继承另一个引用类型的属性和方法。 构造函数、原型、实例的关系：实例就是通过构造函数创建的。实例一创造出来就具有__proto__属性（指向原型对象）。 构造函数中有一个prototype属性，这个属性是一个指针，指向它的原型对象。 原型对象内部也有一个指针（constructor属性）指向构造函数:Person.prototype.constructor = Person; 实例可以访问原型对象上定义的属性和方法。 在这里person1和person2就是实例，prototype是他们的原型对象。12345678910111213141516171819&lt;script&gt; function Animal(name) //积累构造函数 &#123; this.name = name;//设置对象属性 &#125; Animal.prototype.behavior = function() //给基类构造函数的prototype添加behavior方法 &#123; alert("this is a "+this.name); &#125; var Dog = new Animal("dog");//创建Dog对象 var Cat = new Animal("cat");//创建Cat对象 Dog.behavior();//通过Dog对象直接调用behavior方法 Cat.behavior();//output "this is a cat" alert(Dog.behavior==Cat.behavior);//output true;&lt;/script&gt; 可以从程序运行结果看出，构造函数的prototype上定义的方法确实可以通过对象直接调用到，而且代码是共享的。（可以试一下将Animal.prototype.behavior 中的prototype属性去掉，看看还能不能运行。）在这里，constructor属性指向Animal对象。 构造函数的继承比如，现在有一个”动物”对象的构造函数。123function Animal()&#123; this.species = "动物";&#125; 还有一个”猫”对象的构造函数。1234function Cat(name,color)&#123; this.name = name; this.color = color;&#125; 怎样才能使”猫”继承”动物”呢？ 构造函数绑定第一种方法也是最简单的方法，使用call或apply方法，将父对象的构造函数绑定在子对象上，即在子对象构造函数中加一行：1234567function Cat(name,color)&#123; Animal.apply(this, arguments); this.name = name; this.color = color;&#125;var cat1 = new Cat("大毛","黄色");alert(cat1.species); // 动物 prototype模式第二种方法更常见，使用prototype属性。如果”猫”的prototype对象，指向一个Animal的实例，那么所有”猫”的实例，就能继承Animal了。1234Cat.prototype = new Animal();Cat.prototype.constructor = Cat;var cat1 = new Cat("大毛","黄色");alert(cat1.species); // 动物 代码的第一行，我们将Cat的prototype对象指向一个Animal的实例。它相当于完全删除了prototype 对象原先的值，然后赋予一个新值。但是，第二行又是什么意思呢？1Cat.prototype.constructor = Cat; 原来，任何一个prototype对象都有一个constructor属性，指向它的构造函数。如果没有Cat.prototype = new Animal();这一行，Cat.prototype.constructor是指向Cat的；加了这一行以后，Cat.prototype.constructor指向Animal。1alert(Cat.prototype.constructor == Animal); //true 更重要的是，每一个实例也有一个constructor属性，默认调用prototype对象的constructor属性。1alert(cat1.constructor == Cat.prototype.constructor); // true 因此，在运行Cat.prototype = new Animal();这一行之后，cat1.constructor也指向Animal！1alert(cat1.constructor == Animal); // true 这显然会导致继承链的紊乱（cat1明明是用构造函数Cat生成的），因此我们必须手动纠正，将Cat.prototype对象的constructor值改为Cat。这就是第二行的意思。 这是很重要的一点，编程时务必要遵守。下文都遵循这一点，即如果替换了prototype对象，1o.prototype = &#123;&#125;; 那么，下一步必然是为新的prototype对象加上constructor属性，并将这个属性指回原来的构造函数。1o.prototype.constructor = o; 直接继承prototype第三种方法是对第二种方法的改进。由于Animal对象中，不变的属性都可以直接写入Animal.prototype。所以，我们也可以让Cat()跳过 Animal()，直接继承Animal.prototype。现在，我们先将Animal对象改写：12function Animal()&#123; &#125;Animal.prototype.species = "动物"; 然后，将Cat的prototype对象指向Animal的prototype对象，这样就完成了继承。1234Cat.prototype = Animal.prototype;Cat.prototype.constructor = Cat;var cat1 = new Cat("大毛","黄色");alert(cat1.species); // 动物 与前一种方法相比，这样做的优点是效率比较高（不用执行和建立Animal的实例了），比较省内存。缺点是 Cat.prototype和Animal.prototype现在指向了同一个对象，那么任何对Cat.prototype的修改，都会反映到Animal.prototype。所以，上面这一段代码其实是有问题的。请看第二行1Cat.prototype.constructor = Cat; 这一句实际上把Animal.prototype对象的constructor属性也改掉了！1alert(Animal.prototype.constructor); // Cat 利用空对象作为中介由于”直接继承prototype存在上述的缺点，所以就有第四种方法，利用一个空对象作为中介。1234var F = function()&#123;&#125;;F.prototype = Animal.prototype;Cat.prototype = new F();Cat.prototype.constructor = Cat; F是空对象，所以几乎不占内存。这时，修改Cat的prototype对象，就不会影响到Animal的prototype对象。1alert(Animal.prototype.constructor); // Animal 我们将上面的方法，封装成一个函数，便于使用。1234567function extend(Child, Parent) &#123; var F = function()&#123;&#125;; F.prototype = Parent.prototype; Child.prototype = new F(); Child.prototype.constructor = Child; Child.uber = Parent.prototype;&#125; 使用的时候，方法如下123extend(Cat,Animal);var cat1 = new Cat("大毛","黄色");alert(cat1.species); // 动物 另外，说明一点，函数体最后一行Child.uber = Parent.prototype;意思是为子对象设一个uber属性，这个属性直接指向父对象的prototype属性。（uber是一个德语词，意思是”向上”、”上一层”。）这等于在子对象上打开一条通道，可以直接调用父对象的方法。这一行放在这里，只是为了实现继承的完备性，纯属备用性质。 拷贝继承上面是采用prototype对象，实现继承。我们也可以换一种思路，纯粹采用”拷贝”方法实现继承。简单说，如果把父对象的所有属性和方法，拷贝进子对象，不也能够实现继承吗？这样我们就有了第五种方法。首先，还是把Animal的所有不变属性，都放到它的prototype对象上。12function Animal()&#123;&#125;Animal.prototype.species = "动物"; 然后，再写一个函数，实现属性拷贝的目的。12345678function extend2(Child, Parent) &#123; var p = Parent.prototype; var c = Child.prototype; for (var i in p) &#123; c[i] = p[i]; &#125; c.uber = p;&#125; 这个函数的作用，就是将父对象的prototype对象中的属性，一一拷贝给Child对象的prototype对象。使用的时候，这样写：123extend2(Cat, Animal);var cat1 = new Cat("大毛","黄色");alert(cat1.species); // 动物 非构造函数的继承什么是”非构造函数”的继承？比如，现在有一个对象，叫做”中国人”。123var Chinese = &#123; nation:'中国'&#125;; 还有一个对象，叫做”医生”。123var Doctor =&#123; career:'医生'&#125; 请问怎样才能让”医生”去继承”中国人”，也就是说，我怎样才能生成一个”中国医生”的对象？这里要注意，这两个对象都是普通对象，不是构造函数，无法使用构造函数方法实现”继承”。 object()方法json格式的发明人Douglas Crockford，提出了一个object()函数，可以做到这一点。12345function object(o) &#123;//引入对象o function F() &#123;&#125; F.prototype = o; return new F();//返回一个prototype指向o的对象&#125; 使用的时候，第一步先在父对象的基础上，生成子对象：1var Doctor = object(Chinese); 然后，再加上子对象本身的属性：1Doctor.career = '医生'; 这时，子对象已经继承了父对象的属性了。1alert(Doctor.nation); //中国 浅拷贝除了使用prototype链以外，还有另一种思路：把父对象的属性，全部拷贝给子对象，也能实现继承。下面这个函数，就是在做拷贝：12345678function extendCopy(p) &#123; var c = &#123;&#125;; for (var i in p) &#123; c[i] = p[i];//把传入的对象p的属性都复制给c &#125; c.uber = p; return c;&#125; 使用的时候，这样写：123var Doctor = extendCopy(Chinese);Doctor.career = '医生';alert(Doctor.nation); // 中国 但是，这样的拷贝有一个问题。那就是，如果父对象的属性等于数组或另一个对象，那么实际上，子对象获得的只是一个内存地址，而不是真正拷贝，因此存在父对象被篡改的可能。 1Chinese.birthPlaces = ['北京','上海','香港']; 通过extendCopy()函数，Doctor继承了Chinese。1var Doctor = extendCopy(Chinese); 然后，我们为Doctor的”出生地”添加一个城市：1Doctor.birthPlaces.push('厦门'); 发生了什么事？Chinese的”出生地”也被改掉了！12alert(Doctor.birthPlaces); //北京, 上海, 香港, 厦门alert(Chinese.birthPlaces); //北京, 上海, 香港, 厦门 所以，extendCopy()只是拷贝基本类型的数据，我们把这种拷贝叫做”浅拷贝”。这是早期jQuery实现继承的方式。 深拷贝所谓”深拷贝”，就是能够实现真正意义上的数组和对象的拷贝。它的实现并不难，只要递归调用”浅拷贝”就行了。12345678910111213function deepCopy(p, c) &#123; var c = c || &#123;&#125;; for (var i in p) &#123; if (typeof p[i] === 'object') &#123; c[i] = (p[i].constructor === Array) ? [] : &#123;&#125;; deepCopy(p[i], c[i]); &#125; else &#123; c[i] = p[i]; &#125; &#125; return c;&#125; 使用的时候这样写：1var Doctor = deepCopy(Chinese); 现在，给父对象加一个属性，值为数组。然后，在子对象上修改这个属性：12Chinese.birthPlaces = ['北京','上海','香港'];Doctor.birthPlaces.push('厦门'); 这时，父对象就不会受到影响了。12alert(Doctor.birthPlaces); //北京, 上海, 香港, 厦门alert(Chinese.birthPlaces); //北京, 上海, 香港 目前，jQuery库使用的就是这种继承方法。 结束本文所有知识点及代码来之阮一峰老师的文章《Javascript面向对象编程（二）：构造函数的继承》和《Javascript面向对象编程（三）：非构造函数的继承》 参考资料Javascript面向对象编程（二）：构造函数的继承Javascript面向对象编程（三）：非构造函数的继承]]></content>
@@ -8,8 +20,8 @@
         <category>javascript</category>
       </categories>
       <tags>
-        <tag>javascript</tag>
         <tag>web</tag>
+        <tag>javascript</tag>
       </tags>
   </entry>
   <entry>
@@ -20,8 +32,8 @@
         <category>javascript</category>
       </categories>
       <tags>
-        <tag>javascript</tag>
         <tag>web</tag>
+        <tag>javascript</tag>
       </tags>
   </entry>
   <entry>
@@ -32,8 +44,8 @@
         <category>javascript</category>
       </categories>
       <tags>
-        <tag>javascript</tag>
         <tag>web</tag>
+        <tag>javascript</tag>
       </tags>
   </entry>
   <entry>
@@ -55,8 +67,8 @@
         <category>css</category>
       </categories>
       <tags>
-        <tag>web</tag>
         <tag>css</tag>
+        <tag>web</tag>
       </tags>
   </entry>
 </search>
