@@ -108,7 +108,16 @@
 <meta property="og:image" content="http://oq6k3jdcg.bkt.clouddn.com/blog/20170524/154240063.png?imageslim">
 <meta property="og:image" content="http://oq6k3jdcg.bkt.clouddn.com/blog/20170524/154255048.png?imageslim">
 <meta property="og:image" content="http://oq6k3jdcg.bkt.clouddn.com/blog/20170524/154304977.png?imageslim">
-<meta property="og:updated_time" content="2017-05-24T07:51:43.293Z">
+<meta property="og:image" content="http://oq6k3jdcg.bkt.clouddn.com/blog/20170525/085405747.png?imageslim">
+<meta property="og:image" content="http://oq6k3jdcg.bkt.clouddn.com/blog/20170525/085529862.png?imageslim">
+<meta property="og:image" content="http://oq6k3jdcg.bkt.clouddn.com/blog/20170525/085702691.png?imageslim">
+<meta property="og:image" content="http://oq6k3jdcg.bkt.clouddn.com/blog/20170525/090545001.png?imageslim">
+<meta property="og:image" content="http://oq6k3jdcg.bkt.clouddn.com/blog/20170525/090701376.png?imageslim">
+<meta property="og:image" content="http://oq6k3jdcg.bkt.clouddn.com/blog/20170525/090729518.png?imageslim">
+<meta property="og:image" content="http://oq6k3jdcg.bkt.clouddn.com/blog/20170525/090805245.png?imageslim">
+<meta property="og:image" content="http://oq6k3jdcg.bkt.clouddn.com/blog/20170525/090823252.png?imageslim">
+<meta property="og:image" content="http://oq6k3jdcg.bkt.clouddn.com/blog/20170525/090906174.png?imageslim">
+<meta property="og:updated_time" content="2017-05-25T01:19:12.540Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="javascript高级程序设计-执行环境及作用域">
 <meta name="twitter:description" content="前言理解执行环境和作用域是入门javascript的基础，也是难点，但是高程上对这部分的介绍非常吝啬篇幅，结合高程和一些其他的google出来的资料，形成本篇，以备复习。">
@@ -455,7 +464,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  986
+                  2,547
                 </span>
               
 
@@ -471,7 +480,7 @@
                   <span class="post-meta-item-text">阅读时长</span>
                 
                 <span title="阅读时长">
-                  4
+                  9
                 </span>
               
             </div>
@@ -513,7 +522,7 @@
 </blockquote>
 <h1 id="执行上下文栈"><a href="#执行上下文栈" class="headerlink" title="执行上下文栈"></a>执行上下文栈</h1><p>执行全局代码时，会产生一个执行上下文环境，每次调用函数都又会产生执行上下文环境。当函数调用完成时，这个上下文环境以及其中的数据都会被消除，再重新回到全局上下文环境。处于活动状态的执行上下文环境只有一个。执行上下文栈就是是一个压栈出栈的过程。</p>
 <p><img src="http://oq6k3jdcg.bkt.clouddn.com/blog/20170524/153807013.png?imageslim" alt="mark"></p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> a = <span class="number">10</span>, 		<span class="comment">//1.进入全局上下文环境</span></div><div class="line">fn,</div><div class="line">bar = <span class="function"><span class="keyword">function</span>(<span class="params">x</span>) </span>&#123;</div><div class="line">	<span class="keyword">var</span> b = <span class="number">5</span>;</div><div class="line">	fn(x + b); 		<span class="comment">//3.进入fn函数上下文环境</span></div><div class="line">&#125;;</div><div class="line"></div><div class="line">fn = <span class="function"><span class="keyword">function</span>(<span class="params">y</span>) </span>&#123;</div><div class="line">	<span class="keyword">var</span> c = <span class="number">5</span>;</div><div class="line">	<span class="built_in">console</span>.log(y + c);</div><div class="line">&#125;</div><div class="line"></div><div class="line">ar(<span class="number">10</span>); 			<span class="comment">//2.进入bar函数上下文环境</span></div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> a = <span class="number">10</span>, 		<span class="comment">//1.进入全局上下文环境</span></div><div class="line">fn,</div><div class="line">bar = <span class="function"><span class="keyword">function</span>(<span class="params">x</span>) </span>&#123;</div><div class="line">	<span class="keyword">var</span> b = <span class="number">5</span>;</div><div class="line">	fn(x + b); 		<span class="comment">//3.进入fn函数上下文环境</span></div><div class="line">&#125;;</div><div class="line"></div><div class="line">fn = <span class="function"><span class="keyword">function</span>(<span class="params">y</span>) </span>&#123;</div><div class="line">	<span class="keyword">var</span> c = <span class="number">5</span>;</div><div class="line">	<span class="built_in">console</span>.log(y + c);</div><div class="line">&#125;</div><div class="line"></div><div class="line">bar(<span class="number">10</span>); 			<span class="comment">//2.进入bar函数上下文环境</span></div></pre></td></tr></table></figure>
 <p>在执行代码之前，首先将创建全局上下文环境。</p>
 <p><img src="http://oq6k3jdcg.bkt.clouddn.com/blog/20170524/154125045.png?imageslim" alt="mark"></p>
 <p>然后是代码执行。代码执行到第12行之前，上下文环境中的变量都在执行过程中被赋值。</p>
@@ -530,7 +539,77 @@
 <p>同理，待第13行执行完毕，即bar函数执行完毕后，调用bar函数所生成的上下文环境出栈，并且被销毁（已经用完了，就要及时销毁，释放内存）。</p>
 <p><img src="http://oq6k3jdcg.bkt.clouddn.com/blog/20170524/154304977.png?imageslim" alt="mark"></p>
 <p>好了，我很耐心的给大家介绍了一段简短代码的执行上下文环境的变化过程，一个完整的闭环。其中上下文环境的变量赋值过程我省略了许多，因为那些并不难，一看就知道。</p>
-<h1 id="作用域"><a href="#作用域" class="headerlink" title="作用域"></a>作用域</h1><p>未完待续</p>
+<h1 id="作用域"><a href="#作用域" class="headerlink" title="作用域"></a>作用域</h1><p>提到作用域，有一句话大家（有js开发经验者）可能比较熟悉：<code>javascript</code>没有块级作用域”。所谓<code>块</code>，就是大括号“｛｝”中间的语句。<br><br>例如if语句：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> i = <span class="number">10</span>;</div><div class="line"><span class="keyword">if</span> (i &gt; <span class="number">1</span>) &#123;</div><div class="line">    <span class="keyword">var</span> name = <span class="string">"hyt"</span>;</div><div class="line">&#125;</div><div class="line"><span class="built_in">console</span>.log(name); <span class="comment">//hyt</span></div></pre></td></tr></table></figure></p>
+<p>for语句<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</div><div class="line"></div><div class="line">&#125;</div><div class="line"><span class="built_in">console</span>.log(i); <span class="comment">//10</span></div></pre></td></tr></table></figure></p>
+<blockquote>
+<p>我们在编写代码的时候，不要在“块”里面声明变量，要在代码的一开始就声明好了。以避免发生歧义</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> i;</div><div class="line"><span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</div><div class="line">&#125;</div><div class="line"><span class="built_in">console</span>.log(i);</div></pre></td></tr></table></figure>
+<p>你光知道javascript没有块级作用域”是完全不够的，你需要知道的是——javascript除了全局作用域之外，只有函数可以创建的作用域。</p>
+<blockquote>
+<p>我们在声明变量时，全局代码要在代码前端声明，函数中要在函数体一开始就声明好。除了这两个地方，其他地方都不要出现变量声明。而且建议用“单var”形式</p>
+</blockquote>
+<p><img src="http://oq6k3jdcg.bkt.clouddn.com/blog/20170525/085405747.png?imageslim" alt="mark"><br>2017-04-18-灵活方便的布局方式——弹性布局.md</p>
+<p>如上图，全局代码和fn、bar两个函数都会形成一个作用域。而且，作用域有上下级的关系，上下级关系的确定就看函数是在哪个作用域下创建的。例如，fn作用域下创建了bar函数，那么“fn作用域”就是“bar作用域”的上级。</p>
+<p><strong>作用域最大的用处就是隔离变量，不同作用域下同名变量不会有冲突</strong></p>
+<p>例如以上代码中，三个作用域下都声明了“a”这个变量，但是他们不会有冲突。各自的作用域下，用各自的“a”。</p>
+<p><img src="http://oq6k3jdcg.bkt.clouddn.com/blog/20170525/085529862.png?imageslim" alt="mark"></p>
+<p>如上图，我们在上文中已经介绍了，除了全局作用域之外</p>
+<blockquote>
+<p>每个函数都会创建自己的作用域，作用域在函数定义时就已经确定了。而不是在函数调用时确定。</p>
+</blockquote>
+<p>下面我们将按照程序执行的顺序，一步一步把各个上下文环境加上。<br>第一步，在加载程序时，已经确定了全局上下文环境，并随着程序的执行而对变量就行赋值。</p>
+<p><img src="http://oq6k3jdcg.bkt.clouddn.com/blog/20170525/085702691.png?imageslim" alt="mark"></p>
+<p>第二步，程序执行到第27行，调用fn(10)，此时生成此次调用fn函数时的上下文环境，压栈，并将此上下文环境设置为活动状态。</p>
+<p><img src="http://oq6k3jdcg.bkt.clouddn.com/blog/20170525/090545001.png?imageslim" alt="mark"></p>
+<p>第三步，执行到第23行时，调用bar(100)，生成此次调用的上下文环境，压栈，并设置为活动状态。</p>
+<p><img src="http://oq6k3jdcg.bkt.clouddn.com/blog/20170525/090701376.png?imageslim" alt="mark"></p>
+<p>第四步，执行完第23行，bar(100)调用完成。则bar(100)上下文环境被销毁。接着执行第24行，调用bar(200)，则又生成bar(200)的上下文环境，压栈，设置为活动状态。</p>
+<p><img src="http://oq6k3jdcg.bkt.clouddn.com/blog/20170525/090729518.png?imageslim" alt="mark"></p>
+<p>第五步，执行完第24行，则bar(200)调用结束，其上下文环境被销毁。此时会回到fn(10)上下文环境，变为活动状态。</p>
+<p><img src="http://oq6k3jdcg.bkt.clouddn.com/blog/20170525/090805245.png?imageslim" alt="mark"></p>
+<p>第六步，执行完第27行代码，fn(10)执行完成之后，fn(10)上下文环境被销毁，全局上下文环境又回到活动状态。</p>
+<p><img src="http://oq6k3jdcg.bkt.clouddn.com/blog/20170525/090823252.png?imageslim" alt="mark"></p>
+<p>最后我们可以把以上这几个图片连接起来看看。</p>
+<p><img src="http://oq6k3jdcg.bkt.clouddn.com/blog/20170525/090906174.png?imageslim" alt="mark"></p>
+<p>作用域只是一个“地盘”，一个抽象的概念，其中没有变量。要通过作用域对应的执行上下文环境来获取变量的值。</p>
+<blockquote>
+<p>同一个作用域下，不同的调用会产生不同的执行上下文环境，继而产生不同的变量的值。所以，作用域中变量的值是在执行过程中产生的确定的，而作用域却是在函数创建时就确定了。</p>
+</blockquote>
+<h1 id="自由变量"><a href="#自由变量" class="headerlink" title="自由变量"></a>自由变量</h1><p>在A作用域中使用的变量x，却没有在A作用域中声明（即在其他作用域中声明的），对于A作用域来说，x就是一个自由变量。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> x = <span class="number">50</span>;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> b = <span class="number">20</span>;</div><div class="line">    <span class="built_in">console</span>.log(x + b);</div><div class="line">&#125;</div><div class="line">fn();  <span class="comment">//70</span></div></pre></td></tr></table></figure></p>
+<p>在调用fn()函数时，函数体中第6行。取b的值就直接可以在fn作用域中取，因为b就是在这里定义的。而取x的值时，就需要到另一个作用域中取。到哪个作用域中取呢？</p>
+<p>有人说过要到父作用域中取，其实有时候这种解释会产生歧义。<br>例如：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> x = <span class="number">50</span>;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(x);</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">show</span>(<span class="params">f</span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> x = <span class="number">20</span>;</div><div class="line">    (<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        f(); <span class="comment">//50 不是20</span></div><div class="line">    &#125;)();</div><div class="line">&#125;</div><div class="line">show(fn); <span class="comment">//50 不是20</span></div></pre></td></tr></table></figure></p>
+<p>不要在用以上说法了。相比而言，用这句话描述会更加贴切——要到创建这个函数的那个作用域中取值——是“创建”，而不是“调用”，切记切记——其实这就是所谓的“静态作用域”。</p>
+<p>对于本文第一段代码，在fn函数中，取自由变量x的值时，要到哪个作用域中取？——要到创建fn函数的那个作用域中取——无论fn函数将在哪里调用。</p>
+<p>上面描述的只是跨一步作用域去寻找。</p>
+<p>如果跨了一步，还没找到呢？——接着跨！——一直跨到全局作用域为止。要是在全局作用域中都没有找到，那就是真的没有了。</p>
+<p>这个一步一步“跨”的路线，我们称之为——作用域链。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> color = <span class="string">"blue"</span>;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">changeColor</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> anotherColor = <span class="string">"red"</span>;</div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">swapColors</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="keyword">var</span> tempColor = anotherColor;</div><div class="line">        anotherColor = color;</div><div class="line">        color = tempColor;</div><div class="line">        <span class="comment">//这里可以访问color,anotherColor和tempColor</span></div><div class="line">    &#125;</div><div class="line">    <span class="comment">//这里可以访问color和anotherColor,但不能访问tempColor </span></div><div class="line">    swapColors();</div><div class="line">&#125;</div><div class="line">changeColor(); <span class="comment">//注释后alert显示为blue</span></div><div class="line"><span class="comment">//这里只能访问color</span></div><div class="line">alert(<span class="string">"Color is now "</span> + color); <span class="comment">//red</span></div></pre></td></tr></table></figure></p>
+<p>以上代码共涉及3个执行环境：全局环境、changeColor()的局部环境和swapColors()的局部环境。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">全局环境</th>
+<th style="text-align:center">changeColor()的局部环境</th>
+<th style="text-align:center">swapColors()的局部环境</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">变量color</td>
+<td style="text-align:center">变量anotherColor</td>
+<td style="text-align:center">变量tempColor</td>
+</tr>
+<tr>
+<td style="text-align:center">函数changeColor()</td>
+<td style="text-align:center">函数swapColors()</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>内部环境可以通过作用域链访问所有的外部环境，但外部环境不能访问内部环境中的任何变量和函数。</p>
+</blockquote>
+<p>每个环境都可以向上搜索作用域链，以查询变量和函数名；<span style="background-color: #F2FC75;"><strong>但任何环境都不能通过向下搜索作用域链而进入另一个执行环境。</strong></span></p>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><p><a href="http://www.cnblogs.com/wangfupeng1988/p/3989357.html" target="_blank" rel="external">深入理解javascript原型和闭包——执行上下文栈</a><br><br><a href="http://www.cnblogs.com/wangfupeng1988/p/3991995.html" target="_blank" rel="external">深入理解javascript原型和闭包-作用域和上下文环境</a></p>
 
       
     </div>
@@ -761,7 +840,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#代码执行前的准备工作"><span class="nav-number">2.</span> <span class="nav-text">代码执行前的准备工作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#执行上下文栈"><span class="nav-number">3.</span> <span class="nav-text">执行上下文栈</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#作用域"><span class="nav-number">4.</span> <span class="nav-text">作用域</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#代码执行前的准备工作"><span class="nav-number">2.</span> <span class="nav-text">代码执行前的准备工作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#执行上下文栈"><span class="nav-number">3.</span> <span class="nav-text">执行上下文栈</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#作用域"><span class="nav-number">4.</span> <span class="nav-text">作用域</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#自由变量"><span class="nav-number">5.</span> <span class="nav-text">自由变量</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">6.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
             
 
           </div>
