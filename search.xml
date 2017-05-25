@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[javascript中的小知识点]]></title>
+    <url>%2F2017%2F05%2F25%2Fjavascript%E4%B8%AD%E7%9A%84%E5%B0%8F%E7%9F%A5%E8%AF%86%E7%82%B9%2F</url>
+    <content type="text"><![CDATA[前言本文主要记录学习过程中发现的且极易被忽略的小知识点，会不断更新内容，经常翻看。另外知识点顺序按照实际遇到的时间记录，无层次无结构。 内容 没有块级作用域1234for(var i=0;i&lt;10;i++) &#123; doSomething(i);&#125;alert(i);//10; 解释：对于有块级作用域的语言来说，for语句初始化变量的表达式所定义的变量，只会存在于循环的环境中。而js中，由for语句创建的变量i即使在for语句执行结束以后，也依旧存在于循环外部的执行环境中。 方括号访问对象属性]]></content>
+      <categories>
+        <category>javascript</category>
+      </categories>
+      <tags>
+        <tag>web</tag>
+        <tag>javascript</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[javascript高级程序设计-this]]></title>
     <url>%2F2017%2F05%2F24%2Fjavascript%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1-this%2F</url>
     <content type="text"></content>
