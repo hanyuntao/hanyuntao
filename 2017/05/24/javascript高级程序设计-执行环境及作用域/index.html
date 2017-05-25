@@ -117,7 +117,7 @@
 <meta property="og:image" content="http://oq6k3jdcg.bkt.clouddn.com/blog/20170525/090805245.png?imageslim">
 <meta property="og:image" content="http://oq6k3jdcg.bkt.clouddn.com/blog/20170525/090823252.png?imageslim">
 <meta property="og:image" content="http://oq6k3jdcg.bkt.clouddn.com/blog/20170525/090906174.png?imageslim">
-<meta property="og:updated_time" content="2017-05-25T01:19:12.540Z">
+<meta property="og:updated_time" content="2017-05-25T03:51:49.584Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="javascript高级程序设计-执行环境及作用域">
 <meta name="twitter:description" content="前言理解执行环境和作用域是入门javascript的基础，也是难点，但是高程上对这部分的介绍非常吝啬篇幅，结合高程和一些其他的google出来的资料，形成本篇，以备复习。">
@@ -583,7 +583,7 @@
 <p>对于本文第一段代码，在fn函数中，取自由变量x的值时，要到哪个作用域中取？——要到创建fn函数的那个作用域中取——无论fn函数将在哪里调用。</p>
 <p>上面描述的只是跨一步作用域去寻找。</p>
 <p>如果跨了一步，还没找到呢？——接着跨！——一直跨到全局作用域为止。要是在全局作用域中都没有找到，那就是真的没有了。</p>
-<p>这个一步一步“跨”的路线，我们称之为——作用域链。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> color = <span class="string">"blue"</span>;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">changeColor</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> anotherColor = <span class="string">"red"</span>;</div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">swapColors</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="keyword">var</span> tempColor = anotherColor;</div><div class="line">        anotherColor = color;</div><div class="line">        color = tempColor;</div><div class="line">        <span class="comment">//这里可以访问color,anotherColor和tempColor</span></div><div class="line">    &#125;</div><div class="line">    <span class="comment">//这里可以访问color和anotherColor,但不能访问tempColor </span></div><div class="line">    swapColors();</div><div class="line">&#125;</div><div class="line">changeColor(); <span class="comment">//注释后alert显示为blue</span></div><div class="line"><span class="comment">//这里只能访问color</span></div><div class="line">alert(<span class="string">"Color is now "</span> + color); <span class="comment">//red</span></div></pre></td></tr></table></figure></p>
+<p>这个一步一步“跨”的路线，我们称之为——作用域链。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> color = <span class="string">"blue"</span>;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">changeColor</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> anotherColor = <span class="string">"red"</span>;</div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">swapColors</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="keyword">var</span> tempColor = anotherColor;</div><div class="line">        anotherColor = color;</div><div class="line">        color = tempColor;</div><div class="line">        <span class="comment">//这里可以访问color,anotherColor和tempColor</span></div><div class="line">    &#125;</div><div class="line">    <span class="comment">//这里可以访问color和anotherColor,但不能访问tempColor </span></div><div class="line">    swapColors();</div><div class="line">&#125;</div><div class="line">changeColor(); <span class="comment">//注释后alert显示为blue </span></div><div class="line"><span class="comment">//这里只能访问color</span></div><div class="line">alert(<span class="string">"Color is now "</span> + color); <span class="comment">//red</span></div></pre></td></tr></table></figure></p>
 <p>以上代码共涉及3个执行环境：全局环境、changeColor()的局部环境和swapColors()的局部环境。</p>
 <table>
 <thead>
@@ -763,7 +763,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-count">10</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

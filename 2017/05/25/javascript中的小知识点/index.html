@@ -90,17 +90,17 @@
 
 
 
-<meta name="description" content="前言本文主要记录学习过程中发现的且极易被忽略的小知识点，会不断更新内容，经常翻看。另外知识点顺序按照实际遇到的时间记录，无层次无结构。 内容 没有块级作用域1234for(var i=0;i&amp;lt;10;i++) &amp;#123;	doSomething(i);&amp;#125;alert(i);//10;   解释：对于有块级作用域的语言来说，for语句初始化变量的表达式所定义的变量，只会存在于循环的环境">
+<meta name="description" content="前言本文主要记录学习过程中发现的且极易被忽略的小知识点，会不断更新内容，经常翻看。另外知识点顺序按照实际遇到的时间记录，无层次无结构。 内容1.没有块级作用域1234for(var i=0;i&amp;lt;10;i++) &amp;#123;	doSomething(i);&amp;#125;alert(i);//10; 解释：对于有块级作用域的语言来说，for语句初始化变量的表达式所定义的变量，只会存在于循环的环境中">
 <meta name="keywords" content="web,javascript">
 <meta property="og:type" content="article">
 <meta property="og:title" content="javascript中的小知识点">
 <meta property="og:url" content="http://www.hanyuntao.site/2017/05/25/javascript中的小知识点/index.html">
 <meta property="og:site_name" content="前端之路">
-<meta property="og:description" content="前言本文主要记录学习过程中发现的且极易被忽略的小知识点，会不断更新内容，经常翻看。另外知识点顺序按照实际遇到的时间记录，无层次无结构。 内容 没有块级作用域1234for(var i=0;i&amp;lt;10;i++) &amp;#123;	doSomething(i);&amp;#125;alert(i);//10;   解释：对于有块级作用域的语言来说，for语句初始化变量的表达式所定义的变量，只会存在于循环的环境">
-<meta property="og:updated_time" content="2017-05-25T02:44:32.072Z">
+<meta property="og:description" content="前言本文主要记录学习过程中发现的且极易被忽略的小知识点，会不断更新内容，经常翻看。另外知识点顺序按照实际遇到的时间记录，无层次无结构。 内容1.没有块级作用域1234for(var i=0;i&amp;lt;10;i++) &amp;#123;	doSomething(i);&amp;#125;alert(i);//10; 解释：对于有块级作用域的语言来说，for语句初始化变量的表达式所定义的变量，只会存在于循环的环境中">
+<meta property="og:updated_time" content="2017-05-25T02:58:20.423Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="javascript中的小知识点">
-<meta name="twitter:description" content="前言本文主要记录学习过程中发现的且极易被忽略的小知识点，会不断更新内容，经常翻看。另外知识点顺序按照实际遇到的时间记录，无层次无结构。 内容 没有块级作用域1234for(var i=0;i&amp;lt;10;i++) &amp;#123;	doSomething(i);&amp;#125;alert(i);//10;   解释：对于有块级作用域的语言来说，for语句初始化变量的表达式所定义的变量，只会存在于循环的环境">
+<meta name="twitter:description" content="前言本文主要记录学习过程中发现的且极易被忽略的小知识点，会不断更新内容，经常翻看。另外知识点顺序按照实际遇到的时间记录，无层次无结构。 内容1.没有块级作用域1234for(var i=0;i&amp;lt;10;i++) &amp;#123;	doSomething(i);&amp;#125;alert(i);//10; 解释：对于有块级作用域的语言来说，for语句初始化变量的表达式所定义的变量，只会存在于循环的环境中">
 
 
 
@@ -443,7 +443,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  178
+                  229
                 </span>
               
 
@@ -478,14 +478,17 @@
 
       
         <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>本文主要记录学习过程中发现的且极易被忽略的小知识点，会不断更新内容，经常翻看。另外知识点顺序按照实际遇到的时间记录，无层次无结构。</p>
-<h1 id="内容"><a href="#内容" class="headerlink" title="内容"></a>内容</h1><ol>
-<li>没有块级作用域<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span>(<span class="keyword">var</span> i=<span class="number">0</span>;i&lt;<span class="number">10</span>;i++) &#123;</div><div class="line">	doSomething(i);</div><div class="line">&#125;</div><div class="line">alert(i);<span class="comment">//10;</span></div></pre></td></tr></table></figure>
-</li>
-</ol>
+<h1 id="内容"><a href="#内容" class="headerlink" title="内容"></a>内容</h1><p>1.没有块级作用域<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span>(<span class="keyword">var</span> i=<span class="number">0</span>;i&lt;<span class="number">10</span>;i++) &#123;</div><div class="line">	doSomething(i);</div><div class="line">&#125;</div><div class="line">alert(i);<span class="comment">//10;</span></div></pre></td></tr></table></figure></p>
 <p>解释：对于有块级作用域的语言来说，for语句初始化变量的表达式所定义的变量，只会存在于循环的环境中。而js中，由for语句创建的变量i即使在for语句执行结束以后，也依旧存在于循环外部的执行环境中。</p>
-<ol>
-<li>方括号访问对象属性</li>
-</ol>
+<p>2.方括号访问对象属性<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">alert(person.age);<span class="comment">//27</span></div><div class="line">alert(person[<span class="string">"age"</span>]);<span class="comment">//27</span></div></pre></td></tr></table></figure></p>
+<p>方块号的优点是:<br></p>
+<ul>
+<li><p>可以通过变量来访问属性</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> name = <span class="string">"hyt"</span>;</div><div class="line">alert(person[<span class="string">"name"</span>]);</div></pre></td></tr></table></figure>
+</li>
+<li><p>属性名中可以包含非字母非数字</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">person[<span class="string">"first name"</span>];</div></pre></td></tr></table></figure></li>
+</ul>
 
       
     </div>
@@ -561,6 +564,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2017/05/25/常用函数整理/" rel="prev" title="常用函数整理">
+                常用函数整理 <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -633,7 +640,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-count">10</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
