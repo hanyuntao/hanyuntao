@@ -97,7 +97,7 @@
 <meta property="og:url" content="http://www.hanyuntao.site/2017/05/31/前端面试-CSS篇/index.html">
 <meta property="og:site_name" content="前端之路">
 <meta property="og:description" content="css 介绍一下标准的CSS的盒子模型？低版本IE的盒子模型有什么不同的？ CSS盒模型本质上是一个盒子，封装周围的HTML元素，它包括：边距，边框，填充，和实际内容。盒模型允许我们在其它元素和周围元素边框之间的空间放置元素。 盒模型有两种， IE 盒子模型、W3C 盒子模型； 盒模型： 内容(content)、填充(padding)、边界(margin)、 边框(border)； 区  别： I">
-<meta property="og:updated_time" content="2017-05-31T02:19:07.920Z">
+<meta property="og:updated_time" content="2017-05-31T04:11:48.848Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="前端面试--CSS篇">
 <meta name="twitter:description" content="css 介绍一下标准的CSS的盒子模型？低版本IE的盒子模型有什么不同的？ CSS盒模型本质上是一个盒子，封装周围的HTML元素，它包括：边距，边框，填充，和实际内容。盒模型允许我们在其它元素和周围元素边框之间的空间放置元素。 盒模型有两种， IE 盒子模型、W3C 盒子模型； 盒模型： 内容(content)、填充(padding)、边界(margin)、 边框(border)； 区  别： I">
@@ -443,7 +443,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  2,091
+                  2,487
                 </span>
               
 
@@ -459,7 +459,7 @@
                   <span class="post-meta-item-text">阅读时长</span>
                 
                 <span title="阅读时长">
-                  8
+                  10
                 </span>
               
             </div>
@@ -534,32 +534,21 @@
 <li><p>如何居中div？</p>
 <ul>
 <li><p>水平居中：给div设置一个宽度，然后添加<code>margin:0 auto</code>属性  </p>
-<pre>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">div&#123;</div><div class="line">width:200px;</div><div class="line">margin:0 auto;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-
-</pre></li>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">div</span>&#123;</div><div class="line"><span class="attribute">width</span>:<span class="number">200px</span>;</div><div class="line"><span class="attribute">margin</span>:<span class="number">0</span> auto;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
 <li><p>让绝对定位的div居中</p>
-<pre>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">div &#123;</div><div class="line">    position: absolute;</div><div class="line">    width: 300px;</div><div class="line">    height: 300px;</div><div class="line">    margin: auto;</div><div class="line">    top: 0;</div><div class="line">    left: 0;</div><div class="line">    bottom: 0;</div><div class="line">    right: 0;</div><div class="line">    background-color: pink; /* 方便看效果 */</div><div class="line"> &#125;</div></pre></td></tr></table></figure>
-
-</pre></li>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">div</span> &#123;</div><div class="line">    <span class="attribute">position</span>: absolute;</div><div class="line">    <span class="attribute">width</span>: <span class="number">300px</span>;</div><div class="line">    <span class="attribute">height</span>: <span class="number">300px</span>;</div><div class="line">    <span class="attribute">margin</span>: auto;</div><div class="line">    <span class="attribute">top</span>: <span class="number">0</span>;</div><div class="line">    <span class="attribute">left</span>: <span class="number">0</span>;</div><div class="line">    <span class="attribute">bottom</span>: <span class="number">0</span>;</div><div class="line">    <span class="attribute">right</span>: <span class="number">0</span>;</div><div class="line">    <span class="attribute">background-color</span>: pink; <span class="comment">/* 方便看效果 */</span></div><div class="line"> &#125;</div></pre></td></tr></table></figure>
+</li>
 <li><p>水平垂直居中</p>
 <ol>
 <li><p>确定容器的宽高 宽500 高 300 的层<br>设置层的外边距</p>
-<pre>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">div &#123;</div><div class="line">    position: relative;     /* 相对定位或绝对定位均可 */</div><div class="line">    width:500px;</div><div class="line">    height:300px;</div><div class="line">    top: 50%;   /*前提是html,body &#123;width: 100%;height: 100%;&#125;*/</div><div class="line">    left: 50%;</div><div class="line">    margin: -150px 0 0 -250px; /* 外边距为自身宽高的一半 */</div><div class="line">    background-color: pink;     /* 方便看效果 */</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-
-</pre></li>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">div</span> &#123;</div><div class="line">    <span class="attribute">position</span>: relative;     <span class="comment">/* 相对定位或绝对定位均可 */</span></div><div class="line">    <span class="attribute">width</span>:<span class="number">500px</span>;</div><div class="line">    <span class="attribute">height</span>:<span class="number">300px</span>;</div><div class="line">    <span class="attribute">top</span>: <span class="number">50%</span>;   <span class="comment">/*前提是html,body &#123;width: 100%;height: 100%;&#125;*/</span></div><div class="line">    <span class="attribute">left</span>: <span class="number">50%</span>;</div><div class="line">    <span class="attribute">margin</span>: -<span class="number">150px</span> <span class="number">0</span> <span class="number">0</span> -<span class="number">250px</span>; <span class="comment">/* 外边距为自身宽高的一半 */</span></div><div class="line">    <span class="attribute">background-color</span>: pink;     <span class="comment">/* 方便看效果 */</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
 <li><p>未知容器的宽高，利用 <code>transform</code> 属性</p>
-<pre>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">div &#123;</div><div class="line">    position: absolute;     /* 相对定位或绝对定位均可 */</div><div class="line">    top: 50%;   /*前提是html,body &#123;width: 100%;height: 100%;&#125;*/</div><div class="line">    left: 50%;</div><div class="line">    transform: translate(-50%, -50%);</div><div class="line">    background-color: pink;     /* 方便看效果 */</div><div class="line"> &#125;</div></pre></td></tr></table></figure>
-
-</pre></li>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">div</span> &#123;</div><div class="line">    <span class="attribute">position</span>: absolute;     <span class="comment">/* 相对定位或绝对定位均可 */</span></div><div class="line">    <span class="attribute">top</span>: <span class="number">50%</span>;   <span class="comment">/*前提是html,body &#123;width: 100%;height: 100%;&#125;*/</span></div><div class="line">    <span class="attribute">left</span>: <span class="number">50%</span>;</div><div class="line">    <span class="attribute">transform</span>: <span class="built_in">translate</span>(-50%, -50%);</div><div class="line">    <span class="attribute">background-color</span>: pink;     <span class="comment">/* 方便看效果 */</span></div><div class="line"> &#125;</div></pre></td></tr></table></figure>
+</li>
 <li><p>利用 flex 布局,实际使用时应考虑兼容性</p>
-<pre>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">.container &#123;</div><div class="line">    display: flex;</div><div class="line">    align-items: center;        /* 垂直居中 */</div><div class="line">    justify-content: center;    /* 水平居中 */</div><div class="line"> &#125;</div><div class="line">.container div &#123;</div><div class="line">    width: 100px;</div><div class="line">    height: 100px;</div><div class="line">    background-color: pink;     /* 方便看效果 */</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-
-</pre>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.container</span> &#123;</div><div class="line">    <span class="attribute">display</span>: flex;</div><div class="line">    <span class="attribute">align-items</span>: center;        <span class="comment">/* 垂直居中 */</span></div><div class="line">    <span class="attribute">justify-content</span>: center;    <span class="comment">/* 水平居中 */</span></div><div class="line"> &#125;</div><div class="line"><span class="selector-class">.container</span> <span class="selector-tag">div</span> &#123;</div><div class="line">    <span class="attribute">width</span>: <span class="number">100px</span>;</div><div class="line">    <span class="attribute">height</span>: <span class="number">100px</span>;</div><div class="line">    <span class="attribute">background-color</span>: pink;     <span class="comment">/* 方便看效果 */</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
 </li>
 </ol>
 </li>
@@ -624,7 +613,28 @@
 </li>
 </ul>
 </li>
-<li><p>超链接访问过后hover样式就不出现了？   被点击访问过的超链接样式不在具有hover和active了解决方法是改变CSS属性的排列顺序:<br>L-V-H-A :  a:link {} a:visited {} a:hover {} a:active {}</p>
+<li><p>超链接访问过后hover样式就不出现了？   被点击访问过的超链接样式不在具有hover和active了，解决方法是改变CSS属性的排列顺序:<br>L-V-H-A :  <code>a:link {}</code> <code>a:visited {}`` a:hover {}</code> <code>a:active {}</code></p>
+</li>
+<li><p>为什么要初始化CSS样式？</p>
+<ul>
+<li>因为浏览器的兼容问题，不同浏览器对有些标签的默认值是不同的，如果没对CSS初始化往往会出现浏览器之间的页面显示差异。</li>
+<li>当然，初始化样式会对SEO有一定的影响，但鱼和熊掌不可兼得，但力求影响最小的情况下初始化。<ul>
+<li>最简单的初始化方法： * {padding: 0; margin: 0;} （强烈不建议）</li>
+<li>淘宝的样式初始化代码：<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">body</span>, <span class="selector-tag">h1</span>, <span class="selector-tag">h2</span>, <span class="selector-tag">h3</span>, <span class="selector-tag">h4</span>, <span class="selector-tag">h5</span>, <span class="selector-tag">h6</span>, <span class="selector-tag">hr</span>, <span class="selector-tag">p</span>, <span class="selector-tag">blockquote</span>, <span class="selector-tag">dl</span>, <span class="selector-tag">dt</span>, <span class="selector-tag">dd</span>, <span class="selector-tag">ul</span>, <span class="selector-tag">ol</span>, <span class="selector-tag">li</span>, <span class="selector-tag">pre</span>, <span class="selector-tag">form</span>, <span class="selector-tag">fieldset</span>, <span class="selector-tag">legend</span>, <span class="selector-tag">button</span>, <span class="selector-tag">input</span>, <span class="selector-tag">textarea</span>, <span class="selector-tag">th</span>, <span class="selector-tag">td</span> &#123; <span class="attribute">margin</span>:<span class="number">0</span>; <span class="attribute">padding</span>:<span class="number">0</span>; &#125;</div><div class="line"><span class="selector-tag">body</span>, <span class="selector-tag">button</span>, <span class="selector-tag">input</span>, <span class="selector-tag">select</span>, <span class="selector-tag">textarea</span> &#123; <span class="attribute">font</span>:<span class="number">12px</span>/<span class="number">1.5</span>tahoma, arial, \<span class="number">5</span>b8b\<span class="number">4</span>f53; &#125;</div><div class="line"><span class="selector-tag">h1</span>, <span class="selector-tag">h2</span>, <span class="selector-tag">h3</span>, <span class="selector-tag">h4</span>, <span class="selector-tag">h5</span>, <span class="selector-tag">h6</span>&#123; <span class="attribute">font-size</span>:<span class="number">100%</span>; &#125;</div><div class="line"><span class="selector-tag">address</span>, <span class="selector-tag">cite</span>, <span class="selector-tag">dfn</span>, <span class="selector-tag">em</span>, <span class="selector-tag">var</span> &#123; <span class="attribute">font-style</span>:normal; &#125;</div><div class="line"><span class="selector-tag">code</span>, <span class="selector-tag">kbd</span>, <span class="selector-tag">pre</span>, <span class="selector-tag">samp</span> &#123; <span class="attribute">font-family</span>:couriernew, courier, monospace; &#125;</div><div class="line"><span class="selector-tag">small</span>&#123; <span class="attribute">font-size</span>:<span class="number">12px</span>; &#125;</div><div class="line"><span class="selector-tag">ul</span>, <span class="selector-tag">ol</span> &#123; <span class="attribute">list-style</span>:none; &#125;</div><div class="line"><span class="selector-tag">a</span> &#123; <span class="attribute">text-decoration</span>:none; &#125;</div><div class="line"><span class="selector-tag">a</span><span class="selector-pseudo">:hover</span> &#123; <span class="attribute">text-decoration</span>:underline; &#125;</div><div class="line"><span class="selector-tag">sup</span> &#123; <span class="attribute">vertical-align</span>:text-top; &#125;</div><div class="line"><span class="selector-tag">sub</span>&#123; <span class="attribute">vertical-align</span>:text-bottom; &#125;</div><div class="line"><span class="selector-tag">legend</span> &#123; <span class="attribute">color</span>:<span class="number">#000</span>; &#125;</div><div class="line"><span class="selector-tag">fieldset</span>, <span class="selector-tag">img</span> &#123; <span class="attribute">border</span>:<span class="number">0</span>; &#125;</div><div class="line"><span class="selector-tag">button</span>, <span class="selector-tag">input</span>, <span class="selector-tag">select</span>, <span class="selector-tag">textarea</span> &#123; <span class="attribute">font-size</span>:<span class="number">100%</span>; &#125;</div><div class="line"><span class="selector-tag">table</span> &#123; <span class="attribute">border-collapse</span>:collapse; <span class="attribute">border-spacing</span>:<span class="number">0</span>; &#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>absolute的containing block(容器块)计算方式跟正常流有什么不同？</p>
+</li>
+<li><p>CSS里的visibility属性有个collapse属性值是干嘛用的？在不同浏览器下以后什么区别？</p>
+<ul>
+<li>对于普通元素<code>visibility:collapse;</code>会将元素完全隐藏,不占据页面布局空间,与<code>display:none;</code>表现相同</li>
+<li>当在表格元素中使用时，此值可删除一行或一列，但是它不会影响表格的布局。被行或列占据的空间会留给其他内容使用。</li>
+</ul>
+</li>
+<li><p>position跟display、margin collapse、overflow、float这些特性相互叠加后会怎么样？</p>
 </li>
 </ul>
 
